@@ -1,9 +1,3 @@
-Perfect — building a **complete Event Booking System** is one of the *best ways* to master the **MERN stack** because it touches every core concept: authentication, CRUD, file uploads, payments, APIs, complex UI, and performance optimization.
-
-Here’s a **complete breakdown** of how you can turn this project into a full MERN master project 👇
-
----
-
 ## 🎯 Project Title: Event Booking & Management System
 
 ### 🧠 Core Idea

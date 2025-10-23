@@ -5,3 +5,5 @@
 * Email verification and password reset flow
 * Mobile responsiveness and lazy loading
 * CI/CD pipeline with GitHub Actions
+* in creating event make sure the date is older than today
+* event price can not be 0 
