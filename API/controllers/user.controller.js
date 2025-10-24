@@ -55,3 +55,35 @@ exports.updateStatus = async (req, res) => {
         console.log("error in update status route", error);
     }
 }
+
+
+exports.resetPassword = async(req,res) => {
+
+    try {
+        
+    } catch (error) {
+         res.status(400).json({ success: fale, message: error.message })
+        console.log("error in reset password route", error);
+    }
+}
+
+
+exports.verifyEmail = async(req,res) => {
+
+    try {
+        
+    } catch (error) {
+         res.status(400).json({ success: fale, message: error.message })
+        console.log("error in verify email route", error);
+    }
+}
+
+exports.updateProfile = async(req,res) => {
+
+    try {
+        
+    } catch (error) {
+         res.status(400).json({ success: fale, message: error.message })
+        console.log("error in update profile route", error);
+    }
+}

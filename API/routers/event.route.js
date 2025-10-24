@@ -1,10 +1,12 @@
 const express = require('express')
-const { addEvent, updateStatus, deleteEvent, allEvents, updateEvent } = require('../controllers/event.controller')
+const { addEvent, updateStatus, deleteEvent, allEvents, updateEvent, allApprovedEvents } = require('../controllers/event.controller')
 const router = express.Router()
 const {identifier, authorizedRoles} = require('../middlewares/authenticator')
 
 
-router.get("/", identifier, authorizedRoles("Organizer", "Admin", "Attendee"), allEvents)
+router.get("/", identifier, authorizedRoles("Admin"), allEvents)
+router.get("/approved", identifier, authorizedRoles("Organizer", "Attendee"), allApprovedEvents)
+
 router.post("/add", identifier, authorizedRoles("Organizer", "Admin"), addEvent)
 
 router.patch("/update-status/:id", identifier, authorizedRoles("Admin"), updateStatus)

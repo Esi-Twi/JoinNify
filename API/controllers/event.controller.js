@@ -1,6 +1,7 @@
 const { eventSchema } = require("../middlewares/validator")
 const Event = require("../models/event.model")
 
+//update to add image or banner when creating event 
 exports.addEvent = async (req, res) => {
     const { title, location, capacity, price } = req.body
 
@@ -77,6 +78,19 @@ exports.allEvents = async (req, res) => {
     }
 }
 
+
+exports.allApprovedEvents = async (req, res) => {
+    try {
+        const events = await Event.find({isApproved: true})
+        res.status(200).json({ success: true,numEvents: events.length,  events })
+
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message })
+        console.log("error in add event route", error);
+    }
+}
+
+//add edit event to add banner or images 
 exports.updateEvent = async (req, res) => {
     const { id } = req.params
     const { title, location, capacity, price } = req.body

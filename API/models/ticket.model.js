@@ -12,6 +12,10 @@ const ticketSchema = new mongoose.Schema({
     }, 
     expiry: {
         type: Date, 
+    }, 
+    qr_code: {
+        type: String, 
+        required: true, 
     }
 }, {
     timestamps: true

@@ -19,7 +19,6 @@
 ## 🎪 2. Event Management (Organizer & Admin)
 
 ### Organizer
-
 *✅ As an **organizer**, I want to **create an event with title, date, location, capacity, and price** so that attendees can book tickets.
 * As an **organizer**, I want to **upload event images or banners** so that my event looks appealing.
 *✅ As an **organizer**, I want to **edit or delete my event** so that I can manage changes or cancellations.
@@ -29,7 +28,6 @@
 * As an **organizer**, I want to **download a CSV or PDF of attendees** so that I can use it for offline tracking.
 
 ### Admin
-
 *✅ As an **admin**, I want to **approve or reject events created by organizers** so that only valid events appear publicly.
 * As an **admin**, I want to **feature certain events on the homepage** so that I can promote top ones.
 *✅ As an **admin**, I want to **delete inappropriate or fraudulent events** so that I can maintain trust.
@@ -103,7 +101,6 @@
 * As an **organizer**, I want to **see which of my events are trending** so that I can focus marketing efforts.
 
 ### Admin Dashboard
-
 * As an **admin**, I want to **see total users, total events, and total revenue** so that I can monitor platform health.
 * As an **admin**, I want to **view event category performance (e.g., music, tech, education)** so that I can promote popular types.
 * As an **admin**, I want to **export analytics reports** for record-keeping and decision-making.
