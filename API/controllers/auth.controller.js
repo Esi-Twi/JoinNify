@@ -2,6 +2,10 @@ const User = require('../models/user.model')
 const { doHash, doHashValidation } = require('../utils/hashing')
 const { registerSchema, loginSchema } = require('../middlewares/validator')
 const jwt = require('jsonwebtoken')
+const { generateToken } = require('../utils/generateToken')
+const { sendPasswordResetEmail } = require('../utils/sendEmail')
+
+
 
 exports.register = async (req, res) => {
     const { email, password, role, name } = req.body
@@ -54,7 +58,7 @@ exports.register = async (req, res) => {
             })
     } catch (error) {
         console.log("Error in register route", error);
-        res.status(400).json({success: false, message: error.message})        
+        res.status(400).json({ success: false, message: error.message })
     }
 }
 
@@ -103,8 +107,67 @@ exports.login = async (req, res) => {
                 token,
             })
     } catch (error) {
-        console.log("Error in login route" , error);
-        res.status(400).json({success: false, message: error.message})
+        console.log("Error in login route", error);
+        res.status(400).json({ success: false, message: error.message })
+    }
+}
+
+exports.logout = async (req, res) => {
+
+    try {
+
+
+    } catch (error) {
+        console.log("Error in logout route", error);
+        res.status(400).json({ success: false, message: error.message })
+    }
+}
+
+
+//click on forget password/reset password link 
+//system takes email
+//check if user exists
+//generate resetPasswordToken with a time limit about 20 minutes
+//store token in database and token usage status
+//send email to user with reset link containing the token
+//user clicks link, system verifies token and time limit
+//user enters new password and confirms
+//validate password format
+//token is marked as used in database and cleared
+exports.resetPassword = async (req, res) => {
+    const { email } = req.body
+
+    try {
+        const existingUser = await User.findOne({email})
+        if(!existingUser) {
+            return res.status(400).json({ success: false, message: "User does not exist" })
+        }
+
+        const resetPasswordToken = generateToken()
+        const resetPasswordTokenExpiry = Date.now() * 1 * 60 * 60 * 1000 // 1 hour
+
+        existingUser.resetPasswordToken = resetPasswordToken; 
+        existingUser.resetPasswordTokenExpiry = resetPasswordTokenExpiry; 
+        await existingUser.save();
+
+        await sendPasswordResetEmail(existingUser.email, `${process.env.CLIENT_URL}/reset-password/${resetPasswordToken}`)
+        res.json({resetPasswordToken})
+
+
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message })
+        console.log("error in reset password route", error);
+    }
+}
+
+
+exports.verifyEmail = async (req, res) => {
+
+    try {
+
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message })
+        console.log("error in verify email route", error);
     }
 }
 
