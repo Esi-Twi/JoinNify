@@ -11,7 +11,7 @@ router.post("/login", login)
 router.get("/logout", logout)
 
 router.post("/reset-password", identifier, authorizedRoles("Admin", "Organizer", "Attendee"), resetPassword)
-router.post("/verify-email/:id", identifier, authorizedRoles("Admin", "Organizer", "Attendee"), verifyEmail)
+router.post("/verify-email", identifier, authorizedRoles("Admin", "Organizer", "Attendee"), verifyEmail)
 
 
 module.exports = router;

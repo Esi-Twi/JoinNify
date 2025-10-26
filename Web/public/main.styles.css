@@ -1,0 +1,127 @@
+:root {
+    --join-bg: #F9FAFB;
+    --join-text-primary: #111827;
+    --join-text-secondary: #6B7280;
+    --join-indigo: #6366F1;
+    --join-pink: #EC4899;
+    --join-yellow: #FBBF24;
+    --join-white: #ffffff;
+    --join-success: #10B981;
+    --join-danger: #EF4444;
+    --join-gradient: linear-gradient(135deg, #6366F1, #EC4899);
+}
+
+[data-theme="dark"] {
+    --join-bg: #121212;
+    --join-text-primary: #ffffff;
+    --join-text-secondary: #6B7280;
+    --join-indigo: #6366F1;
+    --join-pink: #EC4899;
+    --join-yellow: #FBBF24;
+    --join-white: #ffffff;
+    --join-success: #10B981;
+    --join-danger: #EF4444;
+    --join-gradient: linear-gradient(135deg, #6366F1, #EC4899);
+}
+
+@font-face {
+    font-family: 'lobster';
+    src: url('./assets/fonts/LobsterTwo-Regular.ttf');
+}
+
+* {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    color: var(--join-text-primary); 
+}
+
+/* Primary	#6366F1	indigo-500	Brand buttons and highlights
+Secondary	#EC4899	pink-500	CTAs, icons, and accents
+Accent	#FBBF24	yellow-400	Highlights and warning states
+Background	#F9FAFB	gray-50	Page and section background
+Card / Surface	#FFFFFF	white	Containers, event cards
+Text (Primary)	#111827	gray-900	Main text
+Text (Secondary)	#6B7280	gray-500	Subtext
+Success	#10B981	emerald-500	Booking success
+Danger	#EF4444	red-500	Error messages
+Gradient	linear-gradient(135deg, #6366F1, #EC4899) */
+
+
+body {
+    overflow-x: hidden;
+    background-color: var(--join-bg) !important;
+}
+
+/* --------general box----------------------------------------- */
+.default-btn {
+    background-color: var(--join-indigo);
+    color: 'white', 
+}
+
+
+/* ----------authentication pages------------------------------------ */
+.auth-container {
+    height: 100vh;
+}
+.auth-sideimg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.auth-sideimg img {
+    width: 100%;
+    height: 100%;
+    border-bottom-right-radius: 40px;
+    border-top-right-radius: 40px;
+}
+
+.auth-form {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+}
+.auth-header {
+    font-family: 'lobster';
+    font-weight: bold;
+    font-size: 45px;
+    margin-bottom: 18px;
+}
+.auth-form-inner div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 15px;
+}
+.auth-form-inner div input {
+    border-radius: 5px;
+    border: none; 
+    font-size: 15px;
+    padding: 5px 18px;
+    background-color: color-mix(in srgb, var(--join-indigo) 30%, white 70%);
+    outline: none;
+}
+.auth-form-inner div label {
+    font-size: 15px;
+    font-weight: bold;
+}
+.auth-form-inner div label span {
+    color: var(--join-danger); 
+}
+.agree-box {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 4px !important; 
+    margin-top: 15px !important;
+}
+.auth-form-inner div aside {
+    display: flex;
+    align-items: center;
+    gap: 8px; 
+}
+.auth-form-inner div aside input {
+    width: 100%;
+}
+

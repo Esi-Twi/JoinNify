@@ -3,7 +3,7 @@ const { doHash, doHashValidation } = require('../utils/hashing')
 const { registerSchema, loginSchema } = require('../middlewares/validator')
 const jwt = require('jsonwebtoken')
 const { generateToken } = require('../utils/generateToken')
-const { sendPasswordResetEmail } = require('../utils/sendEmail')
+const { sendPasswordResetEmail, sendVerificationEmail } = require('../utils/sendEmail')
 
 
 
@@ -146,12 +146,15 @@ exports.resetPassword = async (req, res) => {
         const resetPasswordToken = generateToken()
         const resetPasswordTokenExpiry = Date.now() * 1 * 60 * 60 * 1000 // 1 hour
 
-        existingUser.resetPasswordToken = resetPasswordToken; 
-        existingUser.resetPasswordTokenExpiry = resetPasswordTokenExpiry; 
-        await existingUser.save();
+        // existingUser.resetPasswordToken = resetPasswordToken; 
+        // existingUser.resetPasswordTokenExpiry = resetPasswordTokenExpiry; 
+        // await existingUser.save();
 
-        await sendPasswordResetEmail(existingUser.email, `${process.env.CLIENT_URL}/reset-password/${resetPasswordToken}`)
-        res.json({resetPasswordToken})
+       
+
+        // const info = await sendPasswordResetEmail(existingUser.email, `${process.env.CLIENT_URL}/reset-password/${resetPasswordToken}`)
+        const info = await sendVerificationEmail(resetPasswordToken)
+        res.json({resetPasswordToken, info})
 
 
     } catch (error) {
@@ -160,7 +163,11 @@ exports.resetPassword = async (req, res) => {
     }
 }
 
-
+//takes email 
+//check if user is verified
+//generate verification token with time limit
+//store token in database
+//send email to user with verification link containing token
 exports.verifyEmail = async (req, res) => {
 
     try {

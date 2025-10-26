@@ -1,12 +1,30 @@
+import { Routes, Route } from 'react-router-dom'
 import './App.css'
 
+import Home from './pages/general/Home'
+import ErrorPage from './pages/general/ErrorPage'
+
+import GeneralLayout from './layouts/GeneralLayout'
+import AuthLayout from './layouts/authLayout'
+
+import authRoutes from './routes/authRoutes'
+
 function App() {
-
   return (
-    <div>
+    <>
+      <Routes>
+        <Route path='*' element={<ErrorPage />}/>
 
+        <Route element={<GeneralLayout />}>
+          <Route path='/' element={<Home />} />
+        </Route>
 
-    </div>
+        <Route element={<AuthLayout />}>
+          {authRoutes()}
+        </Route>
+
+      </Routes>
+    </>
   )
 }
 
