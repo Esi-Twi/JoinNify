@@ -2,25 +2,19 @@
     --join-bg: #F9FAFB;
     --join-text-primary: #111827;
     --join-text-secondary: #6B7280;
-    --join-indigo: #6366F1;
+    --join-indigo: #c11cea;
     --join-pink: #EC4899;
     --join-yellow: #FBBF24;
     --join-white: #ffffff;
     --join-success: #10B981;
     --join-danger: #EF4444;
-    --join-gradient: linear-gradient(135deg, #6366F1, #EC4899);
+    --join-gradient: linear-gradient(135deg, #c11cea, #EC4899);
 }
 
 [data-theme="dark"] {
     --join-bg: #121212;
     --join-text-primary: #ffffff;
     --join-text-secondary: #6B7280;
-    --join-indigo: #6366F1;
-    --join-pink: #EC4899;
-    --join-yellow: #FBBF24;
-    --join-white: #ffffff;
-    --join-success: #10B981;
-    --join-danger: #EF4444;
     --join-gradient: linear-gradient(135deg, #6366F1, #EC4899);
 }
 
@@ -34,7 +28,6 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    color: var(--join-text-primary); 
 }
 
 /* Primary	#6366F1	indigo-500	Brand buttons and highlights
@@ -52,6 +45,9 @@ Gradient	linear-gradient(135deg, #6366F1, #EC4899) */
 body {
     overflow-x: hidden;
     background-color: var(--join-bg) !important;
+}
+a {
+    text-decoration: none;
 }
 
 /* --------general box----------------------------------------- */
@@ -100,7 +96,7 @@ body {
     border: none; 
     font-size: 15px;
     padding: 5px 18px;
-    background-color: color-mix(in srgb, var(--join-indigo) 30%, white 70%);
+    background-color: color-mix(in srgb, var(--join-indigo) 30%, white 50%);
     outline: none;
 }
 .auth-form-inner div label {
@@ -114,7 +110,10 @@ body {
     flex-direction: row !important;
     align-items: center !important;
     gap: 4px !important; 
-    margin-top: 15px !important;
+}
+.agree-box label {
+    font-size: 14px !important;
+    font-weight: normal !important;
 }
 .auth-form-inner div aside {
     display: flex;
@@ -124,4 +123,21 @@ body {
 .auth-form-inner div aside input {
     width: 100%;
 }
-
+.auth-form-inner button {
+    border: none; 
+    color: var(--join-white); 
+    width: 100%;
+    text-align: center;
+    background-color: var(--join-indigo);
+    border-radius: 20px;
+    padding: 8px 0 ;
+}
+.auth-form .already {
+    font-size: 14px;
+    margin-top: 10px;
+}
+.auth-form .already a {
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--join-indigo);
+}

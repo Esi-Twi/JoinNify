@@ -3,30 +3,34 @@ const { doHash, doHashValidation } = require('../utils/hashing')
 const { registerSchema, loginSchema } = require('../middlewares/validator')
 const jwt = require('jsonwebtoken')
 const { generateToken } = require('../utils/generateToken')
-const { sendPasswordResetEmail, sendVerificationEmail } = require('../utils/sendEmail')
-
+const { sendVerificationEmail, sendSignUpEmail } = require('../utils/sendEmail')
+const { exist } = require('joi')
 
 
 exports.register = async (req, res) => {
     const { email, password, role, name } = req.body
 
+    //check if email and password are provided
     if (!email || !password) {
         return res.status(400).json({ success: false, message: 'Email and Password is required' })
     }
 
     try {
+        // joi validatiion for email and password
         const { error, value } = registerSchema.validate({ email, password })
         if (error) {
             return res.status(400).json({ success: false, message: error.details[0].message })
         }
 
+        //check if user already exists
         const existingUser = await User.findOne({ email })
         if (existingUser) {
             return res.status(400).json({ success: false, message: 'Invalid credentials' })
         }
-
+        //hash password
         const hashedPassword = await doHash(password, 12)
 
+        //create new user
         const newUser = new User({
             email,
             name,
@@ -35,6 +39,7 @@ exports.register = async (req, res) => {
         })
         await newUser.save()
 
+        //generate token
         const token = jwt.sign({
             userId: newUser._id,
             email,
@@ -44,6 +49,11 @@ exports.register = async (req, res) => {
         })
         newUser.password = undefined
 
+        //send welcome email
+        //-------add user email later
+        await sendSignUpEmail(newUser.name);
+
+        //create cookie and send response
         res.status(200)
             .cookie("Authorization", "Bearer " + token, {
                 expiresIn: new Date(Date.now() + 8 * 3600000),
@@ -94,7 +104,7 @@ exports.login = async (req, res) => {
         })
         existingUser.password = undefined
 
-        return res.status(400)
+        return res.status(200)
             .cookie("Authorization", "Bearer " + token, {
                 expiresIn: new Date(Date.now() + 8 * 3600000),
                 httpOnly: process.env.NODE_ENV === 'production',
@@ -113,14 +123,9 @@ exports.login = async (req, res) => {
 }
 
 exports.logout = async (req, res) => {
-
-    try {
-
-
-    } catch (error) {
-        console.log("Error in logout route", error);
-        res.status(400).json({ success: false, message: error.message })
-    }
+    res.clearCookie("Authorization")
+        .status(200)
+        .json({ success: true, message: 'logged out successfully!!!' })
 }
 
 
@@ -138,8 +143,8 @@ exports.resetPassword = async (req, res) => {
     const { email } = req.body
 
     try {
-        const existingUser = await User.findOne({email})
-        if(!existingUser) {
+        const existingUser = await User.findOne({ email })
+        if (!existingUser) {
             return res.status(400).json({ success: false, message: "User does not exist" })
         }
 
@@ -150,11 +155,11 @@ exports.resetPassword = async (req, res) => {
         // existingUser.resetPasswordTokenExpiry = resetPasswordTokenExpiry; 
         // await existingUser.save();
 
-       
+
 
         // const info = await sendPasswordResetEmail(existingUser.email, `${process.env.CLIENT_URL}/reset-password/${resetPasswordToken}`)
         const info = await sendVerificationEmail(resetPasswordToken)
-        res.json({resetPasswordToken, info})
+        res.json({ resetPasswordToken, info })
 
 
     } catch (error) {
@@ -163,18 +168,69 @@ exports.resetPassword = async (req, res) => {
     }
 }
 
-//takes email 
-//check if user is verified
-//generate verification token with time limit
-//store token in database
-//send email to user with verification link containing token
-exports.verifyEmail = async (req, res) => {
-
+exports.sendVerificationEmail = async (req, res) => {
+    const { email } = req.body
     try {
+        //check if user exists
+        const existingUser = await User.findOne({ email })
+        //check if user is already verified
+        if (!existingUser) {
+            return res.status(400).json({ success: false, message: "User does not exist!!" })
+        }
+        //check if user is already verified
+        if (existingUser.isVerified) {
+            return res.status(400).json({ success: false, message: "User is already verified!!" })
+        }
+
+        //generate verification token and token expiry time
+        const verificationToken = generateToken()
+        const verificationTokenExpiry = Date.now() + 20 * 60 * 1000 // 20 minutes
+
+        //update existing user data
+        existingUser.verificationToken = verificationToken
+        existingUser.verificationTokenExpiry = verificationTokenExpiry
+        await existingUser.save()
+
+        //send email
+        const info = await sendVerificationEmail(verificationToken)
+        //send response
+        existingUser.password = undefined;
+        res.json({ success: true, message: "Verification email sent successfully", verificationToken, existingUser })
 
     } catch (error) {
         res.status(400).json({ success: false, message: error.message })
-        console.log("error in verify email route", error);
+        console.log("error in send verification email route", error);
     }
 }
+
+
+exports.verifyEmail = async (req, res) => {
+    const {email, token} = req.body
+    try {
+        //check if user exists
+        const existingUser = await User.findOne({email})
+         if (!existingUser) {
+            return res.status(400).json({ success: false, message: "User does not exist!!" })
+        }
+
+        //check if token is expired
+        if(existingUser.verificationToken !== token || Date.now > email.verificationTokenExpiry) {
+            return res.status(400).json({ success: false, message: "Invalid or expired token!!" })
+        }
+        
+        //update user data
+        existingUser.isVerified = true; 
+        existingUser.verificationToken = undefined;
+        existingUser.verificationTokenExpiry = undefined;
+        await existingUser.save()
+
+        //send response
+        existingUser.password = undefined;
+        res.status(200).json({success: true, message: "Email is verified successfully", existingUser})
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message })
+        console.log("error in send verification email route", error);
+    }
+}
+
 

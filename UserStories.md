@@ -7,7 +7,8 @@
 * As a **user**, I want to **reset my password** in case I forget it.
 * As a **user**, I want to **verify my email** so that my account is trusted.
 * As a **user**, I want to **edit my profile and upload a profile picture** so that I can personalize my account.
-* As a **user**, I want to **receive an email confirmation after signup or booking** so that I know my actions were successful.
+*✅ As a **user**, I want to **receive an email confirmation after signup** so that I know my actions were successful.
+* As a **user**, I want to **receive an email confirmation after ++++660booking** so that I know my actions were successful.
 * As a **user**, I want to **see validation errors (like incorrect password or missing fields)** so that I can fix them immediately.
 
 ### Admin-Specific

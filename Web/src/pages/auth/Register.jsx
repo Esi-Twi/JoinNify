@@ -27,20 +27,20 @@ function Register() {
 
           <div>
             <label>Confirm Password <span>*</span></label>
-            <aside>
+            <aside> 
               <i class='bi bi-eye w-5'></i>
               <input type='password' />
             </aside>
           </div>
 
-          <div className='agree-box'>
+          <div className='agree-box mt-4'>
             <input name='agree' type='checkbox' />
             <label htmlFor='agree'>I agree to all terms and Privacy Policy</label>
           </div>
-          <button className='default-btn'>Register</button>
+          <button>Register</button>
         </form>
 
-        <p>Already registered for an account? <a>Login</a></p>
+        <p className='already'>Already registered for an account? <a href='/auth/login'>Login</a></p>
       </div>
     </div>
   )
