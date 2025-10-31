@@ -14,10 +14,17 @@ exports.bookTicket = async (req, res) => {
             return res.status(400).json({ success: false,  message: "Event does not exist!!!" })
         }
 
+/*
+//how to update attendees list 
+if(!event.attendess.includes(userId)) {
+  event.attendess.push(userId)
+  event.tickets = event.attendess.length
+  await event.save()
+}
+*/
 
 
-
-        res.json({existingEvent})
+        res.status(200).json({existingEvent})
 
     } catch (error) {
         res.status(400).json({ success: false, message: error.message })

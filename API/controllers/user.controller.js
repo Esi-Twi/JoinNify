@@ -34,7 +34,6 @@ exports.updateRole = async (req, res) => {
     }
 }
 
-
 exports.updateStatus = async (req, res) => {
     const { id } = req.params
     const { isBanned } = req.body
@@ -56,12 +55,29 @@ exports.updateStatus = async (req, res) => {
     }
 }
 
-exports.updateProfile = async(req,res) => {
+exports.updateProfile = async (req, res) => {
+    const { name, phoneNumber, location, profilePic } = req.body
+    const { id } = req.params
 
     try {
-        
+        const existingUser = await User.findById(id)
+        if (!existingUser) {
+            return res.status(400).json({ success: false, messge: "User does not exist!"})
+        }
+
+        const newUser = await User.findByIdAndUpdate(
+            id, {
+                name, 
+                phoneNumber, 
+                location, 
+                profilePic
+            }, {new: true, runValidators: true}
+        )
+        newUser.password = undefined;
+        res.status(200).json({success: true, message:"Profile is updated successfully!!", newUser})
+
     } catch (error) {
-         res.status(400).json({ success: fale, message: error.message })
+        res.status(400).json({ success: fale, message: error.message })
         console.log("error in update profile route", error);
     }
 }

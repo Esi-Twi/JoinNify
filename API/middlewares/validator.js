@@ -25,5 +25,6 @@ exports.eventSchema = Joi.object({
     title: Joi.string().required().min(5), 
     location: Joi.string().required(), 
     capacity: Joi.number().required(), 
-    price: Joi.number().required(), 
+    price: Joi.number().required(),
+    date: Joi.date().required()
 })

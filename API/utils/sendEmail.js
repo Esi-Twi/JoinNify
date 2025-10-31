@@ -59,7 +59,7 @@ exports.sendVerificationEmail = async (token) => {
             to: 'esitwitawiah@gmail.com',
             subject: "Password Reset Request",
             html: `<div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
-  <h2>Hi ${username || 'there'},</h2>
+  <h2>Hi 'there',</h2>
   <p>Welcome to <strong>JoinNify</strong> — your all-in-one platform for discovering, managing, and booking amazing events! 🎟️</p>
 
   <p>To complete your registration, please verify your email address using the code below:</p>
@@ -102,3 +102,59 @@ exports.sendVerificationEmail = async (token) => {
         console.log("Error in send password reset email route" + error);
     }
 }
+
+exports.sendResetPasswordEmail = async (resetLink) => {
+    try {
+        let info = await transport.sendMail({
+            from: process.env.NODE_CORE_SENDING_EMAIL_ADDRESS,
+            to: 'esitwitawiah@gmail.com',
+            subject: "Reset Password Link",
+            html: `<div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
+  <h2>Hi there,</h2>
+  <p>You recently requested to reset your password for your <strong>JoinNify</strong> account.</p>
+
+  <p>Click the button below to reset your password:</p>
+
+  <div style="text-align: center; margin: 30px 0;">
+    <a href="${resetLink}" 
+       style="display: inline-block; background-color: #4F46E5; color: #fff; padding: 12px 28px; font-size: 16px; font-weight: bold; text-decoration: none; border-radius: 8px;">
+       🔒 Reset My Password
+    </a>
+  </div>
+
+  <p>If the button above doesn’t work, copy and paste the link below into your browser:</p>
+  <p style="word-break: break-all;">
+    <a href="${resetLink}" style="color: #4F46E5;">${resetLink}</a>
+  </p>
+
+  <p>This link will expire in <strong>20 minutes</strong>. If you didn’t request a password reset, you can safely ignore this email — your password will remain unchanged.</p>
+
+  <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;">
+
+  <h3>Stay in control of your JoinNify account:</h3>
+  <ul>
+    <li>✅ <strong>Secure your events and data:</strong> Always keep your password private.</li>
+    <li>🎫 <strong>Access your bookings:</strong> Manage your upcoming events anytime.</li>
+    <li>📱 <strong>Instant access:</strong> Use QR check-in for smooth entry at your events.</li>
+  </ul>
+
+  <p>If you need help or didn’t make this request, please contact our support team immediately.</p>
+
+  <p>Contact us: 
+    <a href="mailto:support@joinnify.com">support@joinnify.com</a>
+  </p>
+
+  <p>Cheers,<br>
+  The <strong>JoinNify</strong> Team<br>
+  <em>Your Event. Your Way.</em></p>
+</div>
+`
+        })
+
+        return info;
+
+    } catch (error) {
+        console.log("Error in send reset password email route" + error);
+    }
+}
+

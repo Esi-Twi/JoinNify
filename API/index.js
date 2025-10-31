@@ -14,7 +14,7 @@ app.use(cookieParser())
 app.use("/api/auth/", authRouter)
 app.use("/api/users/", userRouter)
 app.use("/api/events/", eventRouter)
-app.use("/api/book-ticket/", bookRouter)
+app.use("/api/purchase-ticket/", bookRouter)
 
 const port = process.env.PORT || 3000
 

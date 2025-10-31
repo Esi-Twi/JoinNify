@@ -5,9 +5,9 @@ const {identifier, authorizedRoles} = require('../middlewares/authenticator')
 
 
 router.get("/", identifier, authorizedRoles("Admin"), allEvents)
-router.get("/approved", identifier, authorizedRoles("Organizer", "Attendee"), allApprovedEvents)
+router.get("/approved", identifier, authorizedRoles("Organizer", "Attendee", "Attendee"), allApprovedEvents)
 
-router.post("/add", identifier, authorizedRoles("Organizer", "Admin"), addEvent)
+router.post("/add/:id", identifier, authorizedRoles("Organizer", "Admin"), addEvent)
 
 router.patch("/update-status/:id", identifier, authorizedRoles("Admin"), updateStatus)
 router.patch("/update/:id", identifier, authorizedRoles("Admin", "Organizer"), updateEvent)

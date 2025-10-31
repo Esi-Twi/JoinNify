@@ -3,8 +3,7 @@ const { doHash, doHashValidation } = require('../utils/hashing')
 const { registerSchema, loginSchema } = require('../middlewares/validator')
 const jwt = require('jsonwebtoken')
 const { generateToken } = require('../utils/generateToken')
-const { sendVerificationEmail, sendSignUpEmail } = require('../utils/sendEmail')
-const { exist } = require('joi')
+const { sendVerificationEmail, sendSignUpEmail, sendResetPasswordEmail } = require('../utils/sendEmail')
 
 
 exports.register = async (req, res) => {
@@ -51,7 +50,7 @@ exports.register = async (req, res) => {
 
         //send welcome email
         //-------add user email later
-        await sendSignUpEmail(newUser.name);
+        const info = await sendSignUpEmail(newUser.name);
 
         //create cookie and send response
         res.status(200)
@@ -129,17 +128,7 @@ exports.logout = async (req, res) => {
 }
 
 
-//click on forget password/reset password link 
-//system takes email
-//check if user exists
-//generate resetPasswordToken with a time limit about 20 minutes
-//store token in database and token usage status
-//send email to user with reset link containing the token
-//user clicks link, system verifies token and time limit
-//user enters new password and confirms
-//validate password format
-//token is marked as used in database and cleared
-exports.resetPassword = async (req, res) => {
+exports.sendResetPasswordEmail = async (req, res) => {
     const { email } = req.body
 
     try {
@@ -149,17 +138,49 @@ exports.resetPassword = async (req, res) => {
         }
 
         const resetPasswordToken = generateToken()
-        const resetPasswordTokenExpiry = Date.now() * 1 * 60 * 60 * 1000 // 1 hour
+        const resetPasswordTokenExpiry = Date.now() + 20 * 60 * 1000 // 20 minutes
 
-        // existingUser.resetPasswordToken = resetPasswordToken; 
-        // existingUser.resetPasswordTokenExpiry = resetPasswordTokenExpiry; 
-        // await existingUser.save();
+        existingUser.resetPasswordToken = resetPasswordToken; 
+        existingUser.resetPasswordTokenExpiry = resetPasswordTokenExpiry; 
+        await existingUser.save();
+        const resetLink = `${process.env.CLIENT_URL}/reset-password/${resetPasswordToken}`;
+
+        const info = await sendResetPasswordEmail(resetLink)
+        res.json({success: true, link: resetLink, resetPasswordToken, message: "Reset password email has been sent", existingUser })
 
 
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message })
+        console.log("error in send reset password email route", error);
+    }
+}
 
-        // const info = await sendPasswordResetEmail(existingUser.email, `${process.env.CLIENT_URL}/reset-password/${resetPasswordToken}`)
-        const info = await sendVerificationEmail(resetPasswordToken)
-        res.json({ resetPasswordToken, info })
+exports.resetPassword = async (req, res) => {
+    const { email, token, newPassword } = req.body
+
+    try {
+        const existingUser = await User.findOne({ email })
+        if (!existingUser) {
+            return res.status(400).json({ success: false, message: "User does not exist" })
+        }
+
+        //check if token is expired
+        if(existingUser.resetPasswordToken !== token || Date.now() > email.resetPasswordTokenExpiry) {
+            return res.status(400).json({ success: false, message: "Invalid or expired token!!" })
+        }
+
+        //hash password
+        const hashedPassword = await doHash(newPassword, 12)
+        
+        //update user data
+        existingUser.resetPasswordToken = undefined;
+        existingUser.resetPasswordTokenExpiry = undefined;
+        existingUser.password = hashedPassword;
+        await existingUser.save()
+
+        //send response
+        existingUser.password = undefined;
+        res.json({success: true, message: "Passward was reset successfully", existingUser})
 
 
     } catch (error) {
