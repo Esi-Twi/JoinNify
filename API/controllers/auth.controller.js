@@ -6,6 +6,8 @@ const { generateToken } = require('../utils/generateToken')
 const { sendVerificationEmail, sendSignUpEmail, sendResetPasswordEmail } = require('../utils/sendEmail')
 
 
+// cannot register as admin 
+// send notification to admin if organizer signs up 
 exports.register = async (req, res) => {
     const { email, password, role, name } = req.body
 
@@ -68,6 +70,17 @@ exports.register = async (req, res) => {
     } catch (error) {
         console.log("Error in register route", error);
         res.status(400).json({ success: false, message: error.message })
+    }
+}
+
+//register only admin
+exports.registerAdmin = async (req, res) => {
+
+    try {
+
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message })
+        console.log("error in register admin route", error);
     }
 }
 

@@ -43,6 +43,10 @@ const eventSchema = new mongoose.Schema({
             ref: "User",
         },
     ],
+    totalRevenue: {
+        type: Number, 
+        default: 0
+    },
     isApproved: {
         type: Boolean,
         default: false,

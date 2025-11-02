@@ -1,11 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const {register, login, resetPassword, sendVerificationEmail, verifyEmail, logout, sendResetPasswordEmail} = require('../controllers/auth.controller')
+const {register, registerAdmin,  login, resetPassword, sendVerificationEmail, verifyEmail, logout, sendResetPasswordEmail} = require('../controllers/auth.controller')
 const { identifier, authorizedRoles } = require('../middlewares/authenticator')
 
 
 
 router.post("/register", register)
+router.post("/register-admin", registerAdmin)
 router.post("/login", login)
 
 router.get("/logout", logout)

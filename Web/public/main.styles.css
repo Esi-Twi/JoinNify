@@ -9,6 +9,7 @@
     --join-success: #10B981;
     --join-danger: #EF4444;
     --join-gradient: linear-gradient(135deg, #c11cea, #EC4899);
+    --light-indigo: #ead0fc;
 }
 
 [data-theme="dark"] {
@@ -61,17 +62,24 @@ a {
 .auth-container {
     height: 100vh;
 }
-.auth-sideimg {
+/* .auth-sideimg {
     display: flex;
     align-items: center;
     justify-content: center;
-}
+   
+}*/
 .auth-sideimg img {
     width: 100%;
-    height: 100%;
     border-bottom-right-radius: 40px;
     border-top-right-radius: 40px;
-}
+} 
+ @media (max-width: 767.98px) {
+    .auth-sideimg img {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 40px;
+      border-bottom-left-radius: 40px;
+    }
+  }
 
 .auth-form {
     display: flex;
@@ -82,8 +90,11 @@ a {
 .auth-header {
     font-family: 'lobster';
     font-weight: bold;
-    font-size: 45px;
     margin-bottom: 18px;
+}
+.auth-form p {
+    font-weight: bold;
+    color: var(--join-text-secondary);
 }
 .auth-form-inner div {
     display: flex;
@@ -96,7 +107,15 @@ a {
     border: none; 
     font-size: 15px;
     padding: 5px 18px;
-    background-color: color-mix(in srgb, var(--join-indigo) 30%, white 50%);
+    background-color: var(--light-indigo);
+    outline: none;
+}
+.auth-form-inner div select {
+    border-radius: 5px;
+    border: none; 
+    font-size: 15px;
+    padding: 9px 18px;
+    background-color: var(--light-indigo);
     outline: none;
 }
 .auth-form-inner div label {
@@ -114,6 +133,7 @@ a {
 .agree-box label {
     font-size: 14px !important;
     font-weight: normal !important;
+    cursor: pointer;
 }
 .auth-form-inner div aside {
     display: flex;

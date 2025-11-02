@@ -1,30 +1,47 @@
 const Event = require("../models/event.model")
 const Ticket = require("../models/ticket.model")
+const User = require('../models/user.model')
 
-//check if event exist and is approved 
-//create a qr code for event 
-//take event id, event price, attendee
-// create event in database
+
 exports.bookTicket = async (req, res) => {
-    const {id} = req.params
-    
+    const { id: userId } = req.params
+    const { eventId, numTickets } = req.body
+
     try {
-        const existingEvent = await Event.findOne({_id: id, isApproved: true, deleted: false})
-        if(!existingEvent) {
-            return res.status(400).json({ success: false,  message: "Event does not exist!!!" })
+        const existingUser = await User.findById(userId)
+        if (!existingUser) {
+            return res.status(400).json({ success: false, message: 'User does not exist' })
         }
 
-/*
-//how to update attendees list 
-if(!event.attendess.includes(userId)) {
-  event.attendess.push(userId)
-  event.tickets = event.attendess.length
-  await event.save()
-}
-*/
+        const existingEvent = await Event.findOne({ _id: eventId, isApproved: true, deleted: false })
+        if (!existingEvent) {
+            return res.status(400).json({ success: false, message: "Event does not exist!!!" })
+        }
 
+        const totalPrice = existingEvent.ticketPrice * numTickets;
+        //generate qr code 
 
-        res.status(200).json({existingEvent})
+        //updating events
+        existingEvent.ticketsSold += numTickets;
+        existingEvent.totalRevenue += totalPrice;
+        if (!existingEvent.attendees.includes(userId)) {
+            existingEvent.attendees.push(userId)
+        }
+        // await existingEvent.save()
+
+        //creating ticket
+        const newTicket = new Ticket({
+            eventId,
+            userId,
+            expiry: existingEvent.date, // date + one
+            qr_code: ""
+        })
+        // await newTicket.save()
+
+        //send notification to organizer of event
+        //send attendee digital ticket with qrcode via email
+
+        res.status(200).json({ success: true, message: "Ticket bought successfully!", newTicket, existingEvent })
 
     } catch (error) {
         res.status(400).json({ success: false, message: error.message })
@@ -32,4 +49,23 @@ if(!event.attendess.includes(userId)) {
     }
 }
 
+exports.getBookingHistory = async (req, res) => {
+
+    try {
+
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message })
+        console.log("error in get booking history route", error);
+    }
+}
+
+exports.cancelTicket = async (req, res) => {
+
+    try {
+
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message })
+        console.log("error in cancel ticket route", error);
+    }
+}
 

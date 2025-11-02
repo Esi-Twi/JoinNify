@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const ticketSchema = new mongoose.Schema({
+const notificaitonSchema = new mongoose.Schema({
     eventId: {
         type: mongoose.Schema.Types.ObjectId, 
         ref: "Events", 
@@ -11,13 +11,6 @@ const ticketSchema = new mongoose.Schema({
         ref: "Users", 
         required: true, 
     },
-    expiry: {
-        type: Date, 
-    }, 
-    qr_code: {
-        type: String, 
-        required: true, 
-    }, 
     deleted: {
         type: Boolean, 
         default: false
@@ -26,4 +19,4 @@ const ticketSchema = new mongoose.Schema({
     timestamps: true
 })
 
-module.exports = mongoose.model("Tickets", ticketSchema)
+module.exports = mongoose.model("Notifications", notificaitonSchema)
