@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllUsers, updateRole, updateStatus, updateProfile } = require('../controllers/user.controller');
+const { getAllUsers, updateRole, updateStatus, updateProfileInfo, updateProfilePic } = require('../controllers/user.controller');
 const { identifier, authorizedRoles } = require('../middlewares/authenticator');
 const router = express.Router()
 
@@ -10,7 +10,8 @@ router.patch("/update-role/:id", identifier, authorizedRoles("Admin"), updateRol
 router.patch("/update-status/:id", identifier, authorizedRoles("Admin"), updateStatus)
 
 
-router.patch("/update-profile/:id", identifier, authorizedRoles("Admin", "Organizer", "Attendee"), updateProfile)
+router.patch("/update-profile-info", identifier, authorizedRoles("Admin", "Organizer", "Attendee"), updateProfileInfo)
+router.patch("/update-profile-pic", identifier, authorizedRoles("Admin", "Organizer", "Attendee"), updateProfilePic)
 
 
 module.exports = router;

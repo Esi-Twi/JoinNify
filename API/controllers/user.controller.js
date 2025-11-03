@@ -1,5 +1,6 @@
 const User = require("../models/user.model")
-
+// const {cloudinary} = require('../')
+const cloudinary = require('../lib/cloudinary')
 
 exports.getAllUsers = async (req, res) => {
     try {
@@ -55,9 +56,9 @@ exports.updateStatus = async (req, res) => {
     }
 }
 
-exports.updateProfile = async (req, res) => {
-    const { name, phoneNumber, location, profilePic } = req.body
-    const { id } = req.params
+exports.updateProfileInfo = async (req, res) => {
+    const { name, phoneNumber, location } = req.body
+    const id = req.user.userId
 
     try {
         const existingUser = await User.findById(id)
@@ -70,11 +71,35 @@ exports.updateProfile = async (req, res) => {
                 name, 
                 phoneNumber, 
                 location, 
-                profilePic
             }, {new: true, runValidators: true}
         )
         newUser.password = undefined;
         res.status(200).json({success: true, message:"Profile is updated successfully!!", newUser})
+
+    } catch (error) {
+        res.status(400).json({ success: fale, message: error.message })
+        console.log("error in update profile route", error);
+    }
+}
+
+exports.updateProfilePic = async (req, res) => {
+    const {profilePic } = req.body
+    const id = req.user.userId
+
+    try {
+        const existingUser = await User.findById(id)
+        if (!existingUser) {
+            return res.status(400).json({ success: false, messge: "User does not exist!"})
+        }
+
+        const uploadResponse = await cloudinary.uploader.upload(profilePic, {
+            folder: "profiles"
+        })
+        const updatedUser = await User.findByIdAndUpdate(
+            id, { profilePic: uploadResponse.secure_url }, {new: true, runValidators: true}
+        )
+        updatedUser.password = undefined;
+        res.status(200).json({success: true, message:"Profile is updated successfully!!", updatedUser})
 
     } catch (error) {
         res.status(400).json({ success: fale, message: error.message })

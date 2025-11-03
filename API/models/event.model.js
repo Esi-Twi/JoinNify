@@ -5,7 +5,7 @@ const eventSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Users",
         required: true,
-    },
+    }, 
     title: {
         type: String,
         required: [true, "Event name is required"],
@@ -50,6 +50,10 @@ const eventSchema = new mongoose.Schema({
     isApproved: {
         type: Boolean,
         default: false,
+    },
+    feature: {
+        type: Boolean, 
+        defaut: false, 
     },
     deleted: {
         type: String,

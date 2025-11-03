@@ -1,10 +1,14 @@
 const Event = require("../models/event.model")
+const Notification = require("../models/notification.model")
 const Ticket = require("../models/ticket.model")
 const User = require('../models/user.model')
+const QRCode = require('qrcode')
+const { sendTicketEmail } = require("../utils/sendEmail")
+const cloudinary  = require('../lib/cloudinary')
 
 
 exports.bookTicket = async (req, res) => {
-    const { id: userId } = req.params
+    const userId = req.user.userId
     const { eventId, numTickets } = req.body
 
     try {
@@ -20,6 +24,12 @@ exports.bookTicket = async (req, res) => {
 
         const totalPrice = existingEvent.ticketPrice * numTickets;
         //generate qr code 
+        const qrCodeData = await QRCode.toDataURL(JSON.stringify({ eventId, userId }))
+        const uploaded = await cloudinary.uploader.upload(qrCodeData, {
+            folder: 'tickets',
+            public_id: `ticket-${eventId}-${userId}`,
+        });
+        const ticketImageUrl = uploaded.secure_url;
 
         //updating events
         existingEvent.ticketsSold += numTickets;
@@ -27,21 +37,31 @@ exports.bookTicket = async (req, res) => {
         if (!existingEvent.attendees.includes(userId)) {
             existingEvent.attendees.push(userId)
         }
-        // await existingEvent.save()
+        await existingEvent.save()
 
         //creating ticket
         const newTicket = new Ticket({
             eventId,
             userId,
-            expiry: existingEvent.date, // date + one
-            qr_code: ""
+            expiry: new Date(new Date(existingEvent.date).getTime() + 24 * 60 * 60 * 1000),
+            qr_code: ticketImageUrl
         })
-        // await newTicket.save()
+        await newTicket.save()
 
         //send notification to organizer of event
-        //send attendee digital ticket with qrcode via email
+        await Notification.create({
+            receiverId: existingEvent.creatorId,
+            type: "ticket_created",
+            title: "Ticket sold: " + existingEvent.title,
+            message: `A new ticket has been sold for your event ${existingEvent.title}.`,
+            eventId,
+        })
 
-        res.status(200).json({ success: true, message: "Ticket bought successfully!", newTicket, existingEvent })
+        //send attendee digital ticket with qrcode via email
+        const info = await sendTicketEmail(existingUser.name, existingEvent, ticketImageUrl)
+
+        res.status(201).json({ success: true, message: "Ticket bought successfully!", info, newTicket, existingEvent })
+        // res.status(201).json(info)
 
     } catch (error) {
         res.status(400).json({ success: false, message: error.message })
