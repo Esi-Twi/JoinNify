@@ -164,7 +164,7 @@ exports.sendTicketEmail = async (attendeeName, event, ticketImageUrl) => {
     let info = await transport.sendMail({
       from: process.env.NODE_CORE_SENDING_EMAIL_ADDRESS,
       to: 'esitwitawiah@gmail.com',
-      subject: "Reset Password Link",
+      subject: "Your JoinNify Ticket is Here",
       html: `
  <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
   <h2>🎉 Congratulations!</h2>
@@ -188,6 +188,7 @@ exports.sendTicketEmail = async (attendeeName, event, ticketImageUrl) => {
   
 
   <p>Make sure to bring your ticket or show the QR code at the entrance for check-in.</p>
+  <p>Note you cannot cancel your ticket 2 hours to the event</p>
 
   <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;">
 
@@ -221,6 +222,59 @@ exports.sendTicketEmail = async (attendeeName, event, ticketImageUrl) => {
   }
 }
 
+exports.sendTicketCancellationEmail = async (attendeeName, event) => {
+  try {
+    let info = await transport.sendMail({
+      from: process.env.NODE_CORE_SENDING_EMAIL_ADDRESS,
+      to: 'esitwitawiah@gmail.com',
+      subject: "Your JoinNify Ticket Has been cancelled",
+      html: `
+<div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
+  <h2>❌ Event Cancellation Confirmed</h2>
+  <p>Hi <strong>${attendeeName || 'there'}</strong>,</p>
+
+  <p>We’re sorry to hear that you won’t be joining us for <strong>${event.title}</strong>. Your ticket has been successfully <strong>canceled</strong>, and we’ve released your spot.</p>
+
+  <h3>📅 Event Details</h3>
+  <ul style="list-style: none; padding-left: 0;">
+    <li><strong>Event:</strong> ${event.title}</li>
+    <li><strong>Date:</strong> ${formatDate(event.date)}</li>
+    <li><strong>Time:</strong> ${formatTime(event.date)}</li>
+    <li><strong>Venue:</strong> ${event.location}</li>
+  </ul>
+
+  <p>Your cancellation has been processed successfully. Please note that cancellations made <strong>within 2 hours of the event start time</strong> are not eligible for refunds.</p>
+
+  <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;">
+
+  <h3>💬 What’s Next?</h3>
+  <ul>
+    <li>🎫 <strong>Changed your mind?</strong> You can always rebook your ticket anytime from your JoinNify account.</li>
+    <li>💰 <strong>Refunds (if applicable):</strong> Refunds will be processed within 3–5 business days to your original payment method.</li>
+    <li>📅 <strong>Stay updated:</strong> Explore new and upcoming events you might love on our platform.</li>
+  </ul>
+
+  <p>We hope to see you at a future event soon! If you have any questions or concerns, please reach out to our support team.</p>
+
+  <p>Contact us: 
+    <a href="mailto:support@joinnify.com" style="color: #4F46E5;">support@joinnify.com</a>
+  </p>
+
+  <p>Thank you for being part of <strong>JoinNify</strong> — where events come to life.</p>
+
+  <p>Best regards,<br>
+  The <strong>JoinNify</strong> Team<br>
+  <em>Your Event. Your Way.</em></p>
+</div>
+`
+    })
+
+    return info;
+
+  } catch (error) {
+    console.log("Error in send ticket cancellation email route" + error);
+  }
+}
 
 
 // <div style="text-align: center; margin: 30px 0;">

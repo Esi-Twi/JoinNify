@@ -5,12 +5,12 @@ const { cloudinary } = require('../lib/cloudinary')
 
 
 exports.addEvent = async (req, res) => {
-    const { title, location, capacity, price, date, images } = req.body
+    const { title, location, capacity, price, date, images, endDate } = req.body
     const id = req.user.userId
 
     try {
         //check if input is given
-        if (!title || !location || !capacity || price < 0 || !date) {
+        if (!title || !location || !capacity || price < 0 || !date || !endDate) {
             return res.status(400).json({ success: false, message: "All fields are required" })
         }
 
@@ -28,6 +28,10 @@ exports.addEvent = async (req, res) => {
         //check if date is greater than today
         if (new Date(date) < Date.now()) {
             return res.status(400).json({ success: false, message: "Date must be older than today!" })
+        }
+
+        if(new Date(endDate) <= new Date(date)) {
+            return res.status(400).json({ success: false, message: "The ending time must be older than the starting time!" })
         }
 
         //check if image is added
@@ -57,6 +61,7 @@ exports.addEvent = async (req, res) => {
             capacity,
             ticketPrice: price,
             date,
+            endDate,
             images: uploadedImages
         })
         await newEvent.save()
@@ -104,6 +109,7 @@ exports.deleteEvent = async (req, res) => {
     }
 }
 
+//check if not deleted
 exports.allEvents = async (req, res) => {
     try {
         const events = await Event.find({})
@@ -118,7 +124,7 @@ exports.allEvents = async (req, res) => {
 
 exports.allApprovedEvents = async (req, res) => {
     try {
-        const events = await Event.find({ isApproved: true })
+        const events = await Event.find({ isApproved: true, deleted: false })
         res.status(200).json({ success: true, numEvents: events.length, events })
 
     } catch (error) {
