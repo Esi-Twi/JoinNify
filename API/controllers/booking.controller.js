@@ -3,7 +3,7 @@ const Notification = require("../models/notification.model")
 const Ticket = require("../models/ticket.model")
 const User = require('../models/user.model')
 const QRCode = require('qrcode')
-const { sendTicketEmail, sendTicketCancellationEmail } = require("../utils/sendEmail")
+const { sendTicketEmail, sendTicketCancellationEmail, sendOrganizerTicketPurchaseEmail } = require("../emails/send.event.emails")
 const cloudinary = require('../lib/cloudinary')
 
 exports.bookTicket = async (req, res) => {
@@ -20,6 +20,9 @@ exports.bookTicket = async (req, res) => {
         if (!existingEvent) {
             return res.status(400).json({ success: false, message: "Event does not exist!!!" })
         }
+
+        //get event creator details
+        const eventCreator = await User.findById(existingEvent.creatorId)
 
         const totalPrice = existingEvent.ticketPrice * numTickets;
 
@@ -49,11 +52,11 @@ exports.bookTicket = async (req, res) => {
                 expiry: existingEvent.endDate,
                 qr_code: ticketImageUrl
             })
-            await newTicket.save()
+            // await newTicket.save()
             tickets.push(newTicket)
 
             //send notification to organizer of event
-            await Notification.create({
+            const notification = await Notification.create({
                 receiverId: existingEvent.creatorId,
                 type: "ticket_created",
                 title: "Ticket sold: " + existingEvent.title,
@@ -61,8 +64,15 @@ exports.bookTicket = async (req, res) => {
                 eventId,
             })
 
+            // real time ticket purchase notification with socket.io
+            const io = req.app.get("io")
+            io.to(existingEvent.creatorId.toString()).emit("ticket_notification", notification)
+
             //send attendee digital ticket with qrcode via email
             await sendTicketEmail(existingUser.name, existingEvent, ticketImageUrl)
+
+            //send organizer email for  ticket purchase
+            await sendOrganizerTicketPurchaseEmail(eventCreator, existingEvent, existingUser, numTickets, totalPrice)
         }
 
         res.status(201).json({ success: true, message: "Ticket(s) bought successfully!", tickets, existingEvent })
@@ -180,7 +190,7 @@ exports.getEventSpecificAnalytics = async (req, res) => {
 
     } catch (error) {
         res.status(400).json({ success: false, message: error.message })
-        console.log("error in cancel ticket route", error);
+        console.log("error in get event specific analytics route", error);
     }
 }
 
@@ -221,16 +231,16 @@ exports.getAllEventAnalytics = async (req, res) => {
         for (let item of existingEvents) {
             totalRevenue += item.totalRevenue
             console.log(item.ticketsSold > topAttendancePerformingEvent.attendees);
-            
+
 
             //top revenue
-            if(item.totalRevenue > topRevenuePerformingEvent.revenue) {
+            if (item.totalRevenue > topRevenuePerformingEvent.revenue) {
                 topRevenuePerformingEvent.title = item.title
                 topRevenuePerformingEvent.revenue = item.totalRevenue
             }
 
             //top attendees
-            if(item.ticketsSold > topRevenuePerformingEvent.attendees) {
+            if (item.ticketsSold > topRevenuePerformingEvent.attendees) {
                 topRevenuePerformingEvent.title = item.title
                 topRevenuePerformingEvent.attendees = item.ticketsSold
             }
@@ -258,7 +268,52 @@ exports.getAllEventAnalytics = async (req, res) => {
 
     } catch (error) {
         res.status(400).json({ success: false, message: error.message })
-        console.log("error in cancel ticket route", error);
+        console.log("error in get all event analytics route", error);
+    }
+}
+
+// {\"eventId\":\"671c22f4b06e6a4a5ef9\",\"userId\":\"671c21d3f8b56b31ce3a\"}
+exports.verfifyQRCode = async (req, res) => {
+    const { qrData } = req.body; 
+    const decoded = JSON.parse(qrData);
+
+    try {
+        const { eventId, userId } = decoded;
+
+        // Find ticket
+        const ticket = await Ticket.findOne({ eventId, userId });
+        if (!ticket) {
+          return res.status(404).json({ success: false, message: 'Ticket not found.' });
+        }
+
+        // if (ticket.checkedIn) {
+        //   return res.status(400).json({ success: false, message: 'Ticket already checked in.' });
+        // }
+
+        // Mark as checked in
+        // ticket.checkedIn = true;
+        // ticket.checkInTime = new Date();
+        // await ticket.save();
+
+        // const user = await User.findById(userId);
+        // const event = await Event.findById(eventId);
+
+        // res.status(200).json({
+        //   success: true,
+        //   message: `Ticket verified for ${user.name}`,
+        //   event: event.title,
+        //   checkInTime: ticket.checkInTime
+        // });
+
+        res.status(200).json({
+            success: true,
+            message: 'Ticket verified',
+            decoded
+        });
+
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message })
+        console.log("error in verify qr code route", error);
     }
 }
 

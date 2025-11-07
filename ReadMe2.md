@@ -66,3 +66,97 @@ Download your full report:
 [Download PDF] [Download CSV]
 Keep growing your events with insights from JoinNify.
 
+<!-- ------frontend qr scanning code -------------
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scan Ticket QR - JoinNify</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin-top: 40px; }
+    video { width: 90%; max-width: 500px; border: 3px solid #4F46E5; border-radius: 10px; }
+    #result { margin-top: 20px; font-weight: bold; }
+    .success { color: green; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+  <h2>🎫 Scan Ticket QR</h2>
+  <video id="video" autoplay></video>
+  <p id="result"></p>
+
+  <script>
+    const video = document.getElementById('video');
+    const result = document.getElementById('result');
+
+    // 1️⃣ Access camera
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+      .then(stream => {
+        video.srcObject = stream;
+        scanQRCode();
+      })
+      .catch(err => {
+        result.textContent = 'Camera access denied.';
+      });
+
+    // 2️⃣ Scan QR from video frames (no library)
+    async function scanQRCode() {
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+
+      setInterval(async () => {
+        if (video.readyState === video.HAVE_ENOUGH_DATA) {
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+          // Convert frame to image data
+          const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+
+          // Decode QR using jsQR library logic (you can include jsQR via CDN)
+          // 👉 include this in your <head>: <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+          if (window.jsQR) {
+            const qrCode = jsQR(imageData.data, imageData.width, imageData.height);
+            if (qrCode) {
+              // Send QR data to backend
+              verifyTicket(qrCode.data);
+            }
+          }
+        }
+      }, 1000);
+    }
+
+    // 3️⃣ Verify ticket
+    async function verifyTicket(qrData) {
+      try {
+        const response = await fetch('/api/tickets/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ qrData })
+        });
+        const data = await response.json();
+
+        if (data.success) {
+          result.className = 'success';
+          result.textContent = `✅ Verified: ${data.message}`;
+        } else {
+          result.className = 'error';
+          result.textContent = `❌ ${data.message}`;
+        }
+      } catch (err) {
+        result.className = 'error';
+        result.textContent = 'Error verifying ticket.';
+      }
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+</body>
+</html>
+
+
+
+
+
+ -->

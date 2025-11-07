@@ -3,7 +3,7 @@ const { doHash, doHashValidation } = require('../utils/hashing')
 const { registerSchema, loginSchema } = require('../middlewares/validator')
 const jwt = require('jsonwebtoken')
 const { generateToken } = require('../utils/generateToken')
-const { sendVerificationEmail, sendSignUpEmail, sendResetPasswordEmail } = require('../utils/sendEmail')
+const { sendVerificationEmail, sendSignUpEmail, sendResetPasswordEmail } = require('../emails/send.auth.emails')
 
 
 // cannot register as admin 

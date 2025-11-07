@@ -18,6 +18,11 @@ const ticketSchema = new mongoose.Schema({
         type: String, 
         required: true, 
     }, 
+    checkedIn: {
+        type: Boolean, 
+        default: false, 
+    },
+    checkInTime: { type: Date },
     deleted: {
         type: Boolean, 
         default: false

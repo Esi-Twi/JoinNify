@@ -49,8 +49,8 @@
 
 
 ### Organizer
-* As an **organizer**, I want to **see real-time ticket purchases** so that I can monitor sales activity.
-* As an **organizer**, I want to **receive email notifications for each sale** so that I know my event is gaining traction.
+*✅ As an **organizer**, I want to **see real-time ticket purchases** so that I can monitor sales activity.
+*✅ As an **organizer**, I want to **receive email notifications for each sale** so that I know my event is gaining traction.
 
 
 ## 📱 4. QR Check-In & Attendance Tracking (Organizer & Attendee)
