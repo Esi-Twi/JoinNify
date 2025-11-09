@@ -56,6 +56,21 @@ a {
     background-color: var(--join-indigo);
     color: 'white', 
 }
+.ff-lobster {
+    font-family: 'lobster';
+}
+.text-indigo {
+    color: var(--join-indigo) !important; 
+}
+.text-pink {
+    color: var(--join-pink) !important; 
+}
+.text-join-primary {
+    color: var(--join-text-primary);
+}
+.text-join-secondary {
+    color: var(--join-text-secondary); 
+}
 
 
 /* ----------authentication pages------------------------------------ */
@@ -161,3 +176,13 @@ a {
     font-weight: bold;
     color: var(--join-indigo);
 }
+
+
+/* --------footer--------------------------------- */
+.bg1 {
+    background-image: url('../assets/images/bg1.jpg');
+}
+
+
+
+
