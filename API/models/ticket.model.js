@@ -11,6 +11,10 @@ const ticketSchema = new mongoose.Schema({
         ref: "Users", 
         required: true, 
     },
+    uniqueNumber: {
+        type: Number, 
+        required: true, 
+    },
     expiry: {
         type: Date, 
     }, 

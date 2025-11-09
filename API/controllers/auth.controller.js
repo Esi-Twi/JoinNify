@@ -11,12 +11,16 @@ const { sendVerificationEmail, sendSignUpEmail, sendResetPasswordEmail } = requi
 exports.register = async (req, res) => {
     const { email, password, role, name } = req.body
 
-    //check if email and password are provided
-    if (!email || !password) {
-        return res.status(400).json({ success: false, message: 'Email and Password is required' })
-    }
-
     try {
+        //check if email and password are provided
+        if (!email || !password) {
+            return res.status(400).json({ success: false, message: 'Email and Password is required' })
+        }
+
+        if(role == "Admin") {
+            return res.status(400).json({ success: false, message: 'Cannot register as an Admin' })
+        }
+
         // joi validatiion for email and password
         const { error, value } = registerSchema.validate({ email, password })
         if (error) {
@@ -153,13 +157,13 @@ exports.sendResetPasswordEmail = async (req, res) => {
         const resetPasswordToken = generateToken()
         const resetPasswordTokenExpiry = Date.now() + 20 * 60 * 1000 // 20 minutes
 
-        existingUser.resetPasswordToken = resetPasswordToken; 
-        existingUser.resetPasswordTokenExpiry = resetPasswordTokenExpiry; 
+        existingUser.resetPasswordToken = resetPasswordToken;
+        existingUser.resetPasswordTokenExpiry = resetPasswordTokenExpiry;
         await existingUser.save();
         const resetLink = `${process.env.CLIENT_URL}/reset-password/${resetPasswordToken}`;
 
         const info = await sendResetPasswordEmail(resetLink)
-        res.json({success: true, link: resetLink, resetPasswordToken, message: "Reset password email has been sent", existingUser })
+        res.json({ success: true, link: resetLink, resetPasswordToken, message: "Reset password email has been sent", existingUser })
 
 
     } catch (error) {
@@ -178,13 +182,13 @@ exports.resetPassword = async (req, res) => {
         }
 
         //check if token is expired
-        if(existingUser.resetPasswordToken !== token || Date.now() > email.resetPasswordTokenExpiry) {
+        if (existingUser.resetPasswordToken !== token || Date.now() > email.resetPasswordTokenExpiry) {
             return res.status(400).json({ success: false, message: "Invalid or expired token!!" })
         }
 
         //hash password
         const hashedPassword = await doHash(newPassword, 12)
-        
+
         //update user data
         existingUser.resetPasswordToken = undefined;
         existingUser.resetPasswordTokenExpiry = undefined;
@@ -193,7 +197,7 @@ exports.resetPassword = async (req, res) => {
 
         //send response
         existingUser.password = undefined;
-        res.json({success: true, message: "Passward was reset successfully", existingUser})
+        res.json({ success: true, message: "Passward was reset successfully", existingUser })
 
 
     } catch (error) {
@@ -239,28 +243,28 @@ exports.sendVerificationEmail = async (req, res) => {
 
 
 exports.verifyEmail = async (req, res) => {
-    const {email, token} = req.body
+    const { email, token } = req.body
     try {
         //check if user exists
-        const existingUser = await User.findOne({email})
-         if (!existingUser) {
+        const existingUser = await User.findOne({ email })
+        if (!existingUser) {
             return res.status(400).json({ success: false, message: "User does not exist!!" })
         }
 
         //check if token is expired
-        if(existingUser.verificationToken !== token || Date.now > email.verificationTokenExpiry) {
+        if (existingUser.verificationToken !== token || Date.now > email.verificationTokenExpiry) {
             return res.status(400).json({ success: false, message: "Invalid or expired token!!" })
         }
-        
+
         //update user data
-        existingUser.isVerified = true; 
+        existingUser.isVerified = true;
         existingUser.verificationToken = undefined;
         existingUser.verificationTokenExpiry = undefined;
         await existingUser.save()
 
         //send response
         existingUser.password = undefined;
-        res.status(200).json({success: true, message: "Email is verified successfully", existingUser})
+        res.status(200).json({ success: true, message: "Email is verified successfully", existingUser })
     } catch (error) {
         res.status(400).json({ success: false, message: error.message })
         console.log("error in send verification email route", error);

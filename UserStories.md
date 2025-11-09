@@ -55,22 +55,22 @@
 
 ## 📱 4. QR Check-In & Attendance Tracking (Organizer & Attendee)
 ### Organizer
-* As an **organizer**, I want to **scan attendee QR codes at the entrance** so that I can verify valid tickets.
+*✅ As an **organizer**, I want to **scan attendee QR codes at the entrance** so that I can verify valid tickets.
 * As an **organizer**, I want to **see which attendees have checked in** so that I can track attendance.
 * As an **organizer**, I want to **mark check-ins manually** if QR scanning fails so that no attendee is left out.
 
 ### Attendee
-* As an **attendee**, I want to **show my QR code at the event** so that I can be quickly checked in.
+*✅ As an **attendee**, I want to **show my QR code at the event** so that I can be quickly checked in.
 
 
 ## ✉️ 5. Notifications & Email Automation (All Roles)
 ### Attendee
-* As an **attendee**, I want to **receive booking confirmation emails** so that I have proof of my reservation.
+*✅ As an **attendee**, I want to **receive booking confirmation emails** so that I have proof of my reservation.
 * As an **attendee**, I want to **get event reminders 24 hours before the start** so that I don’t miss it.
 
 
 ### Organizer
-* As an **organizer**, I want to **get notified when tickets are sold** so that I can track performance.
+*✅ As an **organizer**, I want to **get notified when tickets are sold** so that I can track performance.
 * As an **organizer**, I want to **receive a weekly sales summary report** so that I can review trends.
 
 ### Admin
@@ -119,7 +119,6 @@
 * As an **organizer**, I want to **receive payouts after events** so that I get my revenue.
 * As an **admin**, I want to **track payment transactions** so that I can resolve disputes.
 
----
 
 ## 🧭 11. Extra Advanced Stories (Optional)
 * As an **attendee**, I want to **add events to my Google Calendar** so that I don’t forget.

@@ -11,6 +11,8 @@ router.get("/history", identifier, authorizedRoles("Admin", "Organizer", "Attend
 router.get("/eventAnalytics/:id", identifier, authorizedRoles("Admin", "Organizer"), getEventSpecificAnalytics)
 router.get("/eventAnalytics", identifier, authorizedRoles("Admin", "Organizer"), getAllEventAnalytics)
 
+
+
 router.patch("/cancel/:id", identifier, authorizedRoles("Admin", "Organizer", "Attendee"), cancelTicket)
 
 

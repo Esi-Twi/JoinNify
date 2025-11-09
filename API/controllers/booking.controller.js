@@ -5,7 +5,10 @@ const User = require('../models/user.model')
 const QRCode = require('qrcode')
 const { sendTicketEmail, sendTicketCancellationEmail, sendOrganizerTicketPurchaseEmail } = require("../emails/send.event.emails")
 const cloudinary = require('../lib/cloudinary')
+const { uniqueTicketNumber } = require("../utils/generateUniqueNumber")
 
+
+//check error even if i don't get my response the emails are still sent and my i ticket created but i don't get my response 
 exports.bookTicket = async (req, res) => {
     const userId = req.user.userId
     const { eventId, numTickets } = req.body
@@ -38,7 +41,8 @@ exports.bookTicket = async (req, res) => {
 
         for (let i = 0; i < numTickets; i++) {
             //generate qr code 
-            const qrCodeData = await QRCode.toDataURL(JSON.stringify({ eventId, userId }))
+            const uniqueNumber = await uniqueTicketNumber();
+            const qrCodeData = await QRCode.toDataURL(JSON.stringify({ eventId, userId, uniqueNumber}))
             const uploaded = await cloudinary.uploader.upload(qrCodeData, {
                 folder: 'tickets',
                 public_id: `ticket-${eventId}-${userId}`,
@@ -50,9 +54,10 @@ exports.bookTicket = async (req, res) => {
                 eventId,
                 userId,
                 expiry: existingEvent.endDate,
+                uniqueNumber,
                 qr_code: ticketImageUrl
             })
-            // await newTicket.save()
+            await newTicket.save()
             tickets.push(newTicket)
 
             //send notification to organizer of event
@@ -72,8 +77,9 @@ exports.bookTicket = async (req, res) => {
             await sendTicketEmail(existingUser.name, existingEvent, ticketImageUrl)
 
             //send organizer email for  ticket purchase
-            await sendOrganizerTicketPurchaseEmail(eventCreator, existingEvent, existingUser, numTickets, totalPrice)
         }
+
+        await sendOrganizerTicketPurchaseEmail(eventCreator, existingEvent, existingUser, numTickets, totalPrice)
 
         res.status(201).json({ success: true, message: "Ticket(s) bought successfully!", tickets, existingEvent })
 
@@ -272,43 +278,35 @@ exports.getAllEventAnalytics = async (req, res) => {
     }
 }
 
-// {\"eventId\":\"671c22f4b06e6a4a5ef9\",\"userId\":\"671c21d3f8b56b31ce3a\"}
 exports.verfifyQRCode = async (req, res) => {
     const { qrData } = req.body; 
     const decoded = JSON.parse(qrData);
 
     try {
-        const { eventId, userId } = decoded;
+        const { eventId, userId, uniqueNumber } = decoded;
 
         // Find ticket
-        const ticket = await Ticket.findOne({ eventId, userId });
+        const ticket = await Ticket.findOne({ uniqueNumber, eventId, userId});
         if (!ticket) {
           return res.status(404).json({ success: false, message: 'Ticket not found.' });
         }
 
-        // if (ticket.checkedIn) {
-        //   return res.status(400).json({ success: false, message: 'Ticket already checked in.' });
-        // }
+        if (ticket.checkedIn) {
+          return res.status(400).json({ success: false, message: 'Ticket already checked in.' });
+        }
 
         // Mark as checked in
-        // ticket.checkedIn = true;
-        // ticket.checkInTime = new Date();
-        // await ticket.save();
+        ticket.checkedIn = true;
+        ticket.checkInTime = new Date();
+        await ticket.save();
 
         // const user = await User.findById(userId);
         // const event = await Event.findById(eventId);
 
-        // res.status(200).json({
-        //   success: true,
-        //   message: `Ticket verified for ${user.name}`,
-        //   event: event.title,
-        //   checkInTime: ticket.checkInTime
-        // });
-
         res.status(200).json({
-            success: true,
-            message: 'Ticket verified',
-            decoded
+          success: true,
+          message: `Ticket verified!!`,
+          checkInTime: ticket.checkInTime
         });
 
     } catch (error) {

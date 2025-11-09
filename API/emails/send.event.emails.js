@@ -190,6 +190,42 @@ exports.sendOrganizerTicketPurchaseEmail = async (creator, event, attendee, numT
   }
 }
 
+exports.sendReminderEmail = async (event, attendee) => {
+  try {
+    let info = await transport.sendMail({
+      from: process.env.NODE_CORE_SENDING_EMAIL_ADDRESS,
+      to: 'esitwitawiah@gmail.com',
+      subject: `Reminder: ${event.title} starts in 24 hours!`,
+      html: `
+      <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
+        <h2>⏰ Event Reminder</h2>
+        <p>Hi <strong>${attendee.name}</strong>,</p>
+        <p>This is a friendly reminder that <strong>${event.title}</strong> is happening in <strong>24 hours</strong>!</p>
+
+        <h3>📅 Event Details</h3>
+        <ul style="list-style: none; padding-left: 0;">
+          <li><strong>Date:</strong> ${new Date(event.date).toDateString()}</li>
+          <li><strong>Time:</strong> ${new Date(event.date).toLocaleTimeString()}</li>
+          <li><strong>Venue:</strong> ${event.location}</li>
+        </ul>
+
+        <p>Make sure to bring your ticket or QR code for check-in.</p>
+
+        <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;">
+        <p>We can’t wait to see you there!</p>
+
+        <p>Best,<br>The <strong>JoinNify</strong> Team</p>
+      </div>
+    `
+    })
+
+    return info;
+
+  } catch (error) {
+    console.log("Error in send reminder email route" + error);
+  }
+}
+
 
 
 
