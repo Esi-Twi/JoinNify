@@ -5,6 +5,9 @@ Your system has **3 main roles**:
 * 🎤 **Organizer** — creates and manages events.
 * 🎟️ **Attendee (User)** — browses and books events.
 
+
+
+
 We’ll organize the pages by **role** and **flow** — from landing page → authentication → main features → dashboards.
 
 ## 🏠 **PUBLIC PAGES (Accessible to everyone)**

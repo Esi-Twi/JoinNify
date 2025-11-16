@@ -1,7 +1,9 @@
-import { Image, ImageBackground, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Image, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import DropDownPicker from 'react-native-dropdown-picker'
-import { Colors } from '../../constants/theme';
+import { colors } from '../../src/constants/theme';
+import Text from '@/components/Text'
+
 
 const Register = () => {
   const [open, setOpen] = useState(false);
@@ -60,6 +62,7 @@ const Register = () => {
           <View>
             <Text></Text>
           </View>
+          
         </View>
       </View>
     </ScrollView>
@@ -84,8 +87,8 @@ const styles = StyleSheet.create({
   header: {
     fontFamily: 'lobster', 
     fontWeight: 'bold', 
-    fontSize: 30, 
-    marginBottom: 20, 
+    fontSize: 32, 
+    marginBottom: 20,
   }, 
   inputBox: {
     marginBottom: 18, 
@@ -96,7 +99,7 @@ const styles = StyleSheet.create({
   }, 
   input: {
     borderWidth: 0.5, 
-    borderColor: Colors.text_secondary, 
+    borderColor: colors.text_secondary, 
     fontSize: 15, 
     borderRadius: 5, 
     paddingVertical: 8, 
@@ -105,7 +108,7 @@ const styles = StyleSheet.create({
     width: '85%', 
   }, 
   button: {
-    backgroundColor: Colors.indigo,
+    backgroundColor: colors.indigo,
     borderRadius: 25, 
     marginTop: 20, 
     paddingVertical: 10, 
@@ -113,7 +116,7 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: 'center', 
     fontSize: 16, 
-    color: Colors.white,
+    color: colors.white,
   }, 
   select: {
     width: '85%', 
