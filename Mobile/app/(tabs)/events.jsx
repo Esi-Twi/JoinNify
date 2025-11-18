@@ -113,7 +113,7 @@ const events = () => {
             horizontal={true}
             style={styles.categoryDiv}
             renderItem={({ item, index }) => (
-              <TouchableOpacity key={index} style={styles.upcomingItem}>
+              <TouchableOpacity onPress={() => router.push(`/(events)/${item.id}`)} key={index} style={styles.upcomingItem}>
                 <Image source={item.img} style={styles.upcomingImg}/>
 
                 <View>
@@ -153,8 +153,10 @@ const styles = StyleSheet.create({
     gap: 14, 
     marginRight: 15, 
     backgroundColor: colors.light_indigo, 
-    padding: 8, 
+    padding: 10, 
     borderRadius: 10, 
+    width: 320
+    
   },
    upcoming: {
     marginTop: 30,
@@ -197,7 +199,6 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100,
     borderWidth: 1,
-    borderColor: 'black',
   },
   categoryIcon: {
     marginLeft: 45,
@@ -215,6 +216,7 @@ const styles = StyleSheet.create({
   categoriesHead: {
     fontFamily: 'outfit-bold',
     fontSize: 19,
+    color: colors.brown, 
   },
   headerImg: {
     width: 50,
