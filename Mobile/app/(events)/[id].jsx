@@ -5,6 +5,7 @@ import { useRouter } from 'expo-router';
 import Text from "@/components/Text"
 import { colors } from '../../src/constants/theme';
 import ScreenWrapper from '../../components/ScreenWrapper';
+import MapScreen from '../../components/MapScreen';
 
 
 const EventDetails = () => {
@@ -62,6 +63,9 @@ const EventDetails = () => {
                             <Text style={styles.addressName}>Accra, Circle</Text>
                             <Text style={styles.addressDescription}>Inside the Standard Chattered bank building is the AI Commnity Centre</Text>
                         </View>
+
+                        {/* <MapScreen /> */}
+                        
 
                     </View>
 

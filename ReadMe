@@ -1,0 +1,244 @@
+
+
+# 🎟️ JoinNify Event Booking System
+
+### **Node.js + Express + TypeScript + PostgreSQL + React + React Native**
+
+A full-stack event management and ticketing system with **QR code tickets**, **email notifications**, **role-based access**, **event analytics**, **organizer dashboards**, **attendee mobile app**, and **admin management tools**.
+
+---
+
+## 📌 **Table of Contents**
+
+* [Overview](#overview)
+* [Features](#features)
+* [Project Architecture](#project-architecture)
+* [Tech Stack](#tech-stack)
+* [Frontend (Web)](#frontend-web)
+* [Mobile App](#mobile-app)
+* [Common User Roles](#common-user-roles)
+
+---
+
+# 🧩 **Overview**
+
+This is a complete event management platform that allows users to:
+
+✔️ Discover events
+✔️ Purchase tickets
+✔️ Receive QR-coded passes
+✔️ Scan tickets at the entrance
+✔️ Get automated event reminders
+✔️ Manage event sales and analytics
+✔️ Administer users, events, categories, and permissions
+
+Both **web** and **mobile (React Native)** versions are available.
+
+---
+
+# 🚀 **Features**
+
+### 👥 **User Authentication**
+
+* Register & Login (JWT)
+* Secure password hashing (bcrypt)
+* Forgot password + Email reset link
+* Role-based access (Admin, Organizer, Attendee)
+
+### 🎫 **Event Booking**
+
+* Event creation, update, delete (Organizer)
+* Ticket types (Regular, VIP, Early Bird)
+* Real-time availability check
+* Ticket purchase
+* PDF/Email ticket delivery
+
+### 🔍 **Event Discovery (Public)**
+
+* Search events
+* Filter by category/date/location
+* Pagination
+* Featured events
+
+### 📧 **Email Notifications**
+
+* Welcome email
+* Ticket purchase email (with QR code)
+* Organizer ticket sale alert
+* 24-hours event reminder
+
+### 📱 **QR Code & Check-In**
+
+* Generate QR codes per ticket
+* Scan with mobile app
+* Validate & mark attendance
+
+### 📊 **Analytics**
+
+* Weekly sales summary for organizers
+* Event ticket breakdown
+* Total revenue
+* Check-in statistics
+
+### ⚙️ **Admin Panel**
+
+* Manage users
+* Manage events
+* Manage categories
+* Approve event organizers
+
+---
+
+# 🏗️ **Project Architecture**
+
+```
+Backend (Node + Express + TS)
+Frontend Web (React + TS)
+Mobile App (React Native + Expo)
+Database (PostgreSQL)
+Email Service (Nodemailer)
+QR Code Service (qrcode)
+Scheduler (node-cron)
+```
+
+---
+
+# 🛠️ **Tech Stack**
+
+### **Backend**
+
+* Node.js
+* Express.js
+* TypeScript
+* PostgreSQL
+* TypeORM
+* Nodemailer
+* QRCode
+
+### **Frontend (Web)**
+
+* React
+* TypeScript
+* TailwindCSS
+* Redux Toolkit
+
+### **Mobile**
+
+* React Native
+* Expo
+* Expo Image Picker
+* Expo BarcodeScanner
+
+---
+
+# 🌐 **Frontend (Web)**
+
+Web UI includes:
+
+### **Public Pages**
+
+* Home page
+* Event listing
+* Event details
+* Login / Register
+
+### **Attendee Dashboard**
+
+* My tickets
+* Ticket QR viewer
+* Upcoming events
+* Profile
+
+### **Organizer Dashboard**
+
+* Create event
+* Manage events
+* Ticket sales analytics
+* Check-in dashboard
+
+### **Admin Dashboard**
+
+* Users management
+* Events approval
+* Categories management
+
+---
+
+# 📱 **Mobile App**
+
+The mobile app focuses on:
+
+### **Attendees**
+
+✔ Browse events
+✔ Buy tickets
+✔ View QR code ticket
+✔ Check event reminders
+
+### **Organizers**
+
+✔ QR ticket scanning
+✔ View check-in stats
+✔ Manage their events
+
+---
+
+
+# 👤 **Common User Roles**
+
+### **Admin**
+
+* Full system control
+
+### **Organizer**
+
+* Create & manage events
+* See analytics
+* Scan tickets
+
+### **Attendee**
+
+* Buy tickets
+* View tickets
+* QR check-ins
+
+---
+
+
+# 📸 **Screenshots**
+
+### **Web App**
+
+| Page                    | Screenshot                                     |
+| ----------------------- | ---------------------------------------------- |
+| **Home Page**           | ![](./screenshots/web-home.png)                |
+| **Event Details**       | ![](./screenshots/web-event-details.png)       |
+| **Login / Register**    | ![](./screenshots/web-auth.png)                |
+| **Attendee Dashboard**  | ![](./screenshots/web-attendee-dashboard.png)  |
+| **Organizer Dashboard** | ![](./screenshots/web-organizer-dashboard.png) |
+| **Admin Panel**         | ![](./screenshots/web-admin.png)               |
+
+---
+
+### **Mobile App (React Native)**
+
+| Page                       | Screenshot                                  |
+| -------------------------- | ------------------------------------------- |
+| **Splash Screen**          | ![](./screenshots/mobile-splash.png)        |
+| **Event Listing**          | ![](./screenshots/mobile-events.png)        |
+| **Event Details**          | ![](./screenshots/mobile-event-details.png) |
+| **Ticket (QR Code) View**  | ![](./screenshots/mobile-ticket.png)        |
+| **QR Scanner (Organizer)** | ![](./screenshots/mobile-scanner.png)       |
+| **Profile**                | ![](./screenshots/mobile-profile.png)       |
+
+---
+
+### **Organizer Tools**
+
+| Feature                    | Screenshot                                    |
+| -------------------------- | --------------------------------------------- |
+| **Create Event**           | ![](./screenshots/organizer-create-event.png) |
+| **Ticket Sales Analytics** | ![](./screenshots/organizer-analytics.png)    |
+| **Check-In Dashboard**     | ![](./screenshots/organizer-checkin.png)      |
+
+---

@@ -1,0 +1,45 @@
+
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false,
+    "typeRoots": [
+      "./src/types",
+      "./node_modules/@types"
+    ],
+    "baseUrl": "src",
+    "paths": {
+      "@controllers/*": [
+        "controllers/*"
+      ],
+      "@services/*": [
+        "services/*"
+      ],
+      "@utils/*": [
+        "utils/*"
+      ],
+      "@models/*": [
+        "models/*"
+      ],
+      "@config/*": [
+        "config/*"
+      ],
+      "@entities/*": [
+        "entities/*"
+      ],
+      "@middlewares/*": [
+        "middlewares/*"
+      ],
+      "@routes/*": [
+        "routes/*"
+      ],
+    },
+  }
+}
