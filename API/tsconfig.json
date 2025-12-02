@@ -31,8 +31,8 @@
       "@config/*": [
         "config/*"
       ],
-      "@entities/*": [
-        "entities/*"
+      "@database/*": [
+        "database/*"
       ],
       "@middlewares/*": [
         "middlewares/*"

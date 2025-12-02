@@ -1,21 +1,20 @@
 ## 🧩 1. Authentication & User Management (All Roles)
-
-### General
 ✅
-*✅ As a **user**, I want to **register with my email and password** so that I can access the platform.
-*✅ As a **user**, I want to **log in securely** so that I can access my dashboard.
-*✅ As a **user**, I want to **reset my password** in case I forget it.
-*✅ As a **user**, I want to **verify my email** so that my account is trusted.
-*✅ As a **user**, I want to **edit my profile** so that I can personalize my account.
-*✅ As a **user**, I want to **and upload a profile picture** so that I can personalize my account.
-*✅ As a **user**, I want to **receive an email confirmation after signup** so that I know my actions were successful.
+### General
+* As a **user**, I want to **register with my email and password** so that I can access the platform.
+* As a **user**, I want to **log in securely** so that I can access my dashboard.
+* As a **user**, I want to **reset my password** in case I forget it.
+* As a **user**, I want to **verify my email** so that my account is trusted.
+* As a **user**, I want to **edit my profile** so that I can personalize my account.
+* As a **user**, I want to **and upload a profile picture** so that I can personalize my account.
+* As a **user**, I want to **receive an email confirmation after signup** so that I know my actions were successful.
 * As a **user**, I want to **receive an email confirmation after ++++660booking** so that I know my actions were successful.
-*✅ As a **user**, I want to **see validation errors (like incorrect password or missing fields)** so that I can fix them immediately.
+* As a **user**, I want to **see validation errors (like incorrect password or missing fields)** so that I can fix them immediately.
 
 ### Admin-Specific
-*✅ As an **admin**, I want to **view a list of all users** so that I can monitor activity.
-*✅ As an **admin**, I want to **change a user’s role (organizer or attendee)** so that I can manage access rights.
-*✅ As an **admin**, I want to **ban or unban users** so that I can protect the platform from abuse.
+* As an **admin**, I want to **view a list of all users** so that I can monitor activity.
+* As an **admin**, I want to **change a user’s role (organizer or attendee)** so that I can manage access rights.
+* As an **admin**, I want to **ban or unban users** so that I can protect the platform from abuse.
 
 
 ## 🎪 2. Event Management (Organizer & Admin)axvczz 
