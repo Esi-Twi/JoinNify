@@ -1,20 +1,23 @@
-import { AppDataSource } from "@config/data.source"
 import express from "express"
 import dotenv from "dotenv"
+import cookieParser from "cookie-parser"
+import helmet from "helmet"
+
+import { AppDataSource } from "@config/data.source"
 import AuthRoutes from "@routes/user.routes"
 import { errorHandler } from "@middlewares/customErrorHandler"
-import cookieParser = require("cookie-parser")
-import { loggerMiddleware } from "@utils/apiLogger"
+import { loggerMiddleware } from "@middlewares/apiLogger"
 
 
 dotenv.config()
 const app = express()
 
-
 app.use(express.json())
 app.use(cookieParser())
-app.use("/api/v1/users", AuthRoutes)
+app.use(helmet())
+
 app.use(loggerMiddleware)
+app.use("/api/v1/users", AuthRoutes)
 
 app.use(errorHandler)
 
