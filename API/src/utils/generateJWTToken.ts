@@ -13,6 +13,13 @@ export const generateToken = (res: Response, user: Pick<UserProps, "id" | "name"
     {expiresIn: "7d"}
     )
 
-    // res.cookie()
+    res.cookie("token", token, {
+        maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
+        httpOnly: true, 
+        sameSite: "strict", 
+        secure: process.env.NODE_ENV !== "development"
+    })
+
+    return token
 
 }
