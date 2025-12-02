@@ -4,6 +4,7 @@ import dotenv from "dotenv"
 import AuthRoutes from "@routes/user.routes"
 import { errorHandler } from "@middlewares/customErrorHandler"
 import cookieParser = require("cookie-parser")
+import { loggerMiddleware } from "@utils/apiLogger"
 
 
 dotenv.config()
@@ -13,7 +14,7 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser())
 app.use("/api/v1/users", AuthRoutes)
-
+app.use(loggerMiddleware)
 
 app.use(errorHandler)
 
