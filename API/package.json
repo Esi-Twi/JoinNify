@@ -7,9 +7,9 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "typeorm": "typeorm-ts-node-commonjs",
-    "migration:generate": "npm run typeorm -- migration:generate src/database/migration/SchemaMigration -d src/config/data-source.ts",
-    "migration:run": "npm run typeorm -- migration:run -d ./src/config/data-source.ts",
-    "migration:revert": "npm run typeorm --migration:revert -d src/config/data-source.ts"
+    "migration:generate": "npm run typeorm -- migration:generate src/database/migration/SchemaMigration -d src/config/data.source.ts",
+    "migration:run": "npm run typeorm -- migration:run -d src/config/data.source.ts",
+    "migration:revert": "npm run typeorm --migration:revert -d src/config/data.source.ts"
   },
   "keywords": [],
   "author": "",

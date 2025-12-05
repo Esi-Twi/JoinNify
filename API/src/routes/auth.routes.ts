@@ -1,4 +1,5 @@
-import { AuthControllers } from "@controllers/auth.controllers";
+import { AuthControllers } from "@controllers/auth.controller";
+import { identifier } from "@middlewares/authenticator";
 import { Router } from "express";
 
 const router = Router()
@@ -10,7 +11,7 @@ router.post("/verify-email", AuthControllers.verifyEmail)
 
 router.post("/login", AuthControllers.login)
 
-router.get("/logout", AuthControllers.logout)
+router.get("/logout", identifier, AuthControllers.logout)
 
 
 

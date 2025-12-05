@@ -1,11 +1,11 @@
 import { AppDataSource } from "@config/data.source"
-import { User } from "@database/entity/user"
+import { Users } from "@database/entity/users"
 import { AppError } from "@utils/app-errror"
-import { doHash } from "@utils/hashing"
+import { compareHash, doHash } from "@utils/hashing"
 import { RegisterDTO } from "types"
 
 
-const UserRepository = AppDataSource.getRepository(User)
+const UserRepository = AppDataSource.getRepository(Users)
 
 
 export const registerUser = async(data: RegisterDTO) => {
@@ -27,9 +27,32 @@ export const registerUser = async(data: RegisterDTO) => {
     const newUser = UserRepository.create({
         name: data.name, 
         password: hashedPassword, 
-        email: data.email
+        email: data.email, 
+        role: data.role
     })
 
     return await UserRepository.save(newUser)
 }
+
+
+export const loginUser = async(data:RegisterDTO) => {
+    // check if user email exists 
+    const existingUser = await UserRepository.findOne({
+        where: {
+            email: data.email, 
+            deleted: false
+        }
+    })
+    if (!existingUser) {
+        throw new AppError("User does not exist!!", 401)
+    }
+
+    const result = await compareHash(data.password, existingUser.password)
+    if(!result) {
+        throw new AppError("Invalid Credentials", 401)
+    }
+
+    return existingUser
+}
+
 

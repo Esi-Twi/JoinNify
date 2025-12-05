@@ -40,6 +40,9 @@
       "@routes/*": [
         "routes/*"
       ],
+      "@entity/*": [
+        "database/entity/*"
+      ]
     },
   }
 }

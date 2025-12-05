@@ -3,11 +3,12 @@ import { UserProps } from "types";
 import jwt from "jsonwebtoken"
 
 
-export const generateToken = (res: Response, user: Pick<UserProps, "id" | "name" | "email" >) => {
+export const generateToken = (res: Response, user: Pick<UserProps, "id" | "name" | "email" | "role" >) => {
     const token = jwt.sign({
         id: user.id, 
-        email: user.id, 
-        name: user.id
+        email: user.email, 
+        name: user.name, 
+        role: user.role
     }, 
     process.env.JWT_SECRET as string, 
     {expiresIn: "7d"}

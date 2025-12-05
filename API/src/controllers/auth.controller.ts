@@ -1,13 +1,13 @@
-import { registerSchema } from "@middlewares/inputValidator";
-import { registerUser } from "@services/auth.service";
+import { loginSchema, registerSchema } from "@middlewares/inputValidator";
+import { loginUser, registerUser } from "@services/auth.service";
 import { AppError } from "@utils/app-errror";
 import { generateToken } from "@utils/generateJWTToken";
 import { AuthEmails } from "emails/send.auth.email";
 import { NextFunction, Request, Response } from "express";
 
 
-
 export const AuthControllers = {
+    // todo: send notification to admin if organizer signs up
     async register(req: Request, res: Response, next: NextFunction) {
         try {
             const { role, email, password } = req.body
@@ -17,7 +17,7 @@ export const AuthControllers = {
                 throw new AppError("Email, Password and Role is required!", 400)
             }
 
-            // validatiion for email, password and name
+            // validatiion for email, password and role
             const { error, value } = registerSchema.validate(
                 { role, email, password },
                 { abortEarly: true }
@@ -32,7 +32,8 @@ export const AuthControllers = {
             const token = generateToken(res, {
                 id: newUser.id.toString(),
                 name: newUser.name,
-                email: newUser.email
+                email: newUser.email, 
+                role: newUser.role
             })
 
             //send welcome email
@@ -83,7 +84,48 @@ export const AuthControllers = {
     },
 
     async login(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { email, password } = req.body
 
+            //check if email and password are provided
+            if (!email || !password ) {
+                throw new AppError("Email and Password is required!", 400)
+            }
+
+            // validatiion for email, password 
+            const { error, value } = loginSchema.validate(
+                { email, password },
+                { abortEarly: true }
+            )
+            if (error) {
+                throw new AppError(error.details[0].message, 400)
+            }
+           
+            const user = await loginUser(value)
+
+            // create token 
+            const token = generateToken(res, {
+                id: user.id.toString(), 
+                name: user.name, 
+                email: user.email, 
+                role: user.role
+            })
+
+            res.status(200).json({
+                success: true, 
+                msg: "User logged in successfully!!!",
+                user: {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    role: user.role, 
+                },
+                token
+            })
+            
+        } catch (error) {
+            next(error)
+        }
     },
 
     async verifyEmail(req: Request, res: Response, next: NextFunction) {
@@ -91,6 +133,9 @@ export const AuthControllers = {
     },
 
     async logout(req: Request, res: Response, next: NextFunction) {
-
+        res.clearCookie("token").status(200).json({
+            success: true, 
+            msg: "Logged out successfully!!!", 
+        })
     },
 }

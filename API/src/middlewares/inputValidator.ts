@@ -12,5 +12,12 @@ export const registerSchema = Joi.object({
     )
 })
 
+export const loginSchema = Joi.object({
+    email: Joi.string().required().email().min(5).max(60),
 
+    password: Joi.string().pattern(
+        new RegExp('^(?=.*[A-Z])(?=.*\\d).+$')
+        // takes Capital letters and numbers
+    )
+})
 
