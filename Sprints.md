@@ -16,13 +16,13 @@ The plan assumes **2-week sprints**, but you can adjust as needed.
 
 ## ✅ **Backend (API)**
 
-* Create user model (Admin, Organizer, Attendee roles)
-* Register API
-* Login API (JWT)
-* Email verification API
+*✅ Create user model (Admin, Organizer, Attendee roles)
+*✅ Register API
+*✅ Login API (JWT)
+*✅ Email verification API
 * Forgot password + Reset password API
-* Profile API (view/update)
-* Create “send email” service (Nodemailer)
+*✅ Profile API (view/update)
+*✅ Create “send email” service (Nodemailer)
 
 ## 🎨 **Web Frontend**
 
@@ -40,24 +40,16 @@ The plan assumes **2-week sprints**, but you can adjust as needed.
 * Email verification input screen
 * Forgot/reset password screen
 
-## 🗄️ **Database**
-
-* `users` table/collection
-* Email verification code storage
-* Password reset token storage
-
 ## 🎉 **Milestone Demo**
-
 * “A user can fully sign up, verify email, and log in.”
 
----
+<!-- --- ----------------------------------------------------------------------------->
 
 # 📅 **Sprint 2 – Event Management (Organizer)**
 
 ### 🎯 **Goal:** Organizers can create & publish events.
 
 ## 🔧 **Backend**
-
 * Create event model
 * Create Event API
 * Update Event API
@@ -67,26 +59,22 @@ The plan assumes **2-week sprints**, but you can adjust as needed.
 * Image upload API (event banners)
 
 ## 🎨 **Web Frontend**
-
 * Organizer event creation page
 * Event edit page
 * Event list page
 * Event details admin view
 
 ## 📱 **Mobile App**
-
 * Organizer create event screen
 * Event list screen
 * Event details screen
 
 ## 🗄️ **Database**
-
 * `events` table/collection
 * Relations: event → organizer
 * Event categories (optional)
 
 ## 🎉 **Milestone Demo**
-
 * “Organizer can create and publish events with images.”
 
 ---

@@ -34,5 +34,14 @@ export interface UpdateProfileDTO {
     email: string
 }
 
+export interface CreateEventDTO {
+    title: string,
+    location: string,
+    capacity: number,
+    price: number,
+    start_date: Date,
+    end_date: Date,
+    // images
+}
 
 

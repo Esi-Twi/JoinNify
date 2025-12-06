@@ -27,6 +27,12 @@ export class Users {
     @Column({ default: false })
     is_verified!: boolean
 
+    @Column({type: "integer", nullable: true})
+    verification_token!: number | null
+
+    @CreateDateColumn({nullable: true})
+    verification_token_expiry!: Date | null
+
     @Column({ default: false })
     deleted!: boolean
 

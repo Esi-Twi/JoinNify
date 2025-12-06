@@ -1,5 +1,5 @@
 import { loginSchema, registerSchema } from "@middlewares/inputValidator";
-import { loginUser, registerUser } from "@services/auth.service";
+import { loginUser, registerUser, verifyEmail } from "@services/auth.service";
 import { AppError } from "@utils/app-errror";
 import { generateToken } from "@utils/generateJWTToken";
 import { AuthEmails } from "emails/send.auth.email";
@@ -13,7 +13,7 @@ export const AuthControllers = {
             const { role, email, password } = req.body
 
             //check if email and password are provided
-            if (!email || !password || !role) {
+            if (!email || !password ) {
                 throw new AppError("Email, Password and Role is required!", 400)
             }
 
@@ -36,8 +36,12 @@ export const AuthControllers = {
                 role: newUser.role
             })
 
+            const verificationLink = `${process.env.BASE_URL}/verify-email?userId=${newUser.id}&token=${newUser.verification_token}`
+            // const verificationLink = "https://yourdomain.com/verify-email?userId=USER_ID_HERE&token=VERIFICATION_TOKEN_HERE"
+
+
             //send welcome email
-            await AuthEmails.sendWelcomeEmail(newUser.email, newUser.name)
+            await AuthEmails.sendWelcomeEmail(newUser.email, newUser.name, verificationLink)
 
             // // send notification to admin if organizer signs up
             // app.post("/notify", (req: Request, res: Response) => {
@@ -64,6 +68,7 @@ export const AuthControllers = {
 
 
 
+
             // send response
             res.status(201).json({
                 success: true,
@@ -73,6 +78,8 @@ export const AuthControllers = {
                     name: newUser.name,
                     email: newUser.email, 
                     role: newUser.role, 
+                    verificationToken: newUser.verification_token,
+                    verificationTokenExpiry: newUser.verification_token_expiry
                 }, 
                 token
             })
@@ -129,7 +136,25 @@ export const AuthControllers = {
     },
 
     async verifyEmail(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { userId, token } = req.body
+            const user = await verifyEmail(Number(userId), Number(token))
 
+            res.status(200).json({
+                success: true, 
+                msg: "Email verified successfully!!!",
+                user: {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    role: user.role,
+                    is_verified: user.is_verified,
+                }, 
+            })
+
+        } catch (error) {
+            next(error)
+        }
     },
 
     async logout(req: Request, res: Response, next: NextFunction) {
@@ -138,4 +163,12 @@ export const AuthControllers = {
             msg: "Logged out successfully!!!", 
         })
     },
+
+    async forgotPassword(req: Request, res: Response, next: NextFunction) {
+
+    }, 
+
+    async resetPassword(req: Request, res: Response, next: NextFunction) {
+
+    }
 }
