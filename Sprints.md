@@ -20,7 +20,8 @@ The plan assumes **2-week sprints**, but you can adjust as needed.
 *✅ Register API
 *✅ Login API (JWT)
 *✅ Email verification API
-* Forgot password + Reset password API
+* Forgot password 
+* Reset password API
 *✅ Profile API (view/update)
 *✅ Create “send email” service (Nodemailer)
 
@@ -43,6 +44,13 @@ The plan assumes **2-week sprints**, but you can adjust as needed.
 ## 🎉 **Milestone Demo**
 * “A user can fully sign up, verify email, and log in.”
 
+<!-- const user = await UserRepository.findOne({
+  where: { id: userId },
+  relations: ["eventsAttending"]
+});
+
+console.log(user.eventsAttending); -->
+
 <!-- --- ----------------------------------------------------------------------------->
 
 # 📅 **Sprint 2 – Event Management (Organizer)**
@@ -50,12 +58,12 @@ The plan assumes **2-week sprints**, but you can adjust as needed.
 ### 🎯 **Goal:** Organizers can create & publish events.
 
 ## 🔧 **Backend**
-* Create event model
-* Create Event API
-* Update Event API
-* Delete Event API
-* Get all events API
-* Get event by ID API
+*✅ Create event model
+*✅ Create Event API
+*✅ Update Event API
+*✅ Delete Event API
+*✅ Get all events API
+*✅ Get event by ID API
 * Image upload API (event banners)
 
 ## 🎨 **Web Frontend**
@@ -70,14 +78,15 @@ The plan assumes **2-week sprints**, but you can adjust as needed.
 * Event details screen
 
 ## 🗄️ **Database**
-* `events` table/collection
-* Relations: event → organizer
+
 * Event categories (optional)
 
 ## 🎉 **Milestone Demo**
 * “Organizer can create and publish events with images.”
 
 ---
+
+
 
 # 📅 **Sprint 3 – Ticket Booking (Attendee)**
 

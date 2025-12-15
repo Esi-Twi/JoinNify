@@ -1,4 +1,4 @@
-import { UserRoles } from "@database/enum"
+import { EventCategories, UserRoles } from "@database/enum"
 
 
 export interface RegisterDTO {
@@ -40,8 +40,9 @@ export interface CreateEventDTO {
     capacity: number,
     price: number,
     start_date: Date,
-    end_date: Date,
-    // images
+    end_date: Date, 
+    category: EventCategories,
+    // images: string[]
 }
 
 

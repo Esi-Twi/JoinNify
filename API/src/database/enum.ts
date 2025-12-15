@@ -6,3 +6,10 @@ export enum UserRoles {
     ATTENDEE = "Attendee"
 }
 
+
+export enum EventCategories {
+    TECH = "TECH",
+    SPORTS = "SPORTS",  
+    HEALTH = "HEALTH",
+    
+}

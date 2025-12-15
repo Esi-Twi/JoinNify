@@ -42,6 +42,9 @@
       ],
       "@entity/*": [
         "database/entity/*"
+      ],
+      "@lib/*": [
+        "lib/*"
       ]
     },
   }
