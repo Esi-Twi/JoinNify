@@ -34,6 +34,12 @@ export class Users {
     @CreateDateColumn({ nullable: true })
     verification_token_expiry!: Date | null
 
+    @Column({ type: "varchar" ,nullable: true })
+    reset_password_token!: string | null
+
+    @CreateDateColumn({ nullable: true })
+    reset_password_token_expiry!: Date | null
+
     @ManyToMany(() => Events, event => event.attendees)
     events_attending!: Events[]
 

@@ -20,8 +20,8 @@ The plan assumes **2-week sprints**, but you can adjust as needed.
 *✅ Register API
 *✅ Login API (JWT)
 *✅ Email verification API
-* Forgot password 
-* Reset password API
+*✅ Forgot password 
+*✅ Reset password API
 *✅ Profile API (view/update)
 *✅ Create “send email” service (Nodemailer)
 

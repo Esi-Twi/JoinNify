@@ -1,9 +1,10 @@
-import { loginSchema, registerSchema } from "@middlewares/inputValidator";
-import { loginUser, registerUser, verifyEmail } from "@services/auth.service";
+import { forgetPasswordSchema, loginSchema, registerSchema, verifyForgotPasswordSchema } from "@middlewares/inputValidator";
+import { forgotPassword, loginUser, registerUser, resetPassword, verifyEmail, verifyToken } from "@services/auth.service";
 import { AppError } from "@utils/app-errror";
 import { generateToken } from "@utils/generateJWTToken";
 import { AuthEmails } from "emails/send.auth.email";
 import { NextFunction, Request, Response } from "express";
+
 
 
 export const AuthControllers = {
@@ -165,10 +166,108 @@ export const AuthControllers = {
     },
 
     async forgotPassword(req: Request, res: Response, next: NextFunction) {
+        try {
+            const {email} = req.body
 
+            //check if email and password are provided
+            if (!email) {
+                throw new AppError("Email is required!", 400)
+            }
+
+            // validatiion for email 
+            const { error, value } = forgetPasswordSchema.validate(
+                { email }, { abortEarly: true }
+            )
+            if (error) {
+                throw new AppError(error.details[0].message, 400)
+            }
+
+            const {id:userId, email:userEmail, name, resetToken} = await forgotPassword(email)
+
+            const verificationLink = `${process.env.BASE_URL}/auth/forgot-password?userId=${userId}&token=${resetToken}`
+
+            await AuthEmails.sendForgotPasswordEmail(userEmail, name, verificationLink)
+
+            // send response
+            res.status(201).json({
+                success: true,
+                message: "Forgot password link sent successfully!!",
+                resetToken, 
+            })
+
+
+        } catch (error) {
+            next(error)
+        }
     }, 
 
-    async resetPassword(req: Request, res: Response, next: NextFunction) {
 
-    }
+    async verifyToken(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { userId, token, password } = req.body
+
+            // validatiion for password 
+            const { error, value } = verifyForgotPasswordSchema.validate(
+                { password }, { abortEarly: true }
+            )
+            if (error) {
+                throw new AppError(error.details[0].message, 400)
+            }
+
+            const user = await verifyToken({
+                id: Number(userId),
+                token: Number(token),
+                password
+            })
+
+            res.status(200).json({
+                success: true,
+                msg: "Password Reset successfully!!!",
+                user: {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    role: user.role,
+                },
+            })
+            
+        } catch (error) {
+            next(error)
+        }
+    },
+
+    async resetPassword(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { email } = req.body
+            if (!email) {
+                throw new AppError("Email is required!", 400)
+            }
+
+            // validatiion for email 
+            const { error, value } = forgetPasswordSchema.validate(
+                { email }, { abortEarly: true }
+            )
+            if (error) {
+                throw new AppError(error.details[0].message, 400)
+            }
+
+            const { id: userId, email: userEmail, name, resetToken } = await resetPassword(email)
+            const verificationLink = `${process.env.BASE_URL}/auth/reset-password?userId=${userId}&token=${resetToken}`
+
+            await AuthEmails.sendResetPasswordEmail(userEmail, name, verificationLink)
+
+            // send response
+            res.status(201).json({
+                success: true,
+                message: "Reset password link sent successfully!!",
+                resetToken,
+            })
+
+        } catch (error) {
+            next(error)
+        }
+    },
+
+
+
 }

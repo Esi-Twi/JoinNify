@@ -21,6 +21,16 @@ export const loginSchema = Joi.object({
     )
 })
 
+export const forgetPasswordSchema = Joi.object({
+    email: Joi.string().required().email().min(5).max(60),
+})
+
+export const verifyForgotPasswordSchema = Joi.object({
+    password: Joi.string().pattern(
+        new RegExp('^(?=.*[A-Z])(?=.*\\d).+$')
+        // takes Capital letters and numbers
+    )
+})
 
 export const updateProfileSchema = Joi.object({
     name: Joi.string().min(2).max(60),

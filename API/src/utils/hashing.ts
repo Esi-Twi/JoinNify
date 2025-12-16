@@ -5,6 +5,7 @@ export const doHash = (password: string, salt: number) => {
 }
 
 
+
 export const compareHash = (password: string, hashedPassword: string) => {
     return bcrypt.compare(password, hashedPassword)
 }
