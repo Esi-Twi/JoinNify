@@ -47,6 +47,7 @@ body {
     overflow-x: hidden;
     background-color: var(--join-bg) !important;
 }
+
 a {
     text-decoration: none;
 }
@@ -54,22 +55,39 @@ a {
 /* --------general box----------------------------------------- */
 .default-btn {
     background-color: var(--join-indigo);
-    color: 'white', 
+    color: 'white',
 }
+
 .ff-lobster {
     font-family: 'lobster';
 }
+
 .text-indigo {
-    color: var(--join-indigo) !important; 
+    color: var(--join-indigo) !important;
 }
+
 .text-pink {
-    color: var(--join-pink) !important; 
+    color: var(--join-pink) !important;
 }
+
 .text-join-primary {
     color: var(--join-text-primary);
 }
+
 .text-join-secondary {
-    color: var(--join-text-secondary); 
+    color: var(--join-text-secondary);
+}
+
+.center-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.highlight-link {
+    color: var(--join-indigo) !important; 
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 
@@ -77,24 +95,27 @@ a {
 .auth-container {
     height: 100vh;
 }
-/* .auth-sideimg {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-   
-}*/
+
 .auth-sideimg img {
     width: 100%;
+    height: 100vh;
     border-bottom-right-radius: 40px;
     border-top-right-radius: 40px;
-} 
- @media (max-width: 767.98px) {
+}
+
+@media (max-width: 990px) {
     .auth-sideimg img {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 40px;
-      border-bottom-left-radius: 40px;
+        height: 40vh !important;
+        object-fit: cover !important;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 40px;
+        border-bottom-left-radius: 40px;
     }
-  }
+    .auth-other {
+        margin-top: 5vh !important;
+        height: 80vh !important;
+    }
+}
 
 .auth-form {
     display: flex;
@@ -102,79 +123,102 @@ a {
     justify-content: flex-start;
     height: 100%;
 }
+
 .auth-header {
     font-family: 'lobster';
     font-weight: bold;
     margin-bottom: 18px;
 }
+
 .auth-form p {
     font-weight: bold;
     color: var(--join-text-secondary);
 }
+
 .auth-form-inner div {
     display: flex;
     flex-direction: column;
     gap: 4px;
     margin-bottom: 15px;
 }
+
 .auth-form-inner div input {
     border-radius: 5px;
-    border: none; 
-    font-size: 15px;
-    padding: 5px 18px;
+    border: none;
+    font-size: 16px;
+    padding: 8px 18px;
     background-color: var(--light-indigo);
     outline: none;
 }
+
 .auth-form-inner div select {
     border-radius: 5px;
-    border: none; 
+    border: none;
     font-size: 15px;
     padding: 9px 18px;
     background-color: var(--light-indigo);
     outline: none;
 }
+
 .auth-form-inner div label {
     font-size: 15px;
     font-weight: bold;
 }
+
 .auth-form-inner div label span {
-    color: var(--join-danger); 
+    color: var(--join-danger);
 }
+
 .agree-box {
-    flex-direction: row !important;
+    display: flex !important;
     align-items: center !important;
-    gap: 4px !important; 
+    justify-content: center !important;
 }
 .agree-box label {
-    font-size: 14px !important;
+    font-size: 16px !important;
     font-weight: normal !important;
     cursor: pointer;
 }
+
 .auth-form-inner div aside {
     display: flex;
     align-items: center;
-    gap: 8px; 
+    gap: 8px;
 }
+
 .auth-form-inner div aside input {
     width: 100%;
 }
+
 .auth-form-inner button {
-    border: none; 
-    color: var(--join-white); 
-    width: 100%;
+    border: none;
+    color: var(--join-white);
+    width: 50%;
     text-align: center;
     background-color: var(--join-indigo);
     border-radius: 20px;
-    padding: 8px 0 ;
+    padding: 8px 0;
 }
+
 .auth-form .already {
     font-size: 14px;
     margin-top: 10px;
 }
+
 .auth-form .already a {
     text-decoration: none;
     font-weight: bold;
     color: var(--join-indigo);
+}
+
+@media (max-width: 767px) {
+    .password-input {
+        width: 100%;
+    }
+
+    .auth-form-inner div input {
+        width: 100%;
+    }
 }
 
 
@@ -182,7 +226,3 @@ a {
 .bg1 {
     background-image: url('../assets/images/bg1.jpg');
 }
-
-
-
-

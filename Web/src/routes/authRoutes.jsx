@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom'
 import Login from '../pages/auth/Login'
 import Register from '../pages/auth/Register'
 import ResetPassword from '../pages/auth/ResetPassword'
-import EmailVerification from "../pages/auth/email-verification"
+import EmailVerification from "../pages/auth/EmailVerification"
 import ForgetPasswordEmail from '../pages/auth/ForgetPasswordEmail'
 import ForgotPasswordToken from '../pages/auth/ForgotPasswordToken'
 
