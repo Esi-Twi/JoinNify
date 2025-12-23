@@ -37,7 +37,7 @@ export const AuthControllers = {
                 role: newUser.role
             })
 
-            const verificationLink = `${process.env.BASE_URL}/verify-email?userId=${newUser.id}&token=${newUser.verification_token}`
+            const verificationLink = `${process.env.BASE_URL}/auth/verify-email?userId=${newUser.id}&token=${newUser.verification_token}`
             // const verificationLink = "https://yourdomain.com/verify-email?userId=USER_ID_HERE&token=VERIFICATION_TOKEN_HERE"
 
 
@@ -127,6 +127,7 @@ export const AuthControllers = {
                     name: user.name,
                     email: user.email,
                     role: user.role, 
+                    verified: user.is_verified
                 },
                 token
             })

@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser"
 import helmet from "helmet"
 import { Server } from "socket.io"
 import http from "http"
+import cors from "cors"
 
 import { AppDataSource } from "@config/data.source"
 import AuthRoutes from "@routes/auth.routes"
@@ -26,6 +27,10 @@ const io = new Server(server, {
 app.use(express.json())
 app.use(cookieParser())
 app.use(helmet())
+app.use(cors({
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    credentials: true
+}))
 
 app.use(loggerMiddleware)
 app.use("/api/v1/auth", AuthRoutes)

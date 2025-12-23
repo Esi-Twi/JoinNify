@@ -53,9 +53,9 @@ export const loginUser = async (data: RegisterDTO) => {
         throw new AppError("User does not exist!!", 401)
     }
 
-    if (!existingUser.is_verified) {
-        throw new AppError("Email is not verified. Please verify your email to login.", 401)
-    }
+    // if (!existingUser.is_verified) {
+    //     throw new AppError("Email is not verified. Please verify your email to login.", 401)
+    // }
 
     const result = await compareHash(data.password, existingUser.password)
     if (!result) {

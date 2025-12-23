@@ -15,7 +15,7 @@ export default function authRoutes() {
       <Route path='forgot-password-email' element={<ForgetPasswordEmail />} />
       <Route path='forgot-password-token' element={<ForgotPasswordToken />} />
       <Route path='reset-password' element={<ResetPassword />} />
-      <Route path='email-verification' element={<EmailVerification />} />
+      <Route path='verify-email' element={<EmailVerification />} />
     </Route>
   )
 }

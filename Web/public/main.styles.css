@@ -172,7 +172,6 @@ a {
 .agree-box {
     display: flex !important;
     align-items: center !important;
-    justify-content: center !important;
 }
 .agree-box label {
     font-size: 16px !important;
