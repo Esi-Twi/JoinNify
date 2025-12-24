@@ -1,18 +1,26 @@
 import React, { useState } from 'react';
+import { useAuthStore } from '../../store/useAuthStore';
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const { isSendingForgotEmail, forgotPassword, resubmitLink, disableForgotPasswordButton } = useAuthStore()
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Logic to send email to backend
-    console.log("Sending password reset link to:", email);
-
-    // Show success state
-    setIsSubmitted(true);
   };
+
+  const sendResetLink = () => {
+    if (!email) {
+      setErrorMessage("Email is required")
+      return;
+    }
+    setErrorMessage("")
+
+    forgotPassword(email)
+
+  }
 
   return (
     <div className='center-div row auth-other'>
@@ -20,7 +28,7 @@ function ForgotPassword() {
         <div className='mx-md-0 my-md-0 my-5 pt-md-5'>
           <h1 className='auth-header mb-0'>Forgot Password?</h1>
 
-          {!isSubmitted ? (
+          {!isSendingForgotEmail ? (
             <>
               <p className='mt-0 mb-md-5 mb-4 fs-md-5'>
                 Enter your email address and we'll send you a link to reset your password.
@@ -31,15 +39,20 @@ function ForgotPassword() {
                   <label>Email Address <span>*</span></label>
                   <input
                     type='email'
-                    required className='mt-2'
+                    className='mt-2'
                     placeholder="e.g. name@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
+
+                  {errorMessage && <p style={{ color: "red", marginTop: -5 }}>{errorMessage}</p>}
+
                 </div>
 
                 <div className='center-div'>
-                  <button>Send Reset Link</button>
+                  <button disabled={disableForgotPasswordButton} onClick={() => sendResetLink()}>
+                    {disableForgotPasswordButton ? "Sending Link...." : "Send Reset Link" } 
+                  </button>
                 </div>
               </form>
             </>
@@ -49,10 +62,11 @@ function ForgotPassword() {
               <p>We have sent a password recovery link to <strong>{email}</strong>. Please check your spam folder if you don't see it.</p>
               <button
                 className="btn btn-link p-0 mt-2"
-                onClick={() => setIsSubmitted(false)}
+                onClick={() => resubmitLink()}
               >
                 Try another email
               </button>
+
             </div>
           )}
 

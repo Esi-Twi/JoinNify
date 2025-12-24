@@ -133,12 +133,13 @@ export const verifyToken = async (data: forgotPasswordDTO) => {
             deleted: false
         }
     })
+    
     if (!existingUser) {
         throw new AppError("User does not exist!!", 401)
     }
 
     if (!existingUser.reset_password_token) {
-        throw new AppError("Invalid reset token", 401)
+        throw new AppError("Invalid Reset token", 401)
     }
 
     const result = await compareHash(data.token.toString(), existingUser.reset_password_token)
@@ -149,44 +150,40 @@ export const verifyToken = async (data: forgotPasswordDTO) => {
     if (existingUser.reset_password_token_expiry && existingUser.reset_password_token_expiry < new Date()) {
         throw new AppError("Token has expired", 400)
     }
+
+    return await UserRepository.save(existingUser)
+}
+
+export const resetPassword = async (password: string, userId: number) => {
+    //check if user already exists
+    const existingUser = await UserRepository.findOne({
+        where: {
+            id: Number(userId),
+            deleted: false
+        }
+    })
+
+    if (!existingUser) {
+        throw new AppError("User does not exist!!", 401)
+    }
+
+    //check if token exists
+    if (!existingUser.reset_password_token) {
+        throw new AppError("Invalid reset token", 401)
+    }
+
+    //check if token is valid
+    if (existingUser.reset_password_token_expiry && existingUser.reset_password_token_expiry < new Date()) {
+        throw new AppError("Reset Password token has expired", 400)
+    }
+ 
     //hash password
-    const hashedPassword = await doHash(data.password, 12)
+    const hashedPassword = await doHash(password, 12)
 
     existingUser.password = hashedPassword
     existingUser.reset_password_token = null
     existingUser.reset_password_token_expiry = null
     return await UserRepository.save(existingUser)
-
-    // return existingUser
-
-}
-
-export const resetPassword = async (email: string) => {
-    //check if user already exists
-    const existingUser = await UserRepository.findOne({
-        where: {
-            email,
-            deleted: false
-        }
-    })
-    if (!existingUser) {
-        throw new AppError("If an account exists, you’ll receive a password reset link.", 201)
-    }
-
-    const resetToken = genereateVerificationToken()
-    const hashedToken = await doHash(resetToken.toString(), 12);
-
-    existingUser.reset_password_token = hashedToken
-    existingUser.reset_password_token_expiry = new Date(Date.now() + 60 * 60 * 1000) //1 hour
-
-    await UserRepository.save(existingUser)
-    return {
-        id: existingUser.id,
-        name: existingUser.name,
-        email: existingUser.email,
-        resetToken
-    }
-
 }
 
 

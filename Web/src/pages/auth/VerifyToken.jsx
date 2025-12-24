@@ -2,33 +2,33 @@ import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
 
-function EmailVerification() {
+function VerifyToken() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const token = searchParams.get('token');
-  const user = searchParams.get('userId');
-  const { verifyEmail, verifyingEmailStatus } = useAuthStore()
+  const userId = searchParams.get('userId');
+  const { verifyToken, verifyingTokenStatus } = useAuthStore()
 
 
   useEffect(() => {
-    verifyEmail({
-      userId: Number(user), 
+    verifyToken({
+      userId: Number(userId),
       token: Number(token)
     })
 
-    if(verifyingEmailStatus == "success") {
-      return navigate('/events')
+    if (verifyingTokenStatus === "success") {
+      navigate(`/auth/reset-password?userId=${userId}`)
     }
-  }, []);
+  }, [verifyingTokenStatus]);
 
- 
+
   return (
     <div className='row auth-form align-items-start pt-md-5'>
       <div className='col-md-10 col-10 mx-md-0 mx-5 my-md-0 my-5 pt-md-5 text-center text-md-start'>
 
-        {verifyingEmailStatus === 'verifying' && (
+        {verifyingTokenStatus === 'verifying' && (
           <div className="verification-loader mx-5 mx-lg-0">
-            <h1 className='auth-header mb-2'>Verifying Your Account</h1>
+            <h1 className='auth-header mb-2'>Verifying Your Token</h1>
             <p className='mb-5 fs-md-5'>Please wait while we secure your profile...</p>
 
             {/* The Moving Animation */}
@@ -43,25 +43,25 @@ function EmailVerification() {
           </div>
         )}
 
-        {verifyingEmailStatus === 'success' && (
+        {verifyingTokenStatus === 'success' && (
           <div className="verification-success mx-5 mx-lg-0">
             <h1 className='auth-header mb-2 text-success'>Success!</h1>
-            <p className='fs-md-5'>Your email has been verified. Redirecting you to the homepage...</p>
+            <p className='fs-md-5'>Your token has been verified. Redirecting you to reset password...</p>
             <div className="display-1 text-success mt-4">
               <i className="bi bi-patch-check-fill"></i>
             </div>
           </div>
         )}
 
-        {verifyingEmailStatus === 'error' && (
+        {verifyingTokenStatus === 'error' && (
           <div className="verification-error mx-5 mx-lg-0">
             <h1 className='auth-header mb-2 text-danger'>Verification Failed</h1>
-            <p className='fs-md-5'>The link is invalid or has expired.</p>
+            <p className='fs-md-5'>The token is invalid or has expired.</p>
             <button
               className="mt-4 button"
-              onClick={() => navigate('/auth/login')}
+              onClick={() => navigate('/auth/forgot-password')}
             >
-              Back to Login
+              Back to Forgot Password Page
             </button>
           </div>
         )}
@@ -94,6 +94,6 @@ function EmailVerification() {
   );
 }
 
-export default EmailVerification;
+export default VerifyToken;
 
 

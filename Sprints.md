@@ -20,19 +20,18 @@ The plan assumes **2-week sprints**, but you can adjust as needed.
 *✅ Register API
 *✅ Login API (JWT)
 *✅ Email verification API
-*✅ Forgot password 
-*✅ Reset password API
+*✅ Forgot password and reset password API
 *✅ Profile API (view/update)
 *✅ Create “send email” service (Nodemailer)
 
 ## 🎨 **Web Frontend**
 
-* Login page
-* Register page
-* Email verification UI
-* Forgot password page
-* Reset password page
-* Simple dashboard (empty for now)
+*✅ Login page
+*✅ Register page
+*✅ Email verification UI
+*✅ Forgot password page
+*✅ Reset password page
+*✅ Simple homapage (empty for now)
 
 ## 📱 **Mobile App (React Native)**
 
@@ -43,6 +42,9 @@ The plan assumes **2-week sprints**, but you can adjust as needed.
 
 ## 🎉 **Milestone Demo**
 * “A user can fully sign up, verify email, and log in.”
+
+
+
 
 <!-- const user = await UserRepository.findOne({
   where: { id: userId },

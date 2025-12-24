@@ -42,7 +42,7 @@ function Login() {
 
 
             <div className='d-flex align-items-end justify-content-end mt-5 mb-4'>
-              <a href='/auth/forgot-password-email' className='highlight-link' >Forgot Password?</a>
+              <a href='/auth/forgot-password' className='highlight-link' >Forgot Password?</a>
             </div>
 
             <div className='center-div'>

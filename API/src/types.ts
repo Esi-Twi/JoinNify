@@ -49,6 +49,5 @@ export interface CreateEventDTO {
 export interface forgotPasswordDTO {
     id: number, 
     token: number, 
-    password: string
 }
 

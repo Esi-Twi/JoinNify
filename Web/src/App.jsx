@@ -9,6 +9,8 @@ import ErrorPage from './pages/general/ErrorPage'
 import GeneralLayout from './layouts/GeneralLayout'
 import AuthLayout from './layouts/authLayout'
 
+import Login from './pages/auth/Login'
+import Register from './pages/auth/Register'
 import authRoutes from './routes/authRoutes'
 import eventRoutes from './routes/eventRoutes'
 import { Toaster } from "sonner"
@@ -33,11 +35,17 @@ function App() {
           </Route>
         </Route>
 
-        <Route element={<PublicRoute />}>
+        {/* <Route element={<PublicRoute />}> */}
           <Route element={<AuthLayout />}>
-            {authRoutes()}
+            <Route path='/auth/login' element={<Login />} />
+            <Route path='/auth/register' element={<Register />} />
           </Route>
+        {/* </Route> */}
+
+        <Route element={<AuthLayout />}>
+          {authRoutes()}
         </Route>
+
 
       </Routes>
     </>

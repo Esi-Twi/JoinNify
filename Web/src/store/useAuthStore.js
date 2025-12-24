@@ -2,13 +2,17 @@ import { create } from "zustand"
 import api from "../api/axios"
 import { toast } from "sonner"
 
-
 export const useAuthStore = create((set) => ({
     authUser: JSON.parse(localStorage.getItem("authUser")) || null,
     isLoggingIn: false,
     isLoggingOut: false,
     isRegistering: false, 
-
+    verifyingEmailStatus: "",
+    isSendingForgotEmail: false,
+    disableForgotPasswordButton: false, 
+    verifyingTokenStatus: "",
+    isResetingPassword: false,
+    resetSuccess: false,
 
     login: async (data) => {
         set({ isLoggingIn: true })
@@ -72,6 +76,72 @@ export const useAuthStore = create((set) => ({
             set({ isLoggingOut: false })
         }
     }, 
+
+    verifyEmail: async (data) => {
+        set({ verifyingEmailStatus: "verifying" })
+        try {
+            const res = await api.post("/auth/verify-email", data)
+            toast.success(res.data?.msg)
+            set({verifyingEmailStatus: "success"})
+
+        } catch (error) {
+            let message = error?.response?.data?.message;
+            toast.error(message ?? "Something went wrong")
+            set({ verifyingEmailStatus: "error" })
+
+        } 
+    },
+
+    forgotPassword: async (data) => {
+        set({ isSendingForgotEmail: false })
+        set({ disableForgotPasswordButton: true })
+        try {
+            const res = await api.post("/auth/forgot-password", {email: data})
+            toast.success(res.data?.msg)
+
+        } catch (error) {
+            let message = error?.response?.data?.message;
+            toast.error(message ?? "Something went wrong")
+
+        } finally {
+            set({ isSendingForgotEmail: true })
+            set({ disableForgotPasswordButton: false })
+        }
+    },
+
+    resubmitLink: () => {
+        set({ isSendingForgotEmail : false})
+    }, 
+
+    verifyToken: async (data) => {
+        set({ verifyingTokenStatus: "verifying" })
+        try {
+            const res = await api.post("/auth/verify-token", data)
+            set({ verifyingTokenStatus: "success" })
+
+        } catch (error) {
+            let message = error?.response?.data?.message;
+            set({ verifyingTokenStatus: "error" })
+
+        }
+    },
+
+    resetPassword: async (data) => {
+        set({ isResetingPassword: true })
+        try {
+            const res = await api.post("/auth/reset-password", data)
+            toast.success(res.data?.msg)
+            set({ resetSuccess: true })
+
+        } catch (error) {
+            let message = error?.response?.data?.message;
+            toast.error(message ?? "Something went wrong")
+
+
+        } finally {
+            set({ isResetingPassword: false })
+        }
+    },
 
 
 

@@ -14,7 +14,7 @@ export const AuthControllers = {
             const { role, email, password } = req.body
 
             //check if email and password are provided
-            if (!email || !password ) {
+            if (!email || !password) {
                 throw new AppError("Email, Password and Role is required!", 400)
             }
 
@@ -33,7 +33,7 @@ export const AuthControllers = {
             const token = generateToken(res, {
                 id: newUser.id.toString(),
                 name: newUser.name,
-                email: newUser.email, 
+                email: newUser.email,
                 role: newUser.role
             })
 
@@ -77,11 +77,11 @@ export const AuthControllers = {
                 user: {
                     id: newUser.id,
                     name: newUser.name,
-                    email: newUser.email, 
-                    role: newUser.role, 
+                    email: newUser.email,
+                    role: newUser.role,
                     verificationToken: newUser.verification_token,
                     verificationTokenExpiry: newUser.verification_token_expiry
-                }, 
+                },
                 token
             })
 
@@ -96,7 +96,7 @@ export const AuthControllers = {
             const { email, password } = req.body
 
             //check if email and password are provided
-            if (!email || !password ) {
+            if (!email || !password) {
                 throw new AppError("Email and Password is required!", 400)
             }
 
@@ -108,30 +108,30 @@ export const AuthControllers = {
             if (error) {
                 throw new AppError(error.details[0].message, 400)
             }
-           
+
             const user = await loginUser(value)
 
             // create token 
             const token = generateToken(res, {
-                id: user.id.toString(), 
-                name: user.name, 
-                email: user.email, 
+                id: user.id.toString(),
+                name: user.name,
+                email: user.email,
                 role: user.role
             })
 
             res.status(200).json({
-                success: true, 
+                success: true,
                 msg: "User logged in successfully!!!",
                 user: {
                     id: user.id,
                     name: user.name,
                     email: user.email,
-                    role: user.role, 
+                    role: user.role,
                     verified: user.is_verified
                 },
                 token
             })
-            
+
         } catch (error) {
             next(error)
         }
@@ -143,7 +143,7 @@ export const AuthControllers = {
             const user = await verifyEmail(Number(userId), Number(token))
 
             res.status(200).json({
-                success: true, 
+                success: true,
                 msg: "Email verified successfully!!!",
                 user: {
                     id: user.id,
@@ -151,7 +151,7 @@ export const AuthControllers = {
                     email: user.email,
                     role: user.role,
                     is_verified: user.is_verified,
-                }, 
+                },
             })
 
         } catch (error) {
@@ -161,14 +161,14 @@ export const AuthControllers = {
 
     async logout(req: Request, res: Response, next: NextFunction) {
         res.clearCookie("token").status(200).json({
-            success: true, 
-            msg: "Logged out successfully!!!", 
+            success: true,
+            msg: "Logged out successfully!!!",
         })
     },
 
     async forgotPassword(req: Request, res: Response, next: NextFunction) {
         try {
-            const {email} = req.body
+            const { email } = req.body
 
             //check if email and password are provided
             if (!email) {
@@ -183,31 +183,57 @@ export const AuthControllers = {
                 throw new AppError(error.details[0].message, 400)
             }
 
-            const {id:userId, email:userEmail, name, resetToken} = await forgotPassword(email)
+            const { id: userId, email: userEmail, name, resetToken } = await forgotPassword(email)
 
-            const verificationLink = `${process.env.BASE_URL}/auth/forgot-password?userId=${userId}&token=${resetToken}`
+            const verificationLink = `${process.env.BASE_URL}/auth/verify-token?userId=${userId}&token=${resetToken}`
 
             await AuthEmails.sendForgotPasswordEmail(userEmail, name, verificationLink)
 
             // send response
             res.status(201).json({
                 success: true,
-                message: "Forgot password link sent successfully!!",
-                resetToken, 
+                msg: "Forgot password link sent successfully!!",
+                resetToken,
             })
 
 
         } catch (error) {
             next(error)
         }
-    }, 
+    },
 
 
     async verifyToken(req: Request, res: Response, next: NextFunction) {
         try {
-            const { userId, token, password } = req.body
+            const { userId, token } = req.body
 
-            // validatiion for password 
+            const user = await verifyToken({
+                id: Number(userId),
+                token: Number(token),
+            })
+
+            res.status(200).json({
+                success: true,
+                msg: "Can go ahead and reset password!!!",
+                user: {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    role: user.role,
+                    expiry: user.reset_password_token_expiry
+                },
+            })
+
+        } catch (error) {
+            next(error)
+        }
+    },
+
+    async resetPassword(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { userId, password } = req.body
+
+            // validatiion for password
             const { error, value } = verifyForgotPasswordSchema.validate(
                 { password }, { abortEarly: true }
             )
@@ -215,11 +241,7 @@ export const AuthControllers = {
                 throw new AppError(error.details[0].message, 400)
             }
 
-            const user = await verifyToken({
-                id: Number(userId),
-                token: Number(token),
-                password
-            })
+            const user = await resetPassword(password, userId)
 
             res.status(200).json({
                 success: true,
@@ -230,38 +252,6 @@ export const AuthControllers = {
                     email: user.email,
                     role: user.role,
                 },
-            })
-            
-        } catch (error) {
-            next(error)
-        }
-    },
-
-    async resetPassword(req: Request, res: Response, next: NextFunction) {
-        try {
-            const { email } = req.body
-            if (!email) {
-                throw new AppError("Email is required!", 400)
-            }
-
-            // validatiion for email 
-            const { error, value } = forgetPasswordSchema.validate(
-                { email }, { abortEarly: true }
-            )
-            if (error) {
-                throw new AppError(error.details[0].message, 400)
-            }
-
-            const { id: userId, email: userEmail, name, resetToken } = await resetPassword(email)
-            const verificationLink = `${process.env.BASE_URL}/auth/reset-password?userId=${userId}&token=${resetToken}`
-
-            await AuthEmails.sendResetPasswordEmail(userEmail, name, verificationLink)
-
-            // send response
-            res.status(201).json({
-                success: true,
-                message: "Reset password link sent successfully!!",
-                resetToken,
             })
 
         } catch (error) {
