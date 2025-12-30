@@ -45,24 +45,24 @@ export const updateProfileSchema = Joi.object({
 
 
 export const createEventSchema = Joi.object({
-    title: Joi.string().min(2).required(),
-    location: Joi.string().min(2).required(),
-    capacity: Joi.number().required().min(0),
-    price: Joi.number().required().min(0),
+    title: Joi.string().min(2),
+    location: Joi.string().min(2),
+    capacity: Joi.number().min(0),
+    price: Joi.number().min(0),
 
-    start_date: Joi.date().required().min(Date.now()),
-    end_date: Joi.date().required().min(Date.now()),
+    start_date: Joi.date().min(Date.now()),
+    end_date: Joi.date().min(Date.now()),
     category: Joi.string().valid(...Object.values(EventCategories)),
 
-    // images: Joi.array().items(
-    //     Joi.object({
-    //         originalName: Joi.string().required(),
-    //         mimetype: Joi.string().valid(
-    //             "image/png", "image/jpeg", "image/jpg", "image/webp"
-    //         ),
-    //         // size: Joi.number().max(5 * 1024 * 1024) // 5MB
-    //     })
-    // ).min(1).required()
+    images: Joi.array().items(
+        Joi.object({
+            originalName: Joi.string(),
+            mimetype: Joi.string().valid(
+                "image/png", "image/jpeg", "image/jpg", "image/webp"
+            ),
+            size: Joi.number().max(5 * 1024 * 1024) // 5MB
+        })
+    ).min(1)
 
 })
 

@@ -35,12 +35,12 @@ function App() {
           </Route>
         </Route>
 
-        {/* <Route element={<PublicRoute />}> */}
+        <Route element={<PublicRoute />}>
           <Route element={<AuthLayout />}>
             <Route path='/auth/login' element={<Login />} />
             <Route path='/auth/register' element={<Register />} />
           </Route>
-        {/* </Route> */}
+        </Route>
 
         <Route element={<AuthLayout />}>
           {authRoutes()}

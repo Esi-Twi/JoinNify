@@ -9,7 +9,7 @@ import { CreateEventDTO } from "types"
 const UserRepository = AppDataSource.getRepository(Users)
 const EventRepository = AppDataSource.getRepository(Events)
 
-
+//get all available events for only approved events
 export const getAllEvents = async () => {
     const events = await EventRepository.find({
         where: {
@@ -22,7 +22,7 @@ export const getAllEvents = async () => {
     return events
 }
 
-
+//get event for only approved events
 export const getEvent = async (id: number) => {
     const event = await EventRepository.findOne({
         where: {
@@ -50,13 +50,13 @@ export const createEvent = async (id: number, data: CreateEventDTO) => {
     }
 
     // // Upload each image to Cloudinary
-    // const uploadedImages = await Promise.all(data.images.map(async(img) => {
-    //     const uploadRes = await cloudinary.uploader.upload(img, {
-    //         folder: "events",
-    //     })
+    const uploadedImages = await Promise.all(data.images.map(async(img) => {
+        const uploadRes = await cloudinary.uploader.upload(img, {
+            folder: "events",
+        })
 
-    //     return uploadRes.secure_url
-    // }))
+        return uploadRes.secure_url
+    }))
 
     //create event
     const event = EventRepository.create({
@@ -68,13 +68,13 @@ export const createEvent = async (id: number, data: CreateEventDTO) => {
         start_date: data.start_date,
         end_date: data.end_date,
         category: data.category,
-        // images: uploadedImages, 
+        images: uploadedImages, 
     })
 
     return await EventRepository.save(event)
 }
 
-
+//make update available for only approved events
 export const updateEvent = async (id: number, data: CreateEventDTO) => {
     const event = await EventRepository.findOne({
         where: {
@@ -93,30 +93,28 @@ export const updateEvent = async (id: number, data: CreateEventDTO) => {
     event.ticket_price = data.price || event.ticket_price
     event.start_date = data.start_date || event.start_date
     event.end_date = data.end_date || event.end_date
-    // for(let image in data.images) {
-    //     event.images.push(image)
-    // }
+    for(let image in data.images) {
+        event.images.push(image)
+    }
 
     return await EventRepository.save(event)
-
 }
 
-
+//delete event for only approved events
 export const deleteEvent = async (id: number) => {
-    // const event = await EventRepository.findOne({
-    //     where: {
-    //         id, 
-    //         deleted: false, 
-    //         // is_approved: true
-    //     }
-    // })
-    // if(!event) {
-    //     throw new AppError("Event does not exist", 401)
-    // }
+    const event = await EventRepository.findOne({
+        where: {
+            id, 
+            deleted: false, 
+            // is_approved: true
+        }
+    })
+    if(!event) {
+        throw new AppError("Event does not exist", 401)
+    }
 
-    // event.deleted = true
-    // return EventRepository.save(event)
+    event.deleted = true
+    return EventRepository.save(event)
 
-    await EventRepository.deleteAll()
 }
 

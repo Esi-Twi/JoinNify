@@ -16,3 +16,4 @@ router.delete("/:id", identifier, allowedRoles("Admin", "Organizer"), EventContr
 
 export default router;
 
+

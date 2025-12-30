@@ -8,7 +8,122 @@ export enum UserRoles {
 
 
 export enum EventCategories {
+    // Technology & Innovation
     TECH = "TECH",
-    SPORTS = "SPORTS",  
+    AI = "AI",
+    SOFTWARE = "SOFTWARE",
+    BLOCKCHAIN = "BLOCKCHAIN",
+    CYBERSECURITY = "CYBERSECURITY",
+    STARTUPS = "STARTUPS",
+    HACKATHON = "HACKATHON",
+
+    // Business & Finance
+    BUSINESS = "BUSINESS",
+    ENTREPRENEURSHIP = "ENTREPRENEURSHIP",
+    MARKETING = "MARKETING",
+    SALES = "SALES",
+    FINANCE = "FINANCE",
+    INVESTING = "INVESTING",
+    ECONOMICS = "ECONOMICS",
+    REAL_ESTATE = "REAL_ESTATE",
+
+    // Education & Learning
+    EDUCATION = "EDUCATION",
+    WORKSHOP = "WORKSHOP",
+    SEMINAR = "SEMINAR",
+    TRAINING = "TRAINING",
+    CERTIFICATION = "CERTIFICATION",
+    BOOTCAMP = "BOOTCAMP",
+    CAREER = "CAREER",
+
+    // Arts, Media & Culture
+    MUSIC = "MUSIC",
+    CONCERT = "CONCERT",
+    FESTIVAL = "FESTIVAL",
+    ART = "ART",
+    EXHIBITION = "EXHIBITION",
+    FILM = "FILM",
+    PHOTOGRAPHY = "PHOTOGRAPHY",
+    FASHION = "FASHION",
+    DESIGN = "DESIGN",
+    THEATRE = "THEATRE",
+    DANCE = "DANCE",
+
+    // Sports & Fitness
+    SPORTS = "SPORTS",
+    FOOTBALL = "FOOTBALL",
+    BASKETBALL = "BASKETBALL",
+    TENNIS = "TENNIS",
+    MARATHON = "MARATHON",
+    FITNESS = "FITNESS",
+    YOGA = "YOGA",
+    GYM = "GYM",
+    ESPORTS = "ESPORTS",
+
+    // Health & Wellness
     HEALTH = "HEALTH",
+    MENTAL_HEALTH = "MENTAL_HEALTH",
+    WELLNESS = "WELLNESS",
+    NUTRITION = "NUTRITION",
+    MEDITATION = "MEDITATION",
+
+    // Lifestyle & Social
+    LIFESTYLE = "LIFESTYLE",
+    NETWORKING = "NETWORKING",
+    SOCIAL = "SOCIAL",
+    DATING = "DATING",
+    COMMUNITY = "COMMUNITY",
+    VOLUNTEERING = "VOLUNTEERING",
+
+    // Food & Drink
+    FOOD = "FOOD",
+    DRINKS = "DRINKS",
+    COOKING = "COOKING",
+    BAKING = "BAKING",
+    WINE_TASTING = "WINE_TASTING",
+    FOOD_FESTIVAL = "FOOD_FESTIVAL",
+
+    // Travel & Outdoor
+    TRAVEL = "TRAVEL",
+    TOURISM = "TOURISM",
+    ADVENTURE = "ADVENTURE",
+    HIKING = "HIKING",
+    CAMPING = "CAMPING",
+
+    // Gaming & Entertainment
+    GAMING = "GAMING",
+    BOARD_GAMES = "BOARD_GAMES",
+    CARD_GAMES = "CARD_GAMES",
+    COSPLAY = "COSPLAY",
+    COMEDY = "COMEDY",
+
+    // Spiritual & Personal Growth
+    SPIRITUAL = "SPIRITUAL",
+    RELIGION = "RELIGION",
+    PERSONAL_DEVELOPMENT = "PERSONAL_DEVELOPMENT",
+    MOTIVATION = "MOTIVATION",
+    MINDFULNESS = "MINDFULNESS",
+
+    // Family & Kids
+    FAMILY = "FAMILY",
+    KIDS = "KIDS",
+    PARENTING = "PARENTING",
+    EDUCATIONAL_KIDS = "EDUCATIONAL_KIDS",
+
+    // Environment & Sustainability
+    ENVIRONMENT = "ENVIRONMENT",
+    SUSTAINABILITY = "SUSTAINABILITY",
+    CLIMATE = "CLIMATE",
+    ECO_FRIENDLY = "ECO_FRIENDLY",
+
+    // Government & Politics
+    GOVERNMENT = "GOVERNMENT",
+    POLITICS = "POLITICS",
+    CIVIC = "CIVIC",
+
+    // Other / Misc
+    CHARITY = "CHARITY",
+    FUNDRAISING = "FUNDRAISING",
+    NON_PROFIT = "NON_PROFIT",
+    OTHER = "OTHER",
 }

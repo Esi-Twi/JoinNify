@@ -38,14 +38,14 @@ export const EventController = {
             }
 
             // //check if image is added
-            // if (!images) {
-            //     throw new AppError("At least one image is needed", 401)
-            // }
+            if (!images) {
+                throw new AppError("At least one image is needed", 401)
+            }
 
             // //check images.length
-            // if (images.length > 9) {
-            //     throw new AppError("You can upload a minimun of 9 images", 401)
-            // }
+            if (images.length > 9) {
+                throw new AppError("You can upload a minimun of 9 images", 401)
+            }
 
             //validate inputs
             const { error, value } = createEventSchema.validate(req.body)
@@ -75,20 +75,10 @@ export const EventController = {
             const {id} = req.params
             const { title, location, capacity, price, start_date, end_date, images } = req.body
 
-            if (!title || !location || !capacity || price < 0 || !start_date || !end_date) {
-                throw new AppError("All Fields required", 401)
-            }
-
-            //check if image is added
-            if (!images) {
-                throw new AppError("At least one image is needed", 401)
-            }
-
             //check images.length
-            if (images.length > 9) {
+            if (images && images.length > 9) {
                 throw new AppError("You can upload a minimun of 9 images", 401)
             }
-
 
             //validate inputs
             const { error, value } = createEventSchema.validate(req.body)
@@ -97,7 +87,7 @@ export const EventController = {
             }
 
             //check if ending date is older than starting date
-            if (new Date(end_date) <= new Date(start_date)) {
+            if (end_date && start_date && new Date(end_date) <= new Date(start_date)) {
                 throw new AppError("Ending Date must be older than Starter Date", 401)
             }
 
