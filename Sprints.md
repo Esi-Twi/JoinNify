@@ -112,7 +112,6 @@ console.log(user.eventsAttending); -->
 * Generate ticket image + QR code
 
 ## 🎨 **Web Frontend**
-
 * Public event listing
 * Single event page (with date & time)
 * Book ticket flow
@@ -379,9 +378,6 @@ or
 ## 🌍 General Public (Not Logged In)
 These pages are visible to everyone.
 ## Pages
-Landing / Home
-Explore Events
-Event Details (read-only)
 Login
 Register
 Forgot Password

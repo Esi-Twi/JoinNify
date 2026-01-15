@@ -8,8 +8,9 @@ export class Events {
     @PrimaryGeneratedColumn()
     id!: Number
 
+    
     @Column()
-    creatorId!: number
+    creatorId!: Number
 
     @Column()
     title!: string

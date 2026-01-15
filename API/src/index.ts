@@ -10,6 +10,7 @@ import { AppDataSource } from "@config/data.source"
 import AuthRoutes from "@routes/auth.routes"
 import UserRoutes from "@routes/user.routes"
 import EventRoutes from "@routes/event.routes"
+import TicketRoutes from "@routes/ticket.routes"
 import { errorHandler } from "@middlewares/customErrorHandler"
 import { loggerMiddleware } from "@middlewares/apiLogger"
 
@@ -36,6 +37,7 @@ app.use(loggerMiddleware)
 app.use("/api/v1/auth", AuthRoutes)
 app.use("/api/v1/users", UserRoutes)
 app.use("/api/v1/events", EventRoutes)
+app.use("/api/v1/tickets", EventRoutes)
 
 app.use(errorHandler)
 

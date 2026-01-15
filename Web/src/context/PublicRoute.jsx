@@ -6,7 +6,7 @@ const PublicRoute = () => {
     const { authUser } = useAuthStore()
 
     if (authUser?.token) {
-        return <Navigate to="/events" replace />
+        return <Navigate to="/" replace />
     }
 
     return < Outlet/>
