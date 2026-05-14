@@ -17,7 +17,7 @@ function EmailVerification() {
     })
 
     if(verifyingEmailStatus == "success") {
-      return navigate('/events')
+      return navigate('/')
     }
   }, []);
 

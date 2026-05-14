@@ -112,12 +112,22 @@ const MOCK_EVENTS = [
 
 const CATEGORIES = ["All", "Technology", "Music", "Wellness", "Business", "Art", "Food"]
 
+const items = [
+  { id: 0, title: "Treasured ten: selections from the costume collection", time: "TODAY | 9:30 AM", location: "Chicago History Museum", img: "https://images.unsplash.com/photo-1539109132314-347596d6b508?auto=format&fit=crop&w=800&q=80" },
+  { id: 1, title: "Modern Art Gala", time: "TOMORROW | 7:00 PM", location: "MOMA New York", img: "https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&fit=crop&w=800&q=80" },
+  // Add more items here to fill the bottom row...
+];
 
 function Events() {
   const { isLoggingOut, logout } = useAuthStore()
   const navigate = useNavigate()
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [priceFilter, setPriceFilter] = useState("all")
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const nextSlide = () => setActiveIndex((prev) => (prev + 1) % items.length);
+  const prevSlide = () => setActiveIndex((prev) => (prev - 1 + items.length) % items.length);
+
 
   const logOut = () => {
     logout()
@@ -151,6 +161,89 @@ function Events() {
 
   return (
     <div style={{minHeight: "100vh" }}>
+      <button onClick={logOut} >Logout</button>
+
+      <div className="bg-dark text-white min-vh-100 p-4 font-sans" style={{ backgroundColor: '#121212' }}>
+        <header className="mb-4">
+          <h5 className="text-secondary fw-bold">Today's top picks <small className="fw-light opacity-50">Updated May 9</small></h5>
+        </header>
+
+        {/* Main Carousel Area */}
+        <div className="position-relative overflow-hidden mb-5" style={{ height: '500px' }}>
+          <div className="d-flex align-items-center justify-content-center h-100">
+
+            {/* Left Arrow */}
+            <button onClick={prevSlide} className="btn btn-success rounded-circle position-absolute start-0 z-3 ms-4 d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px' }}>
+              {/* <ChevronLeft /> */}
+              <i className='bi bi-star'></i>
+            </button>
+
+            {/* Main Card */}
+            <div className="carousel-card-container position-relative w-75 h-100 rounded-4 overflow-hidden shadow-lg">
+              <img
+                src={items[activeIndex].img}
+                className="w-100 h-100 object-fit-cover"
+                alt="featured"
+                style={{ filter: 'brightness(0.7)' }}
+              />
+
+              <div className="position-absolute bottom-0 start-0 p-5 w-100 text-start">
+                <div className="d-flex gap-3 mb-3">
+                  <div className="bg-white bg-opacity-25 rounded-circle p-2 border border-white border-opacity-25">
+                    {/* <PlayFill size={24} /> */}
+                    <i className='bi bi-star'></i>
+                    </div>
+                  <div className="bg-white bg-opacity-25 rounded-circle p-2 border border-white border-opacity-25">
+                    {/* <Heart size={20} /> */}
+                    <i className='bi bi-star'></i>
+
+                    </div>
+                </div>
+                <h1 className="display-4 fw-bold mb-2 w-75">{items[activeIndex].title}</h1>
+                <p className="mb-0 text-uppercase fw-bold small tracking-widest">{items[activeIndex].time}</p>
+                <p className="opacity-75 small">{items[activeIndex].location}</p>
+              </div>
+            </div>
+
+            {/* Right Arrow */}
+            <button onClick={nextSlide} className="btn btn-success rounded-circle position-absolute end-0 z-3 me-4 d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px' }}>
+              {/* <ChevronRight /> */}
+              <i className='bi bi-star'></i>
+
+            </button>
+          </div>
+        </div>
+
+        {/* Bottom Thumbnails */}
+        <div className="container mt-4">
+          <div className="d-flex justify-content-center gap-3 flex-wrap">
+            {items.map((item, index) => (
+              <div
+                key={item.id}
+                onClick={() => setActiveIndex(index)}
+                className={`rounded-circle overflow-hidden cursor-pointer transition-all ${activeIndex === index ? 'border border-3 border-success p-1 scale-110' : 'opacity-50'}`}
+                style={{ width: '50px', height: '50px', cursor: 'pointer', transition: '0.3s' }}
+              >
+                <img src={item.img} className="w-100 h-100 object-fit-cover rounded-circle" alt="thumb" />
+              </div>
+            ))}
+            {/* Placeholder for remaining dots in your image */}
+            {[...Array(12)].map((_, i) => (
+              <div key={i} className="rounded-circle bg-secondary opacity-25" style={{ width: '45px', height: '45px' }}></div>
+            ))}
+          </div>
+        </div>
+
+        <style dangerouslySetInnerHTML={{
+          __html: `
+        .carousel-card-container {
+            perspective: 1000px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .scale-110 { transform: scale(1.15); }
+        .tracking-widest { letter-spacing: 0.1em; }
+      `}} />
+      </div>
 
       {/* Hero Section */}
       <section style={styles.heroSection}>
@@ -358,6 +451,12 @@ function Events() {
     </div>
   )
 }
+
+
+
+
+
+
 
 const styles = {
   navbar: {

@@ -51,3 +51,9 @@ export interface forgotPasswordDTO {
     token: number, 
 }
 
+
+export interface bookTicketDTO {
+    event_id: number, 
+    user_id: number, 
+    num: number
+}

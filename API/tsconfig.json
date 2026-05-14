@@ -14,38 +14,38 @@
       "./src/types",
       "./node_modules/@types"
     ],
-    "baseUrl": "src",
+    // "baseUrl": "src",
     "paths": {
       "@controllers/*": [
-        "controllers/*"
+        "./src/controllers/*"
       ],
       "@services/*": [
-        "services/*"
+        "./src/services/*"
       ],
       "@utils/*": [
-        "utils/*"
+        "./src/utils/*"
       ],
       "@models/*": [
-        "models/*"
+        "./src/models/*"
       ],
       "@config/*": [
-        "config/*"
+        "./src/config/*"
       ],
       "@database/*": [
-        "database/*"
+        "./src/database/*"
       ],
       "@middlewares/*": [
-        "middlewares/*"
+        "./src/middlewares/*"
       ],
       "@routes/*": [
-        "routes/*"
+        "./src/routes/*"
       ],
       "@entity/*": [
-        "database/entity/*"
+        "./src/database/entity/*"
       ],
       "@lib/*": [
-        "lib/*"
+        "./src/lib/*"
       ]
-    },
+    }
   }
 }

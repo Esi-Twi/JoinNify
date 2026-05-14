@@ -5,13 +5,13 @@ import { NextFunction } from "express"
 
 
 export const AuthEmails = {
-    async sendWelcomeEmail(email: string, username: string, verificationLink: string) {
-        try {
-            let info = await emailTransporter.sendMail({
-                from: process.env.NODE_CORE_SENDING_EMAIL_ADDRESS,
-                to: email,
-                subject: "🎉Welcome to JoinNify — Let’s Get You Started!",
-                html: `
+  async sendWelcomeEmail(email: string, username: string, verificationLink: string) {
+    try {
+      let info = await emailTransporter.sendMail({
+        from: process.env.NODE_CORE_SENDING_EMAIL_ADDRESS,
+        to: email,
+        subject: "🎉Welcome to JoinNify — Let’s Get You Started!",
+        html: `
              <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
                 <h2>Hi ${username || 'there'},</h2>
                 <p>Welcome to <strong>JoinNify</strong> — your all-in-one platform for discovering, managing, and booking amazing events! 🎟️</p>
@@ -29,9 +29,9 @@ export const AuthEmails = {
                 </div>
 
                 <!-- FALLBACK PLAIN LINK -->
-                <p>If the button above doesn’t work, copy and paste this link into your browser:</p>
+                <p>If the button above doesn’t work, use this link:</p>
                 <p style="word-break: break-all;">
-                    <a href="${verificationLink}" style="color: #4F46E5;">${verificationLink}</a>
+                    <a href="${verificationLink}" style="color: #4F46E5;">Click Here</a>
                 </p>
 
                 <h3>Here’s what you can do right after verification:</h3>
@@ -58,22 +58,22 @@ export const AuthEmails = {
                 The <strong>JoinNify</strong> Team<br>
                 <em>Your Event. Your Way.</em></p>
             </div>   `
-            })
+      })
 
-            return info;
+      return info;
 
-        } catch (error) {
-            throw new AppError("Failed to send welcome email " + error, 401)
-        }
-    },
+    } catch (error) {
+      throw new AppError("Failed to send welcome email " + error, 401)
+    }
+  },
 
-    async sendForgotPasswordEmail(email: string, username: string, resetLink: string) {
-        try {
-            let info = await emailTransporter.sendMail({
-                from: process.env.NODE_CORE_SENDING_EMAIL_ADDRESS,
-                to: email,
-                subject: "Fogot Password Email - JoinNify!",
-                html: `
+  async sendForgotPasswordEmail(email: string, username: string, resetLink: string) {
+    try {
+      let info = await emailTransporter.sendMail({
+        from: process.env.NODE_CORE_SENDING_EMAIL_ADDRESS,
+        to: email,
+        subject: "Fogot Password Email - JoinNify!",
+        html: `
             <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
   <h2>🔒 Reset Your JoinNify Password</h2>
 
@@ -137,14 +137,14 @@ export const AuthEmails = {
   </p>
 </div>
   `
-            })
+      })
 
-            return info;
+      return info;
 
-        } catch (error) {
-            throw new AppError("Failed to send welcome email " + error, 401)
-        }
-    },
+    } catch (error) {
+      throw new AppError("Failed to send welcome email " + error, 401)
+    }
+  },
 
   async sendResetPasswordEmail(email: string, username: string, resetLink: string) {
     try {

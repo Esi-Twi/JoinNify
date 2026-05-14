@@ -5,12 +5,17 @@ import { useAuthStore } from "../store/useAuthStore";
 const PublicRoute = () => {
     const { authUser } = useAuthStore()
 
-    if (authUser?.token) {
-        return <Navigate to="/" replace />
-    }
+    // console.log(authUser);
+    
+    
+    // if (authUser?.token) {
+    //     return <Navigate to="/" replace />
+    // }
 
     return < Outlet/>
-
 }
 
 export default PublicRoute
+
+
+

@@ -13,6 +13,7 @@ import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
 import authRoutes from './routes/authRoutes'
 import eventRoutes from './routes/eventRoutes'
+import sharedRoutes from './routes/sharedRoutes'
 import { Toaster } from "sonner"
 
 
@@ -32,6 +33,7 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route element={<GeneralLayout />}>
             {eventRoutes()}
+            {sharedRoutes()}
           </Route>
         </Route>
 

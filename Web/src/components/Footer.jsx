@@ -20,78 +20,125 @@ function Footer() {
     );
 
     return (
-        <footer className="pb-3 pt-5 text-white bg1">
-            <div className="container mx-auto pt-5 row g-4 pb-4 mb-4" >
-                <div className="col-lg-4 col-md-12">
-                    <div className="mb-4">
-                        <h2 className="fw-bold m-0 ff-lobster text-indigo" style={{ letterSpacing: '2px', fontSize: '1.5rem' }}>JoinNify</h2>
-                        <p className="m-0 text-secondary" style={{ fontSize: '0.8rem', letterSpacing: '1px' }}>PARIS</p>
+        <div>
+            <div className="trusted-section text-center pt-5" style={{zIndex: 100}}>
+                <div className="container">
+                    <div>
+                        <h1 className="fw-bold display-4 mb-1"> Trusted by over <span className="text-indigo">150</span>  organizations</h1>
+                        <p className='fs-5 fw-bold text-gray mb-5'>in more than 50 countries</p>
+
+                        <div className="brand-icons mt-4 mb-5 pb-5">
+                            <img src="../../assets/icons/mi-logo.png" alt="profile" className="brand-icon" />
+
+                            <img src="../../assets/icons/microsoft.png" alt="profile" className="brand-icon" />
+
+                            <img src="../../assets/icons/mit.png" alt="profile" className="brand-icon" />
+
+                            <img src="../../assets/icons/slack.png" alt="profile" className="brand-icon" />
+
+                        </div>
                     </div>
-                    <p className="text-white text-opacity-75 pe-lg-5" style={{ fontSize: '0.9rem' }}>
-                        There are many variations of passages of Lorem Ipsum available, but the majority have suffered
-                    </p>
-                </div>
 
-                <div className="col-lg-2 col-md-4 col-sm-6 col-6">
-                    <LinkItem text="Home" />
-                    <LinkItem text="About" />
-                    <LinkItem text="Event" />
-                    <LinkItem text="Blog" />
-                </div>
+                    {/* Call to Action */}
+                    <div className="cta-box p-4 mb-n10 mt-5 bg1">
+                        <p className="lead">
+                            Join our Events and Participate in the next <strong>Lorem contest</strong>.
+                        </p>
+                        <button className="btn btn-primary btn-lg">
+                            <i className="bi bi-people-fill me-2"></i> Join Us
+                        </button>
 
-                <div className="col-lg-3 col-md-4 col-sm-6 col-6">
-                    <LinkItem text="FAQ" />
-                    <LinkItem text="Careers" />
-                    <LinkItem text="Our approach" />
-                    <LinkItem text="Contact" />
-                </div>
+                        <div className="avatars mt-4">
+                            <img
+                                src="../../assets/icons/mi-logo.png" alt="profile" className="avatar" />
 
-                <div className="col-lg-3 col-md-4 col-12 mt-4 mt-lg-0">
-                    <ContactItem
-                        icon="bi-geo-alt-fill"
-                        text="North Legon, Accra"
-                    />
-                    <ContactItem
-                        icon="bi-telephone-fill"
-                        text="054-444-2220"
-                    />
-                    <ContactItem
-                        icon="bi-envelope-fill"
-                        text="info@joinnify.com"
-                    />
+                            {[1, 2, 3, 4, 5].map((num) => (
+                                <img
+                                    key={num}
+                                    src={`https://i.pravatar.cc/60?img=${num}`}
+                                    alt="profile"
+                                    className="avatar"
+                                />
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div className="row border-top pt-3 border-secondary border-opacity-25 align-items-center px-2 px-md-5">
-                <div className="col-lg-4 col-md-12 text-center text-lg-start mb-lg-0 text-white text-opacity-75" style={{ fontSize: '0.85rem' }}>
-                    &copy; 2025 All rights reserved by societhy
+            {/* footer */}
+            <div className="pb-3 pt-5 text-white bg1" style={{ zIndex: -100 }}>
+                <div className="container mx-auto pt-5 row g-4 pb-4 mb-4" >
+                    <div className="col-lg-4 col-md-12 pt-5">
+                        <div className="mb-4">
+                            <a href="/" className="fw-bold text-decoration-none m-0 ff-lobster text-indigo" style={{ letterSpacing: '2px', fontSize: '1.5rem' }}>JoinNify</a>
+                            <p className="m-0 text-secondary" style={{ fontSize: '0.8rem', letterSpacing: '1px' }}>PARIS</p>
+                        </div>
+                        <p className="text-white text-opacity-75 pe-lg-5" style={{ fontSize: '0.9rem' }}>
+                            There are many variations of passages of Lorem Ipsum available, but the majority have suffered
+                        </p>
+                    </div>
+
+                    <div className="col-lg-2 col-md-4 col-sm-6 col-6">
+                        <LinkItem text="Home" />
+                        <LinkItem text="About" />
+                        <LinkItem text="Event" />
+                        <LinkItem text="Blog" />
+                    </div>
+
+                    <div className="col-lg-3 col-md-4 col-sm-6 col-6">
+                        <LinkItem text="FAQ" />
+                        <LinkItem text="Careers" />
+                        <LinkItem text="Our approach" />
+                        <LinkItem text="Contact" />
+                    </div>
+
+                    <div className="col-lg-3 col-md-4 col-12 mt-4 mt-lg-0">
+                        <ContactItem
+                            icon="bi-geo-alt-fill"
+                            text="North Legon, Accra"
+                        />
+                        <ContactItem
+                            icon="bi-telephone-fill"
+                            text="054-444-2220"
+                        />
+                        <ContactItem
+                            icon="bi-envelope-fill"
+                            text="info@joinnify.com"
+                        />
+                    </div>
                 </div>
 
-                <div className="col-lg-4 col-md-12 text-center mb-3 mb-lg-0">
-                    <a href="#" className="text-white mx-3 fs-5 opacity-75 hover-opacity-100" style={{ transition: 'opacity 0.2s' }}>
-                        <i className="bi bi-facebook"></i>
-                    </a>
-                    <a href="#" className="text-white mx-3 fs-5 opacity-75 hover-opacity-100" style={{ transition: 'opacity 0.2s' }}>
-                        <i className="bi bi-twitter"></i>
-                    </a>
-                    <a href="#" className="text-white mx-3 fs-5 opacity-75 hover-opacity-100" style={{ transition: 'opacity 0.2s' }}>
-                        <i className="bi bi-linkedin"></i>
-                    </a>
-                    <a href="#" className="text-white mx-3 fs-5 opacity-75 hover-opacity-100" style={{ transition: 'opacity 0.2s' }}>
-                        <i className="bi bi-youtube"></i>
-                    </a>
-                </div>
+                <div className="row border-top pt-3 border-secondary border-opacity-25 align-items-center px-2 px-md-5">
+                    <div className="col-lg-4 col-md-12 text-center text-lg-start mb-lg-0 text-white text-opacity-75" style={{ fontSize: '0.85rem' }}>
+                        &copy; 2025 All rights reserved by societhy
+                    </div>
 
-                <div className="col-lg-4 col-md-12 text-center text-lg-end" style={{ fontSize: '0.85rem' }}>
-                    <a href="#" className="text-white text-opacity-75 text-decoration-none mx-2">
-                        Terms & Conditions
-                    </a>
-                    <a href="#" className="text-white text-opacity-75 text-decoration-none mx-2">
-                        Privacy Policy
-                    </a>
+                    <div className="col-lg-4 col-md-12 text-center mb-3 mb-lg-0">
+                        <a href="#" className="text-white mx-3 fs-5 opacity-75 hover-opacity-100" style={{ transition: 'opacity 0.2s' }}>
+                            <i className="bi bi-facebook"></i>
+                        </a>
+                        <a href="#" className="text-white mx-3 fs-5 opacity-75 hover-opacity-100" style={{ transition: 'opacity 0.2s' }}>
+                            <i className="bi bi-twitter"></i>
+                        </a>
+                        <a href="#" className="text-white mx-3 fs-5 opacity-75 hover-opacity-100" style={{ transition: 'opacity 0.2s' }}>
+                            <i className="bi bi-linkedin"></i>
+                        </a>
+                        <a href="#" className="text-white mx-3 fs-5 opacity-75 hover-opacity-100" style={{ transition: 'opacity 0.2s' }}>
+                            <i className="bi bi-youtube"></i>
+                        </a>
+                    </div>
+
+                    <div className="col-lg-4 col-md-12 text-center text-lg-end" style={{ fontSize: '0.85rem' }}>
+                        <a href="#" className="text-white text-opacity-75 text-decoration-none mx-2">
+                            Terms & Conditions
+                        </a>
+                        <a href="#" className="text-white text-opacity-75 text-decoration-none mx-2">
+                            Privacy Policy
+                        </a>
+                    </div>
                 </div>
             </div>
-        </footer>
+        </div>
     )
 }
 

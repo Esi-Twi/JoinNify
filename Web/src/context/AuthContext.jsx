@@ -1,18 +1,20 @@
- import { useContext, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
+import { useAuthStore } from '../store/useAuthStore'
+import { Navigate, useNavigate } from 'react-router-dom'
 
-const AuthContext = useContext()
+const AuthContext = createContext(null)
 
-export const AuthProvider = ({childern}) => {
-    const [user, setUser] = useState(null)
+export const AuthProvider = ({ children }) => {
+    const {authUser} = useAuthStore()
 
-    const login = (username) => setUser({name: username})
-    const logout = () => setUser(null)
+    // console.log(authUser);
 
-    return(
-        <AuthContext.Provider value={{user, login, logout}}> 
-            {childern}
+
+    return (
+        <AuthContext.Provider value={{authUser}}>
+            {children}
         </AuthContext.Provider>
     )
 }
 
-export const useAuth = () => useContext(AuthProvider)
+export const useAuth = () => useContext(AuthContext)

@@ -11,7 +11,7 @@ export class tickets {
     @Column()
     event_id!: number 
 
-    @OneToOne(() => Users)
+    @ManyToOne(() => Users)
     @Column()
     user_id!: number 
 

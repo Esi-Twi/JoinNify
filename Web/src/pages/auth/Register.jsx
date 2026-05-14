@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { set, useForm } from "react-hook-form"
 import { useAuthStore } from '../../store/useAuthStore';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -10,15 +11,16 @@ function Register() {
   const [agreeWarning, setAgreeWarning] = useState("")
   const { isRegistering, registerUser } = useAuthStore()
   const { register, handleSubmit, formState: { errors } } = useForm()
+  const router = useNavigate()
 
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
     if(!hasAgreed) {
       return setAgreeWarning("Agree to all terms and privacy policy ")
     }
 
-    registerUser(data);
-    
+    await registerUser(data);
+    router("/")
   }
 
 

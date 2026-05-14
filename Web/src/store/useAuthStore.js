@@ -22,8 +22,7 @@ export const useAuthStore = create((set) => ({
             toast.success(res.data?.msg)
             localStorage.setItem("authUser", JSON.stringify(res.data))
 
-            console.log(res.data);
-
+            return res.data
 
         } catch (error) {
             let message = error?.response?.data?.message;

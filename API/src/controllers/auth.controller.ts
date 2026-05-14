@@ -2,7 +2,7 @@ import { forgetPasswordSchema, loginSchema, registerSchema, verifyForgotPassword
 import { forgotPassword, loginUser, registerUser, resetPassword, verifyEmail, verifyToken } from "@services/auth.service";
 import { AppError } from "@utils/app-errror";
 import { generateToken } from "@utils/generateJWTToken";
-import { AuthEmails } from "emails/send.auth.email";
+import { AuthEmails } from "../emails/send.auth.email";
 import { NextFunction, Request, Response } from "express";
 
 
@@ -38,13 +38,12 @@ export const AuthControllers = {
             })
 
             const verificationLink = `${process.env.BASE_URL}/auth/verify-email?userId=${newUser.id}&token=${newUser.verification_token}`
-            // const verificationLink = "https://yourdomain.com/verify-email?userId=USER_ID_HERE&token=VERIFICATION_TOKEN_HERE"
 
 
             //send welcome email
             await AuthEmails.sendWelcomeEmail(newUser.email, newUser.name, verificationLink)
 
-            // // send notification to admin if organizer signs up
+             // send notification to admin if organizer signs up
             // app.post("/notify", (req: Request, res: Response) => {
             //     const { userId, message } = req.body;
 
@@ -79,16 +78,12 @@ export const AuthControllers = {
                     name: newUser.name,
                     email: newUser.email,
                     role: newUser.role,
-                    verificationToken: newUser.verification_token,
-                    verificationTokenExpiry: newUser.verification_token_expiry
                 },
                 token
             })
-
         } catch (error) {
             next(error)
         }
-
     },
 
     async login(req: Request, res: Response, next: NextFunction) {

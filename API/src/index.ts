@@ -37,7 +37,7 @@ app.use(loggerMiddleware)
 app.use("/api/v1/auth", AuthRoutes)
 app.use("/api/v1/users", UserRoutes)
 app.use("/api/v1/events", EventRoutes)
-app.use("/api/v1/tickets", EventRoutes)
+app.use("/api/v1/tickets", TicketRoutes)
 
 app.use(errorHandler)
 

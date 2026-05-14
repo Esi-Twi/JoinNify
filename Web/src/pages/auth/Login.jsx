@@ -1,21 +1,23 @@
 import React, { useState } from 'react'
 import { useForm } from "react-hook-form"
 import { useAuthStore } from '../../store/useAuthStore';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const { isLoggingIn, login } = useAuthStore()
   const { register, handleSubmit, formState: { errors } } = useForm()
+  const router = useNavigate()
 
+  const onSubmit = async (data) => {
+    const result = await login(data)
 
-  const onSubmit = (data) => {
-    login(data)
+    if (result) {
+      router("/")
+    }
   }
 
 
-  // <div className='d-flex align-items-center justify-content-center w-100' style={{ height: "100vh" }}>
-  //   <span class="loader"></span>
-  // </div>
   return (
     <div className='center-div row auth-other'>
       <div className='col-lg-9 col-md-10 col-11 row auth-form align-items-start pt-md-5'>
@@ -34,7 +36,7 @@ function Login() {
               <label>Password <span>*</span></label>
               <aside>
                 <input type={showPassword ? "text" : "password"}
-                {...register("password", { required: "Password is required" })} />
+                  {...register("password", { required: "Password is required" })} />
                 <i className={`bi ${showPassword ? 'bi-eye' : 'bi-eye-slash'} w-5 ms-2`} style={{ cursor: "pointer" }} onClick={() => setShowPassword(!showPassword)}></i>
               </aside>
             </div>
@@ -47,10 +49,10 @@ function Login() {
 
             <div className='center-div'>
               <button disabled={isLoggingIn}>
-                {isLoggingIn ? 
-                    "Logging In ..."
-                   : "Log In"}
-                </button>
+                {isLoggingIn ?
+                  "Logging In ..."
+                  : "Log In"}
+              </button>
             </div>
           </form>
 

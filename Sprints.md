@@ -65,7 +65,7 @@ console.log(user.eventsAttending); -->
 
 # 📅 **Sprint 2 – Event Management (Organizer)**
 ### 🎯 **Goal:** Organizers can create & publish events.
-## 🔧 **Backend**
+## 🔧 **Backend** 
 *✅ Create event model
 *✅ Create Event API
 *✅ Update Event API
@@ -102,7 +102,7 @@ console.log(user.eventsAttending); -->
 
 ## 🔧 **Backend**
 
-* Ticket model
+*✅ Ticket model
 * Book ticket API
 * Cancel ticket API
 * Get event tickets API

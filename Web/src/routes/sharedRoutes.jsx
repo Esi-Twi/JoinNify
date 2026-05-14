@@ -6,7 +6,7 @@ import Profile from '../pages/shared/Profile'
 export default function authRoutes() {
     return (
         <Route path='/user'>
-            <Route path='' element={<Profile />} />
+            <Route path='profile' element={<Profile />} />
 
         </Route>
     )
