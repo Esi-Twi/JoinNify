@@ -1,114 +1,10 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuthStore } from '../../store/useAuthStore'
+import { useAuthStore } from "../../store/useAuthStore"
+import { MOCK_EVENTS } from '../../eventDummy'
 
 // Mock Events Data
-const MOCK_EVENTS = [
-  {
-    id: 1,
-    title: "Tech Conference 2025",
-    date: "2025-01-15",
-    time: "09:00 AM",
-    location: "San Francisco, CA",
-    category: "Technology",
-    price: "paid",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=300&fit=crop",
-    description: "Join industry leaders for an exciting day of talks, workshops, and networking.",
-    attendees: 250,
-    rating: 4.8
-  },
-  {
-    id: 2,
-    title: "Summer Music Festival",
-    date: "2025-02-20",
-    time: "06:00 PM",
-    location: "Los Angeles, CA",
-    category: "Music",
-    price: "paid",
-    image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=500&h=300&fit=crop",
-    description: "Experience live performances from top artists. Three days of amazing music!",
-    attendees: 1200,
-    rating: 4.9
-  },
-  {
-    id: 3,
-    title: "Community Yoga Session",
-    date: "2025-01-10",
-    time: "08:00 AM",
-    location: "Central Park, NY",
-    category: "Wellness",
-    price: "free",
-    image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=500&h=300&fit=crop",
-    description: "Relaxing outdoor yoga session for all skill levels. Bring your mat!",
-    attendees: 45,
-    rating: 4.6
-  },
-  {
-    id: 4,
-    title: "Startup Pitch Night",
-    date: "2025-01-20",
-    time: "07:00 PM",
-    location: "New York, NY",
-    category: "Business",
-    price: "free",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=300&fit=crop",
-    description: "Watch innovative startups pitch their ideas to investors.",
-    attendees: 300,
-    rating: 4.7
-  },
-  {
-    id: 5,
-    title: "Art Exhibition Opening",
-    date: "2025-02-05",
-    time: "05:00 PM",
-    location: "Chicago, IL",
-    category: "Art",
-    price: "paid",
-    image: "https://images.unsplash.com/photo-1561214115-6d2f1b0609fa?w=500&h=300&fit=crop",
-    description: "Celebrate contemporary art with wine, cheese, and networking.",
-    attendees: 120,
-    rating: 4.5
-  },
-  {
-    id: 6,
-    title: "Food & Wine Tasting",
-    date: "2025-02-15",
-    time: "06:30 PM",
-    location: "Napa Valley, CA",
-    category: "Food",
-    price: "paid",
-    image: "https://images.unsplash.com/photo-1555939594-58d7cb561143?w=500&h=300&fit=crop",
-    description: "Taste wines from award-winning vineyards paired with gourmet cuisine.",
-    attendees: 80,
-    rating: 4.8
-  },
-  {
-    id: 7,
-    title: "Digital Marketing Workshop",
-    date: "2025-01-25",
-    time: "10:00 AM",
-    location: "Seattle, WA",
-    category: "Technology",
-    price: "paid",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=300&fit=crop",
-    description: "Learn latest digital marketing strategies from industry experts.",
-    attendees: 180,
-    rating: 4.6
-  },
-  {
-    id: 8,
-    title: "Morning Meditation & Breakfast",
-    date: "2025-01-12",
-    time: "07:00 AM",
-    location: "Boston, MA",
-    category: "Wellness",
-    price: "free",
-    image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=500&h=300&fit=crop",
-    description: "Start your day with guided meditation and healthy breakfast.",
-    attendees: 65,
-    rating: 4.7
-  }
-]
+
 
 const CATEGORIES = ["All", "Technology", "Music", "Wellness", "Business", "Art", "Food"]
 
@@ -119,19 +15,24 @@ const items = [
 ];
 
 function Events() {
-  const { isLoggingOut, logout } = useAuthStore()
-  const navigate = useNavigate()
+  const { authUser } = useAuthStore()
+
+  console.log(authUser);
+
+
+
+
+
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [priceFilter, setPriceFilter] = useState("all")
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const navigate = useNavigate();
 
   const nextSlide = () => setActiveIndex((prev) => (prev + 1) % items.length);
   const prevSlide = () => setActiveIndex((prev) => (prev - 1 + items.length) % items.length);
 
 
-  const logOut = () => {
-    logout()
-  }
 
   const filteredEvents = MOCK_EVENTS.filter(event => {
     const categoryMatch = selectedCategory === "All" || event.category === selectedCategory
@@ -151,127 +52,291 @@ function Events() {
     navigate(`/event/${eventId}`)
   }
 
-  if (isLoggingOut) {
-    return (
-      <div className='d-flex align-items-center justify-content-center w-100' style={{ height: "100vh" }}>
-        <span className="loader"></span>
-      </div>
-    )
-  }
-
   return (
-    <div style={{minHeight: "100vh" }}>
-      <button onClick={logOut} >Logout</button>
+    <div style={{ minHeight: "100vh" }}>
+      {/* hero section */}
+      <section className="hero-section d-flex align-items-center overflow-hidden position-relative">
+        {/* Abstract Background Glow */}
+        <div className="radial-glow"></div>
 
-      <div className="bg-dark text-white min-vh-100 p-4 font-sans" style={{ backgroundColor: '#121212' }}>
-        <header className="mb-4">
-          <h5 className="text-secondary fw-bold">Today's top picks <small className="fw-light opacity-50">Updated May 9</small></h5>
-        </header>
+        <div className="container position-relative" style={{ zIndex: 2 }}>
+          <div className="row align-items-center g-5">
 
-        {/* Main Carousel Area */}
-        <div className="position-relative overflow-hidden mb-5" style={{ height: '500px' }}>
-          <div className="d-flex align-items-center justify-content-center h-100">
+            {/* Left Column: Content */}
+            <div className="col-12 col-md-6 text-white">
+              <p className="text-secondary mb-2 fw-medium opacity-75">
+                All the fun starts here.
+              </p>
+              <h1 className="display-3 fw-bold mb-4">
+                Book your <br />
+                <span className="position-relative">
+                  Tickets
+                  <span className="heading-underline"></span>
+                </span> for Event!
+              </h1>
 
-            {/* Left Arrow */}
-            <button onClick={prevSlide} className="btn btn-success rounded-circle position-absolute start-0 z-3 ms-4 d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px' }}>
-              {/* <ChevronLeft /> */}
-              <i className='bi bi-star'></i>
-            </button>
+              <ul className="list-unstyled mb-5">
+                <li className="d-flex align-items-center mb-3 opacity-90">
+                  <i className="bi bi-circle-fill me-3 small-dot"></i>
+                  <span>Safe, Secure, Reliable ticketing.</span>
+                </li>
+                <li className="d-flex align-items-center opacity-90">
+                  <i className="bi bi-circle-fill me-3 small-dot"></i>
+                  <span>Your ticket to live entertainment!</span>
+                </li>
+              </ul>
 
-            {/* Main Card */}
-            <div className="carousel-card-container position-relative w-75 h-100 rounded-4 overflow-hidden shadow-lg">
-              <img
-                src={items[activeIndex].img}
-                className="w-100 h-100 object-fit-cover"
-                alt="featured"
-                style={{ filter: 'brightness(0.7)' }}
-              />
-
-              <div className="position-absolute bottom-0 start-0 p-5 w-100 text-start">
-                <div className="d-flex gap-3 mb-3">
-                  <div className="bg-white bg-opacity-25 rounded-circle p-2 border border-white border-opacity-25">
-                    {/* <PlayFill size={24} /> */}
-                    <i className='bi bi-star'></i>
-                    </div>
-                  <div className="bg-white bg-opacity-25 rounded-circle p-2 border border-white border-opacity-25">
-                    {/* <Heart size={20} /> */}
-                    <i className='bi bi-star'></i>
-
-                    </div>
-                </div>
-                <h1 className="display-4 fw-bold mb-2 w-75">{items[activeIndex].title}</h1>
-                <p className="mb-0 text-uppercase fw-bold small tracking-widest">{items[activeIndex].time}</p>
-                <p className="opacity-75 small">{items[activeIndex].location}</p>
+              <div className="mt-4">
+                <a href='#' className="btn btn-light btn-lg px-4 py-2 rounded-0 fw-bold d-inline-flex align-items-center gap-2">
+                  View More <i className="bi bi-arrow-down"></i>
+                </a>
               </div>
             </div>
 
-            {/* Right Arrow */}
-            <button onClick={nextSlide} className="btn btn-success rounded-circle position-absolute end-0 z-3 me-4 d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px' }}>
-              {/* <ChevronRight /> */}
-              <i className='bi bi-star'></i>
+            {/* Right Column: Image Grid */}
+            <div className="col-12 col-md-6 position-relative">
+              {/* Decorative Zigzags and Corners */}
+              <div className="decoration-zigzag top-right d-none d-lg-block"></div>
+              <div className="decoration-zigzag bottom-left d-none d-lg-block"></div>
+              <div className="frame-corner top-corner"></div>
+              <div className="frame-corner bottom-corner"></div>
 
-            </button>
-          </div>
-        </div>
-
-        {/* Bottom Thumbnails */}
-        <div className="container mt-4">
-          <div className="d-flex justify-content-center gap-3 flex-wrap">
-            {items.map((item, index) => (
-              <div
-                key={item.id}
-                onClick={() => setActiveIndex(index)}
-                className={`rounded-circle overflow-hidden cursor-pointer transition-all ${activeIndex === index ? 'border border-3 border-success p-1 scale-110' : 'opacity-50'}`}
-                style={{ width: '50px', height: '50px', cursor: 'pointer', transition: '0.3s' }}
-              >
-                <img src={item.img} className="w-100 h-100 object-fit-cover rounded-circle" alt="thumb" />
+              <div className="row g-3 image-grid">
+                <div className="col-6">
+                  <div className="hero-img-wrapper img-tall">
+                    <img src="../assets/images/recording.avif" alt="Concert" className="img-fluid" />
+                  </div>
+                </div>
+                <div className="col-6 mt-5">
+                  <div className="hero-img-wrapper img-square">
+                    <img src="../assets/images/party.avif" alt="Artist" className="img-fluid" />
+                  </div>
+                </div>
+                <div className="col-6 mt-n4">
+                  <div className="hero-img-wrapper img-square">
+                    <img src="../assets/images/dj.avif" alt="DJ" className="img-fluid" />
+                  </div>
+                </div>
+                <div className="col-6">
+                  <div className="hero-img-wrapper img-tall">
+                    <img src="../assets/images/banner.png" alt="Singer" className="img-fluid" />
+                  </div>
+                </div>
               </div>
-            ))}
-            {/* Placeholder for remaining dots in your image */}
-            {[...Array(12)].map((_, i) => (
-              <div key={i} className="rounded-circle bg-secondary opacity-25" style={{ width: '45px', height: '45px' }}></div>
-            ))}
-          </div>
-        </div>
+            </div>
 
-        <style dangerouslySetInnerHTML={{
-          __html: `
-        .carousel-card-container {
-            perspective: 1000px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        }
-        .scale-110 { transform: scale(1.15); }
-        .tracking-widest { letter-spacing: 0.1em; }
-      `}} />
-      </div>
-
-      {/* Hero Section */}
-      <section style={styles.heroSection}>
-        <div style={styles.heroContent}>
-          <h1 style={styles.heroTitle}>Discover and book amazing events around you</h1>
-          <p style={styles.heroSubtitle}>
-            Find the perfect event that matches your interests. From tech conferences to wellness sessions,
-            JoinNify has it all.
-          </p>
-          <div style={styles.heroBtnContainer}>
-            <button
-              onClick={handleExploreEvents}
-              style={styles.primaryBtn}
-              onMouseEnter={(e) => e.target.style.backgroundColor = "#4338CA"}
-              onMouseLeave={(e) => e.target.style.backgroundColor = "#4F46E5"}
-            >
-              Explore Events
-            </button>
-            <button
-              style={styles.secondaryBtn}
-              onMouseEnter={(e) => e.target.style.backgroundColor = "#E5E7EB"}
-              onMouseLeave={(e) => e.target.style.backgroundColor = "#FFFFFF"}
-            >
-              Create Event
-            </button>
           </div>
         </div>
       </section>
+
+      {/* upcoming events section */}
+      <section className="py-5 my-4" >
+        <div className="container">
+          <h2 className="text-center display-5 mb-5 fw-bold">Recommended for You</h2>
+
+          {/* Added id "eventCarousel" to link controls */}
+          <div id="eventCarousel" className="carousel slide position-relative" data-bs-ride="carousel">
+            <button
+              className="carousel-control-prev custom-nav-btn"
+              type="button"
+              data-bs-target="#eventCarousel"
+              data-bs-slide="prev"
+            >
+              <i className="bi bi-chevron-left"></i>
+            </button>
+
+            <button
+              className="carousel-control-next custom-nav-btn"
+              type="button"
+              data-bs-target="#eventCarousel"
+              data-bs-slide="next"
+            >
+              <i className="bi bi-chevron-right"></i>
+            </button>
+
+            <div className="carousel-inner">
+              {MOCK_EVENTS.map((event, index) => (
+                <div key={event.id} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
+                  <div className="container row mx-auto position-relative p-0 d-flex align-items-center justify-content-center" style={{ minHeight: '550px' }}>
+
+                    <div className="col-lg-10 p-0 position-relative">
+                      <img
+                        src={event.image}
+                        className="rounded-3 shadow-lg w-100"
+                        alt={event.title}
+                        style={{ height: '480px', objectFit: 'cover', border: '1px solid #333' }}
+                      />
+
+                      <div className="glass-card position-absolute translate-middle-y top-50 end-0 me-lg-n5 p-4 rounded-4 shadow-2xl col-11 col-md-7 col-lg-6">
+
+                        <div className="d-flex gap-3 mb-3">
+                          {/* Date Component */}
+                          <div className="date-box rounded-3 overflow-hidden text-center shadow">
+                            <div className="bg-white text-dark fw-bold py-1 px-3 fs-4">17</div>
+                            <div className="bg-white text-dark small pb-1">June, 2025</div>
+                            <div className="bg-primary text-white x-small py-1" style={{ fontSize: '10px' }}>07:00 pm</div>
+                          </div>
+
+                          {/* Title Section */}
+                          <div className="flex-grow-1 text-white">
+                            <div className="d-flex justify-content-between align-items-center">
+                              <span className="small opacity-75">{event.category} Party</span>
+                              {/* <div className="d-flex gap-2">
+                                <i className="bi bi-heart-fill glass-icon p-2 rounded-circle"></i>
+                                <i className="bi bi-bookmark-fill glass-icon p-2 rounded-circle"></i>
+                              </div> */}
+                            </div>
+                            <h3 className="h4 fw-bold">{event.title}</h3>
+                          </div>
+                        </div>
+
+                        <p className="text-white small opacity-75 mb-4 pe-lg-4">
+                          Join us for an exclusive Business Party filled with networking opportunities, engaging conversations, and a touch of celebration!
+                        </p>
+
+                        <div className="d-flex gap-3">
+                          <button className="btn btn-outline-light border-secondary px-4 py-2 d-flex align-items-center gap-2">
+                            <i className="bi bi-journal-text"></i> Get Ticket
+                          </button>
+                          <a href={`/event/${event.id}`} className="btn btn-outline-light border-secondary px-4 py-2">
+                            More Details
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* instruction section */}
+      <section className="steps-section py-5 position-relative overflow-hidden">
+        <div className="container py-5">
+
+          {/* Step 1: Image Left, Text Right */}
+          <div className="row mb-lg-5 align-items-center pb-5 g-5">
+            <div className="col-12 col-md-6 position-relative">
+              {/* The Image Frame */}
+              <div className="image-frame-wrapper">
+                <div className="decorative-frame"></div>
+                <img
+                  src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=800"
+                  alt="Tunnel"
+                  className="img-fluid rounded-1 position-relative z-1"
+                />
+                {/* Floating Icon Card */}
+                <div className="floating-icon-card shadow-lg">
+                  <i className="bi bi-layout-text-sidebar-reverse fs-1"></i>
+                </div>
+                {/* Loopy Line Decor */}
+                <div className="loopy-decor top-0 start-100 translate-middle">
+                  <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                    <path d="M10 50 C 20 10, 50 10, 50 40" stroke="white" strokeWidth="2" strokeDasharray="4 4" fill="transparent" opacity="0.4" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-12 col-md-6 text-white ps-md-5">
+              <span className="text-secondary fw-bold d-block mb-2 h5">Step 1</span>
+              <h2 className="display-5 fw-bold mb-4">Discover Events</h2>
+              <p className="text-gray leading-relaxed">
+                Browse concerts, workshops, conferences, and more. <br />
+                Find events that match your interests and schedule.
+              </p>
+            </div>
+          </div>
+
+          {/* Connection Path (Dashed Line) - Hidden on Mobile */}
+          <div className="connection-path d-none d-md-block">
+            <svg width="200" height="150" viewBox="0 0 200 150" fill="none">
+              <path d="M0 10 Q 100 150 200 10" stroke="white" strokeWidth="2" strokeDasharray="6 6" opacity="0.2" fill="none" />
+            </svg>
+          </div>
+
+          {/* Step 2: Text Left, Image Right */}
+          <div className="row my-lg-5 py-lg-5 align-items-center g-5 flex-column-reverse flex-md-row">
+            <div className="col-12 col-md-6 text-white pe-md-5 text-md-start">
+              <span className="text-secondary fw-bold d-block mb-2 h5">Step 2</span>
+              <h2 className="display-5 fw-bold mb-4">Book Your Ticket</h2>
+              <p className="text-gray leading-relaxed">
+                Choose your event and reserve your spot in seconds. <br />
+                Enjoy fast, secure, and seamless ticket booking.
+              </p>
+            </div>
+
+            <div className="col-12 col-md-6 position-relative">
+              <div className="image-frame-wrapper ms-auto">
+                <div className="decorative-frame frame-right"></div>
+                <img
+                  src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800"
+                  alt="Tickets"
+                  className="img-fluid rounded-1 position-relative z-1"
+                />
+                {/* Floating Icon Card */}
+                <div className="floating-icon-card card-left shadow-lg">
+                  <i className="bi bi-play-btn fs-1"></i>
+                </div>
+                {/* Loopy Line Decor */}
+                <div className="loopy-decor top-0 start-0 translate-middle">
+                  <svg width="60" height="60" viewBox="0 0 60 60" fill="none" transform="scale(-1, 1)">
+                    <path d="M10 50 C 20 10, 50 10, 50 40" stroke="white" strokeWidth="2" strokeDasharray="4 4" fill="transparent" opacity="0.4" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Connection Path (Dashed Line) - Hidden on Mobile */}
+          <div className="connection-path d-none d-md-block">
+            <svg width="200" height="150" viewBox="0 0 200 150" fill="none">
+              <path d="M0 10 Q 100 150 200 10" stroke="white" strokeWidth="2" strokeDasharray="6 6" opacity="0.2" fill="none" />
+            </svg>
+          </div>
+
+          {/* Step 3: Image Left, Text Right */}
+          <div className="row pt-lg-5 align-items-center g-5">
+            <div className="col-12 col-md-6 position-relative">
+              {/* The Image Frame */}
+              <div className="image-frame-wrapper">
+                <div className="decorative-frame"></div>
+                <img
+                  src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=800"
+                  alt="Tunnel"
+                  className="img-fluid rounded-1 position-relative z-1"
+                />
+                {/* Floating Icon Card */}
+                <div className="floating-icon-card shadow-lg">
+                  <i className="bi bi-layout-text-sidebar-reverse fs-1"></i>
+                </div>
+                {/* Loopy Line Decor */}
+                <div className="loopy-decor top-0 start-100 translate-middle">
+                  <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                    <path d="M10 50 C 20 10, 50 10, 50 40" stroke="white" strokeWidth="2" strokeDasharray="4 4" fill="transparent" opacity="0.4" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-12 col-md-6 text-white ps-md-5">
+              <span className="text-secondary fw-bold d-block mb-2 h5">Step 3</span>
+              <h2 className="display-5 fw-bold mb-4">3. Attend & Enjoy</h2>
+              <p className="text-gray leading-relaxed">
+                Receive your digital ticket with instant QR check-in. <br />
+                Show up, scan, and enjoy your event hassle-free.
+              </p>
+            </div>
+          </div>
+
+
+        </div>
+      </section>
+
+
 
       {/* Filters Section */}
       <section id="events-section" style={styles.filterSection}>
@@ -357,97 +422,45 @@ function Events() {
       </section>
 
       {/* Events Grid */}
-      <section style={styles.eventsSection}>
-        <div style={styles.container}>
+      <section id="events-section" className="py-5">
+        <div className="container">
           {filteredEvents.length > 0 ? (
-            <div style={styles.eventsGrid}>
+            <div className="row g-4">
               {filteredEvents.map((event) => (
-                <div
-                  key={event.id}
-                  style={styles.eventCard}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "translateY(-8px)"
-                    e.currentTarget.style.boxShadow = "0 12px 24px rgba(79, 70, 229, 0.15)"
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "translateY(0)"
-                    e.currentTarget.style.boxShadow = "0 2px 8px rgba(0, 0, 0, 0.08)"
-                  }}
-                >
-                  {/* Event Image */}
-                  <div style={styles.eventImageContainer}>
-                    <img
-                      src={event.image}
-                      alt={event.title}
-                      style={styles.eventImage}
-                    />
-                    <div style={styles.categoryBadge}>
-                      {event.category}
-                    </div>
-                    <div style={styles.priceBadge}>
-                      {event.price === "free" ? "Free" : "Paid"}
-                    </div>
-                  </div>
-
-                  {/* Event Details */}
-                  <div style={styles.eventCardBody}>
-                    <h3 style={styles.eventTitle}>{event.title}</h3>
-
-                    <div style={styles.eventMeta}>
-                      <div style={styles.metaItem}>
-                        <span style={styles.metaIcon}>📅</span>
-                        <span style={styles.metaText}>
-                          {new Date(event.date).toLocaleDateString('en-US', {
-                            month: 'short',
-                            day: 'numeric'
-                          })}
-                        </span>
-                      </div>
-                      <div style={styles.metaItem}>
-                        <span style={styles.metaIcon}>🕐</span>
-                        <span style={styles.metaText}>{event.time}</span>
-                      </div>
+                <div key={event.id} className="col-12 col-md-6 col-lg-4">
+                  <div className="card shadow-sm h-100 overflow-hidden">
+                    <div style={{ position: 'relative' }}>
+                      <img src={event.image} className="card-img-top" alt={event.title} style={{ height: 220, objectFit: 'cover' }} />
+                      <span className="badge bg-primary position-absolute" style={{ top: 12, left: 12 }}>{event.category}</span>
+                      <span className={`badge position-absolute ${event.price === 'free' ? 'bg-success' : 'bg-warning text-dark'}`} style={{ top: 12, right: 12 }}>{event.price === 'free' ? 'Free' : 'Paid'}</span>
                     </div>
 
-                    <div style={styles.eventMeta}>
-                      <div style={styles.metaItem}>
-                        <span style={styles.metaIcon}>📍</span>
-                        <span style={styles.metaText}>{event.location}</span>
-                      </div>
-                    </div>
+                    <div className="card-body d-flex flex-column">
+                      <h5 className="card-title">{event.title}</h5>
 
-                    <div style={styles.eventFooter}>
-                      <div style={styles.attendees}>
-                        <span style={styles.attendeesIcon}>👥</span>
-                        <span style={styles.attendeesText}>{event.attendees}</span>
+                      <div className="mb-2 small text-muted d-flex gap-3">
+                        <div><i className="bi bi-calendar-event me-1"></i> {new Date(event.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
+                        <div><i className="bi bi-clock me-1"></i> {event.time}</div>
                       </div>
-                      <button
-                        onClick={() => handleViewDetails(event.id)}
-                        style={styles.viewDetailsBtn}
-                        onMouseEnter={(e) => e.target.style.backgroundColor = "#4338CA"}
-                        onMouseLeave={(e) => e.target.style.backgroundColor = "#4F46E5"}
-                      >
-                        View Details
-                      </button>
+
+                      <p className="mb-3 small text-muted"><i className="bi bi-geo-alt me-1"></i> {event.location}</p>
+
+                      <div className="mt-auto d-flex justify-content-between align-items-center">
+                        <div className="small text-muted"><i className="bi bi-people-fill me-1"></i> {event.attendees}</div>
+                        <button onClick={() => handleViewDetails(event.id)} className="btn btn-primary btn-sm">View Details</button>
+                      </div>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <div style={styles.noEventsContainer}>
-              <p style={styles.noEventsText}>No events found. Try adjusting your filters!</p>
+            <div className="text-center py-5">
+              <p className="mb-0">No events found. Try adjusting your filters!</p>
             </div>
           )}
         </div>
       </section>
-
-      {/* Footer */}
-      <footer style={styles.footer}>
-        <div style={styles.container}>
-          <p style={styles.footerText}>© 2025 JoinNify. All rights reserved.</p>
-        </div>
-      </footer>
     </div>
   )
 }

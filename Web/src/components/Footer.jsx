@@ -21,50 +21,6 @@ function Footer() {
 
     return (
         <div>
-            <div className="trusted-section text-center pt-5" style={{zIndex: 100}}>
-                <div className="container">
-                    <div>
-                        <h1 className="fw-bold display-4 mb-1"> Trusted by over <span className="text-indigo">150</span>  organizations</h1>
-                        <p className='fs-5 fw-bold text-gray mb-5'>in more than 50 countries</p>
-
-                        <div className="brand-icons mt-4 mb-5 pb-5">
-                            <img src="../../assets/icons/mi-logo.png" alt="profile" className="brand-icon" />
-
-                            <img src="../../assets/icons/microsoft.png" alt="profile" className="brand-icon" />
-
-                            <img src="../../assets/icons/mit.png" alt="profile" className="brand-icon" />
-
-                            <img src="../../assets/icons/slack.png" alt="profile" className="brand-icon" />
-
-                        </div>
-                    </div>
-
-                    {/* Call to Action */}
-                    <div className="cta-box p-4 mb-n10 mt-5 bg1">
-                        <p className="lead">
-                            Join our Events and Participate in the next <strong>Lorem contest</strong>.
-                        </p>
-                        <button className="btn btn-primary btn-lg">
-                            <i className="bi bi-people-fill me-2"></i> Join Us
-                        </button>
-
-                        <div className="avatars mt-4">
-                            <img
-                                src="../../assets/icons/mi-logo.png" alt="profile" className="avatar" />
-
-                            {[1, 2, 3, 4, 5].map((num) => (
-                                <img
-                                    key={num}
-                                    src={`https://i.pravatar.cc/60?img=${num}`}
-                                    alt="profile"
-                                    className="avatar"
-                                />
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             {/* footer */}
             <div className="pb-3 pt-5 text-white bg1" style={{ zIndex: -100 }}>
                 <div className="container mx-auto pt-5 row g-4 pb-4 mb-4" >

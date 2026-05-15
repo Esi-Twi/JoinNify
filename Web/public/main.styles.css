@@ -373,5 +373,425 @@ a {
 }
 
 
+/* ---------------------loader ----------------------------- */
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 40px;
+    height: 40px;
+    --c: no-repeat linear-gradient(orange 0 0);
+    background: var(--c), var(--c), var(--c), var(--c);
+    background-size: 21px 21px;
+    animation: l5 1.5s infinite cubic-bezier(0.3, 1, 0, 1);
+}
 
-/* ---------------------profile ----------------------------- */
+@keyframes l5 {
+    0% {
+        background-position: 0 0, 100% 0, 100% 100%, 0 100%
+    }
+
+    33% {
+        background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+        width: 60px;
+        height: 60px
+    }
+
+    66% {
+        background-position: 100% 0, 100% 100%, 0 100%, 0 0;
+        width: 60px;
+        height: 60px
+    }
+
+    100% {
+        background-position: 100% 0, 100% 100%, 0 100%, 0 0
+    }
+}
+
+
+
+/* -----------------------home page-------------------------- */
+
+/* Hero Section Main Layout */
+.hero-section {
+    min-height: 85vh;
+    padding: 80px 0;
+    background: linear-gradient(135deg, #42074c 0%, #0D1233 50%, #2A0F3D 100%);
+}
+
+/* Heading Underline Decoration */
+.heading-underline {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 105%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    z-index: -1;
+}
+
+/* Bullet Point Dots */
+.small-dot {
+    font-size: 8px;
+    color: #ffffff;
+}
+
+/* Image Grid Styling */
+.hero-img-wrapper {
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    transition: transform 0.4s ease;
+}
+
+.hero-img-wrapper:hover {
+    transform: translateY(-10px);
+}
+
+.hero-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.img-tall {
+    height: 260px;
+}
+
+.img-square {
+    height: 200px;
+}
+
+/* Staggered Grid Helper */
+.mt-n4 {
+    margin-top: -40px;
+}
+
+/* Decorative Elements */
+.radial-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+    right: -100px;
+    top: 10%;
+    z-index: 1;
+}
+
+.decoration-zigzag {
+    position: absolute;
+    width: 120px;
+    height: 60px;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 L10 0 L20 10 L30 0 L40 10 L50 0 L60 10 L70 0 L80 10 L90 0 L100 10' fill='none' stroke='white' stroke-opacity='0.2' stroke-width='2'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    z-index: 3;
+}
+
+.top-right {
+    top: -20px;
+    right: 0;
+}
+
+.bottom-left {
+    bottom: -20px;
+    left: 0;
+}
+
+.frame-corner {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    z-index: 0;
+}
+
+.top-corner {
+    top: -30px;
+    right: -15px;
+    border-left: 0;
+    border-bottom: 0;
+}
+
+.bottom-corner {
+    bottom: 40px;
+    left: -15px;
+    border-right: 0;
+    border-top: 0;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .hero-section {
+        text-align: center;
+        padding: 60px 0;
+    }
+
+    .display-3 {
+        font-size: 2.5rem;
+    }
+
+    .list-unstyled li {
+        justify-content: center;
+    }
+
+    .image-grid {
+        margin-top: 50px;
+    }
+
+    .mt-5,
+    .mt-n4 {
+        margin-top: 0 !important;
+    }
+
+    .img-tall,
+    .img-square {
+        height: 180px;
+    }
+}
+
+.steps-section {
+  background: linear-gradient(135deg, #070A1A 0%, #03040a 100%);
+}
+
+/* Image Container with Frame effect */
+.image-frame-wrapper {
+  position: relative;
+  max-width: 480px;
+}
+
+.decorative-frame {
+  position: absolute;
+  top: 40px;
+  left: -20px;
+  right: 20px;
+  bottom: -20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.frame-right {
+  left: 20px;
+  right: -20px;
+}
+
+/* Purple Floating Icon Card */
+.floating-icon-card {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 100px;
+  height: 100px;
+  background: #3d3b4f; /* Muted purple from reference */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  border-radius: 4px;
+  z-index: 5;
+}
+
+.card-left {
+  right: auto;
+  left: -20px;
+}
+
+/* Middle connection curve */
+.connection-path {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: -60px;
+  z-index: 0;
+}
+
+.loopy-decor {
+    position: absolute;
+    z-index: 10;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .image-frame-wrapper {
+    margin: 40px auto;
+  }
+  .floating-icon-card {
+    width: 70px;
+    height: 70px;
+  }
+  .floating-icon-card i {
+      font-size: 1.5rem !important;
+  }
+  .decorative-frame {
+      display: none;
+  }
+}
+/* ----------------instruction ---------------------- */
+.steps-section {
+    background: linear-gradient(135deg, #671e5f 0%, #0a030a 100%);
+}
+
+/* Image Container with Frame effect */
+.image-frame-wrapper {
+    position: relative;
+    max-width: 480px;
+}
+
+.decorative-frame {
+    position: absolute;
+    top: 40px;
+    left: -20px;
+    right: 20px;
+    bottom: -20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.frame-right {
+    left: 20px;
+    right: -20px;
+}
+
+/* Purple Floating Icon Card */
+.floating-icon-card {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 100px;
+    height: 100px;
+    background: #3d3b4f;
+    /* Muted purple from reference */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    border-radius: 4px;
+    z-index: 5;
+}
+
+.card-left {
+    right: auto;
+    left: -20px;
+}
+
+/* Middle connection curve */
+.connection-path {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: -60px;
+    z-index: 0;
+}
+
+.loopy-decor {
+    position: absolute;
+    z-index: 10;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .image-frame-wrapper {
+        margin: 40px auto;
+    }
+
+    .floating-icon-card {
+        width: 70px;
+        height: 70px;
+    }
+
+    .floating-icon-card i {
+        font-size: 1.5rem !important;
+    }
+
+    .decorative-frame {
+        display: none;
+    }
+}
+/* ----------------upcoming events------------------- */
+/* Glassmorphism Panel */
+.glass-card {
+    background: rgba(30, 34, 45, 0.7);
+    /* Deep dark blue transparent */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 10;
+}
+
+/* Date Box Styling */
+.date-box {
+    min-width: 85px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.x-small {
+    font-size: 11px;
+    text-transform: lowercase;
+}
+
+/* Icons styling */
+.glass-icon {
+    background: rgba(255, 255, 255, 0.1);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.glass-icon:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Handles the overlap on large screens */
+@media (min-width: 992px) {
+    .me-lg-n5 {
+        margin-right: -100px !important;
+        /* Forces the box to hang over the edge */
+    }
+}
+
+/* Responsive fix for small screens */
+@media (max-width: 991px) {
+    .glass-card {
+        position: relative !important;
+        top: 0 !important;
+        transform: none !important;
+        margin: -50px auto 0 auto !important;
+        width: 95%;
+    }
+}
+/* 2. Custom Navigation Button Styling */
+.custom-nav-btn {
+    width: 45px !important;
+    height: 45px !important;
+    background-color: black !important;
+    color: white important;
+    border-radius: 50%;
+    top: 15% !important;
+    transform: translateY(-50%);
+    opacity: 1 !important;
+    /* Make them visible by default */
+    z-index: 20;
+}
+
+.custom-nav-btn i {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Position them on the far edges */
+.carousel-control-prev {
+    left: -20px !important;
+}
+
+.carousel-control-next {
+    z-index: 100;
+    right: -20px !important;
+}
+
+/* Hide navigation on very small screens to prevent overlap */
+@media (max-width: 576px) {
+    .custom-nav-btn {
+        display: none;
+    }
+}
+
+

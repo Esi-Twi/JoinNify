@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import './App.css'
 
 import PublicRoute from "./context/PublicRoute"
@@ -15,12 +15,31 @@ import authRoutes from './routes/authRoutes'
 import eventRoutes from './routes/eventRoutes'
 import sharedRoutes from './routes/sharedRoutes'
 import { Toaster } from "sonner"
+import { useEffect, useState } from 'react'
+import Loader from './components/Loader'
 
 
 function App() {
+  const [loading, setLoading] = useState(true);
+  const location = useLocation();
+
+  // First load
+  useEffect(() => {
+    setLoading(true);
+    const t = setTimeout(() => setLoading(false), 600); // fake load delay
+    return () => clearTimeout(t);
+  }, []);
+
+  // On route change
+  useEffect(() => {
+    setLoading(true);
+    const t = setTimeout(() => setLoading(false), 400);
+    return () => clearTimeout(t);
+  }, [location.pathname]);
 
   return (
     <>
+      {loading && <Loader />}
       <Toaster position='top-right' richColors closeButton={true} toastOptions={{
         style: { fontSize: "15px" }
       }} />
@@ -46,6 +65,8 @@ function App() {
         <Route element={<AuthLayout />}>
           {authRoutes()}
         </Route>
+
+        <Route path='/auth/*' element={<ErrorPage />} />
 
 
       </Routes>
