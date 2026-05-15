@@ -3,7 +3,7 @@ import { Events } from "@database/entity/events"
 import { Users } from "@database/entity/users"
 import cloudinary from "@lib/cloudinary"
 import { AppError } from "@utils/app-errror"
-import { CreateEventDTO } from "types"
+import { CreateEventDTO } from "../types"
 
 
 const UserRepository = AppDataSource.getRepository(Users)
@@ -20,6 +20,22 @@ export const getAllEvents = async () => {
     })
 
     return events
+}
+
+
+export const getAllUserEvents = async (userId: number) => {
+    if (isNaN(userId)) return [];
+    const events = await EventRepository.find({
+        where: {
+            deleted: false,
+            creatorId: userId,
+        },
+        relations: ["attendees"]
+    })
+
+    console.log("TYPEORM QUERY CALLED WITH:");
+
+    return events 
 }
 
 //get event for only approved events
@@ -50,13 +66,13 @@ export const createEvent = async (id: number, data: CreateEventDTO) => {
     }
 
     // // Upload each image to Cloudinary
-    const uploadedImages = await Promise.all(data.images.map(async(img) => {
-        const uploadRes = await cloudinary.uploader.upload(img, {
-            folder: "events",
-        })
+    // const uploadedImages = await Promise.all(data.images.map(async(img) => {
+    //     const uploadRes = await cloudinary.uploader.upload(img, {
+    //         folder: "events",
+    //     })
 
-        return uploadRes.secure_url
-    }))
+    //     return uploadRes.secure_url
+    // }))
 
     //create event
     const event = EventRepository.create({
@@ -68,18 +84,20 @@ export const createEvent = async (id: number, data: CreateEventDTO) => {
         start_date: data.start_date,
         end_date: data.end_date,
         category: data.category,
-        images: uploadedImages, 
+        images: []
+        // images: uploadedImages, 
     })
 
     return await EventRepository.save(event)
 }
 
 //make update available for only approved events
-export const updateEvent = async (id: number, data: CreateEventDTO) => {
+export const updateEvent = async (id: number, userId: number, data: CreateEventDTO) => {
     const event = await EventRepository.findOne({
         where: {
             id,
             deleted: false,
+            creatorId: userId,
             // is_approved: true
         }
     })
@@ -101,11 +119,12 @@ export const updateEvent = async (id: number, data: CreateEventDTO) => {
 }
 
 //delete event for only approved events
-export const deleteEvent = async (id: number) => {
+export const deleteEvent = async (id: number, userId: number) => {
     const event = await EventRepository.findOne({
         where: {
             id, 
             deleted: false, 
+            creatorId: userId,
             // is_approved: true
         }
     })

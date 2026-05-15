@@ -7,8 +7,6 @@ const AuthContext = createContext(null)
 export const AuthProvider = ({ children }) => {
     const {authUser} = useAuthStore()
 
-    // console.log(authUser);
-
 
     return (
         <AuthContext.Provider value={{authUser}}>

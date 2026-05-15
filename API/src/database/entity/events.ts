@@ -7,7 +7,6 @@ import { EventCategories } from "../enum";
 export class Events {
     @PrimaryGeneratedColumn()
     id!: Number
-
     
     @Column()
     creatorId!: Number

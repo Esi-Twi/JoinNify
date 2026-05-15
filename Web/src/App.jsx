@@ -28,7 +28,6 @@ function App() {
 
       <Routes>
         <Route path='*' element={<ErrorPage />} />
-        {/* <Route path='/events' element={<Events />} /> */}
 
         <Route element={<ProtectedRoute />}>
           <Route element={<GeneralLayout />}>

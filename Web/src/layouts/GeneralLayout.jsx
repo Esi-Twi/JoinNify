@@ -1,16 +1,19 @@
-import {Outlet} from 'react-router-dom'
-import Footer from '../components/Footer'
-import Header from '../components/Header'
+import { Outlet, useLocation } from "react-router-dom"
+import Header from "../components/Header"
+import Footer from "../components/Footer"
 
+export default function GeneralLayout() {
+  const location = useLocation()
 
-export default function generalLayout() {
+  const hideFooterRoutes = ["/user/profile"]
+
+  const hideFooter = hideFooterRoutes.includes(location.pathname)
+
   return (
-    <div>
+    <>
       <Header />
       <Outlet />
-      
-      <Footer />
-      
-    </div>
+      {!hideFooter && <Footer />}
+    </>
   )
 }

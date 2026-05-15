@@ -2,10 +2,13 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 
 
-const ProtectedRoute = ({children}) => {
+const ProtectedRoute = () => {
     const { authUser } = useAuthStore()
 
-    return authUser?.token ? children : <Navigate to="/auth/login" replace />
+
+    return authUser?.token
+        ? <Outlet />
+        : <Navigate to="/auth/login" replace />;
 }
 
 export default ProtectedRoute

@@ -1,7 +1,7 @@
 import { AppDataSource } from "@config/data.source"
 import { Users } from "@database/entity/users"
 import { AppError } from "@utils/app-errror"
-import { UpdateProfileDTO } from "types"
+import { UpdateProfileDTO } from "../types"
 
 const UserRepository = AppDataSource.getRepository(Users)
 

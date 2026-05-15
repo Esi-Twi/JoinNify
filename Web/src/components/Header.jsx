@@ -2,7 +2,12 @@ import React from 'react'
 
 function Header() {
   return (
-    <div>Header</div>
+    <div>
+      Header
+
+      <a href='/user/profile'>Profile</a>
+
+    </div>
   )
 }
 

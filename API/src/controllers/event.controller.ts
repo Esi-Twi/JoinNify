@@ -1,5 +1,5 @@
 import { createEventSchema } from "@middlewares/inputValidator";
-import { createEvent, deleteEvent, getAllEvents, getEvent, updateEvent } from "@services/event.service";
+import { createEvent, deleteEvent, getAllEvents, getAllUserEvents, getEvent, updateEvent } from "@services/event.service";
 import { AppError } from "@utils/app-errror";
 import { NextFunction, Request, Response } from "express";
 
@@ -28,6 +28,20 @@ export const EventController = {
         }
     },
 
+    async allOrganizerEvents(req: Request, res: Response, next: NextFunction) {
+        try {
+            const authenticatedUserId = req.user.id
+            // const events = await getAllUserEvents(Number(authenticatedUserId))
+            // res.status(200).json({ success: true, num: events.length, events })
+            res.status(200).json({ success: true,  authenticatedUserId })
+
+
+
+        } catch (error) {
+            next(error)
+        }
+    },
+
     async create(req: Request, res: Response, next: NextFunction) {
         try {
             const authenticatedUser = req.user
@@ -37,15 +51,15 @@ export const EventController = {
                 throw new AppError("All Fields required", 401)
             }
 
-            // //check if image is added
-            if (!images) {
-                throw new AppError("At least one image is needed", 401)
-            }
+            //check if image is added
+            // if (!images) {
+            //     throw new AppError("At least one image is needed", 401)
+            // }
 
             // //check images.length
-            if (images.length > 9) {
-                throw new AppError("You can upload a minimun of 9 images", 401)
-            }
+            // if (images.length > 9) {
+            //     throw new AppError("You can upload a minimun of 9 images", 401)
+            // }
 
             //validate inputs
             const { error, value } = createEventSchema.validate(req.body)
@@ -73,12 +87,13 @@ export const EventController = {
     async update(req: Request, res: Response, next: NextFunction) {
         try {
             const {id} = req.params
+            const authenticatedUserId = req.user.id
             const { title, location, capacity, price, start_date, end_date, images } = req.body
 
             //check images.length
-            if (images && images.length > 9) {
-                throw new AppError("You can upload a minimun of 9 images", 401)
-            }
+            // if (images && images.length > 9) {
+            //     throw new AppError("You can upload a minimun of 9 images", 401)
+            // }
 
             //validate inputs
             const { error, value } = createEventSchema.validate(req.body)
@@ -91,9 +106,9 @@ export const EventController = {
                 throw new AppError("Ending Date must be older than Starter Date", 401)
             }
 
-            const event = await updateEvent(Number(id), value)
+            const event = await updateEvent(Number(id), Number(authenticatedUserId), value)
 
-            res.status(200).json({ success: true, msg: "Event created successfully!!!", event})
+            res.status(200).json({ success: true, msg: "Event updated successfully!!!", event})
             
         } catch (error) {
             next(error)
@@ -103,8 +118,9 @@ export const EventController = {
     async delete(req: Request, res: Response, next: NextFunction) {
         try {
             const {id} = req.params
+            const authenticatedUserId = req.user.id
 
-            await deleteEvent(Number(id))
+            await deleteEvent(Number(id), Number(authenticatedUserId))
             res.status(200).json({ success: true, msg: "Event deleted successfully!!!" })
 
         } catch (error) {

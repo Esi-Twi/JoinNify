@@ -5,7 +5,8 @@ import { Router } from "express";
 const router = Router();
 
 router.get("/:id", identifier, allowedRoles("Admin", "Organizer", "Attendee"), EventController.getEvent)
-router.get("/", identifier, allowedRoles("Admin", "Organizer", "Attendee"), EventController.getAllEvents)
+router.get("/", identifier, allowedRoles("Admin", "Organizer"), EventController.getAllEvents)
+router.get("/organizer", identifier, allowedRoles("Admin", "Organizer"), EventController.allOrganizerEvents)
 
 router.post("/", identifier, allowedRoles("Admin", "Organizer"), EventController.create)
 

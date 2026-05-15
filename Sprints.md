@@ -43,26 +43,6 @@ The plan assumes **2-week sprints**, but you can adjust as needed.
 
 
 
-
-<!-- const user = await UserRepository.findOne({
-  where: { id: userId },
-  relations: ["eventsAttending"]
-});
-
-console.log(user.eventsAttending); -->
-
-<!-- --- ----------------------------------------------------------------------------->
-
-
-
-
-
-
-
-
-
-
-
 # 📅 **Sprint 2 – Event Management (Organizer)**
 ### 🎯 **Goal:** Organizers can create & publish events.
 ## 🔧 **Backend** 
