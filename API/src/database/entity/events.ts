@@ -15,6 +15,9 @@ export class Events {
     title!: string
 
     @Column()
+    desc!: string
+
+    @Column()
     location!: string
 
     @Column()

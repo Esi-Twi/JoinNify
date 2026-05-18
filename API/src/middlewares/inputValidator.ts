@@ -49,6 +49,7 @@ export const createEventSchema = Joi.object({
     location: Joi.string().min(2),
     capacity: Joi.number().min(0),
     price: Joi.number().min(0),
+    desc: Joi.string().min(5), 
 
     start_date: Joi.date().min(Date.now()),
     end_date: Joi.date().min(Date.now()),

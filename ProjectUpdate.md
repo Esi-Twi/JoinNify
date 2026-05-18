@@ -1,5 +1,17 @@
 
 ## ONGOING
+
+### 🎯 **Goal:** Users can view events and book tickets.
+*✅ Ticket model
+* Book ticket API
+* Cancel ticket API
+* Get event tickets API
+* Logic: Limit tickets per user
+* Logic: Event capacity
+* Automatic email after booking
+* Generate ticket image + QR code
+
+
 ### 🎯 **Goal:** Organizers can create & publish events.
 ## 🔧 **Backend** 
 *✅ Get all events API
@@ -12,10 +24,9 @@ make changes for event to be updated before changes
 ### 🎯 **Goal:** Users can sign up, verify email, log in, and update profile.
 left with mobile
 
-make use of page loader
 
 
-## DONE
+## -----------------DONE---------------------------------------
 ## for backend: 
 register user, login, verify email, view profile, update profile
 *✅ Create event model

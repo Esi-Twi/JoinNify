@@ -45,9 +45,9 @@ export const EventController = {
     async create(req: Request, res: Response, next: NextFunction) {
         try {
             const authenticatedUser = req.user
-            const { title, location, capacity, price, start_date, end_date, images, category } = req.body
+            const { title, location, capacity, price, start_date, end_date, images, category, desc } = req.body
 
-            if (!title || !location || !capacity || price < 0 || !start_date || !end_date || !category) {
+            if (!title || !location || !desc || !capacity || price < 0 || !start_date || !end_date || !category) {
                 throw new AppError("All Fields required", 401)
             }
 
@@ -88,7 +88,7 @@ export const EventController = {
         try {
             const {id} = req.params
             const authenticatedUserId = req.user.id
-            const { title, location, capacity, price, start_date, end_date, images } = req.body
+            const { title, location, capacity, price, start_date, end_date, images, desc } = req.body
 
             //check images.length
             // if (images && images.length > 9) {

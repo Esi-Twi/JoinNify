@@ -11,13 +11,15 @@ const EventRepository = AppDataSource.getRepository(Events)
 
 //get all available events for only approved events
 export const getAllEvents = async () => {
-    const events = await EventRepository.find({
-        where: {
-            deleted: false,
-            // is_approved: true
-        },
-        relations: ["attendees"]
-    })
+    const events = await EventRepository.find()
+
+    // const events = await EventRepository.find({
+    //     where: {
+    //         // deleted: false,
+    //         // is_approved: true
+    //     },
+    //     relations: ["attendees"]
+    // })
 
     return events
 }
@@ -32,6 +34,8 @@ export const getAllUserEvents = async (userId: number) => {
         },
         relations: ["attendees"]
     })
+
+    
 
     console.log("TYPEORM QUERY CALLED WITH:");
 
@@ -84,7 +88,8 @@ export const createEvent = async (id: number, data: CreateEventDTO) => {
         start_date: data.start_date,
         end_date: data.end_date,
         category: data.category,
-        images: []
+        images: [], 
+        desc: data.desc,
         // images: uploadedImages, 
     })
 
@@ -111,6 +116,7 @@ export const updateEvent = async (id: number, userId: number, data: CreateEventD
     event.ticket_price = data.price || event.ticket_price
     event.start_date = data.start_date || event.start_date
     event.end_date = data.end_date || event.end_date
+    event.desc = data.desc || event.desc
     for(let image in data.images) {
         event.images.push(image)
     }
