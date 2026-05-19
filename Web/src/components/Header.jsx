@@ -2,13 +2,15 @@ import { useEffect, useState } from 'react'
 import { useAuthStore } from '../store/useAuthStore'
 
 function Header() {
-  const { isLoggingOut, logout, userAuth } = useAuthStore()
-  const user = userAuth?.user
-
-
+  const { isLoggingOut, logout, authUser } = useAuthStore()
+  const user = authUser?.user
+  
   const logOut = () => {
     logout()
   }
+
+  console.log(user);
+
 
 
   return (
@@ -45,21 +47,15 @@ function Header() {
           {/* RIGHT: Actions & Profile */}
           <div className="col-auto d-flex align-items-center gap-2 gap-lg-3">
 
-            {/* Create Event CTA */}
-            <button className="btn d-flex align-items-center gap-2 shadow-sm" style={headerStyles.createBtn}>
-              <i className="bi bi-plus-lg"></i>
-              <span className="d-none d-lg-inline">Create Event</span>
-            </button>
-
             {/* Notifications */}
-            <div className="position-relative">
+            {/* <div className="position-relative">
               <button className="btn btn-light rounded-circle p-2" style={{ width: '42px', height: '42px' }}>
                 <i className="bi bi-bell fs-5 text-join-secondary"></i>
               </button>
               <span className="position-absolute translate-middle badge rounded-pill bg-danger border border-light" style={headerStyles.badge}>
                 3
               </span>
-            </div>
+            </div> */}
 
             {/* Profile Dropdown */}
             <div className="dropdown">
@@ -89,11 +85,11 @@ function Header() {
                     <i className="bi bi-person"></i> My Profile
                   </a>
                 </li>
-                <li>
+                {user?.role !== "Attendee" && <li>
                   <a href='/org/dashboard' className="dropdown-item py-2 d-flex align-items-center gap-2" ><i className="bi bi-buildings">
                   </i> My Dashboard
                   </a>
-                </li>
+                </li>}
 
                 <li><a className="dropdown-item py-2 d-flex align-items-center gap-2" href="#"><i className="bi bi-credit-card"></i> Billing / Subscription</a></li>
                 <li><hr className="dropdown-divider opacity-50" /></li>
@@ -132,7 +128,7 @@ const headerStyles = {
     width: '100%',
   },
   searchInput: {
-    backgroundColor: '#F3F4F6',
+    backgroundColor: '#c2c2c2d3',
     border: 'none',
     borderRadius: '12px',
     paddingLeft: '40px',

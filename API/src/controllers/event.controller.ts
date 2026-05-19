@@ -52,14 +52,14 @@ export const EventController = {
             }
 
             //check if image is added
-            // if (!images) {
-            //     throw new AppError("At least one image is needed", 401)
-            // }
+            if (!images) {
+                throw new AppError("At least one image is needed", 401)
+            }
 
             // //check images.length
-            // if (images.length > 9) {
-            //     throw new AppError("You can upload a minimun of 9 images", 401)
-            // }
+            if (images.length > 9) {
+                throw new AppError("You can upload a minimun of 9 images", 401)
+            }
 
             //validate inputs
             const { error, value } = createEventSchema.validate(req.body)

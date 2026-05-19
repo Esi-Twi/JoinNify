@@ -793,5 +793,35 @@ a {
         display: none;
     }
 }
+/* Organizer Platform Shared UI Aesthetics Extensions hooks */
+.organizer-sidebar .nav-link:hover {
+    background-color: #EEF2FF !important;
+    color: var(--join-indigo) !important;
+}
 
+.dashboard-card {
+    background-color: #FFFFFF !important;
+    border: 1px solid #E5E7EB !important;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 20px -4px rgba(79, 70, 229, 0.08), 0 8px 12px -6px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Simulated laser animation sequence framework for scan boxes */
+@keyframes scanMove {
+    0% {
+        top: 15%;
+    }
+
+    50% {
+        top: 85%;
+    }
+
+    100% {
+        top: 15%;
+    }
+}
 

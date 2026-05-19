@@ -70,13 +70,13 @@ export const createEvent = async (id: number, data: CreateEventDTO) => {
     }
 
     // // Upload each image to Cloudinary
-    // const uploadedImages = await Promise.all(data.images.map(async(img) => {
-    //     const uploadRes = await cloudinary.uploader.upload(img, {
-    //         folder: "events",
-    //     })
+    const uploadedImages = await Promise.all(data.images.map(async(img) => {
+        const uploadRes = await cloudinary.uploader.upload(img, {
+            folder: "events",
+        })
 
-    //     return uploadRes.secure_url
-    // }))
+        return uploadRes.secure_url
+    }))
 
     //create event
     const event = EventRepository.create({
@@ -88,9 +88,9 @@ export const createEvent = async (id: number, data: CreateEventDTO) => {
         start_date: data.start_date,
         end_date: data.end_date,
         category: data.category,
-        images: [], 
+        // images: [], 
         desc: data.desc,
-        // images: uploadedImages, 
+        images: uploadedImages, 
     })
 
     return await EventRepository.save(event)

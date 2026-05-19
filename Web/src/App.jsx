@@ -17,6 +17,8 @@ import sharedRoutes from './routes/sharedRoutes'
 import { Toaster } from "sonner"
 import { useEffect, useState } from 'react'
 import Loader from './components/Loader'
+import OrganizerDashboardLayout from './layouts/OrganizerDashboardLayout'
+import dashboardRoutes from './routes/dashboardRoutes'
 
 
 function App() {
@@ -52,6 +54,12 @@ function App() {
           <Route element={<GeneralLayout />}>
             {eventRoutes()}
             {sharedRoutes()}
+          </Route>
+        </Route>
+
+        <Route element={<ProtectedRoute />}>
+          <Route element={<OrganizerDashboardLayout />}>
+            {dashboardRoutes()}
           </Route>
         </Route>
 
