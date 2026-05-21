@@ -14,8 +14,8 @@ export class Events {
     @Column()
     title!: string
 
-    @Column()
-    desc!: string
+    @Column({nullable: true})
+    desc: string
 
     @Column()
     location!: string

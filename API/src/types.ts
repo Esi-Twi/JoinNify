@@ -42,7 +42,7 @@ export interface CreateEventDTO {
     start_date: Date,
     end_date: Date, 
     category: EventCategories,
-    images: string[], 
+    images: Express.Multer.File[], 
     desc: string, 
 }
 

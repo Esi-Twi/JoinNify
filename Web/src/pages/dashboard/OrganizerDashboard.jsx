@@ -1,7 +1,10 @@
 import React from 'react';
 import StatsCard from '../../components/StatsCard';
+import { useNavigate } from 'react-router-dom';
 
 const OrganizerDashboard = ({ setActiveTab }) => {
+  const navigate = useNavigate()
+
   return (
     <div className="container-fluid py-4">
       {/* Quick Layout Actions Header banner */}
@@ -12,13 +15,13 @@ const OrganizerDashboard = ({ setActiveTab }) => {
             <p className="text-muted small mb-0">Here is what is happening with your operations platform scope today.</p>
           </div>
           <div className="d-flex align-items-center gap-2 flex-wrap">
-            <button onClick={() => setActiveTab('create-event')} className="btn text-white px-3 py-2 rounded-3 fw-medium d-flex align-items-center gap-2 border-0" style={{ backgroundColor: '#4F46E5' }}>
+            <button onClick={() => navigate('/dashboard/create-event')} className="btn text-white px-3 py-2 rounded-3 fw-medium d-flex align-items-center gap-2 border-0" style={{ backgroundColor: '#4F46E5' }}>
               <i className="bi bi-plus-lg"></i> Create Event
             </button>
-            <button onClick={() => setActiveTab('qr-checkin')} className="btn btn-white bg-white border px-3 py-2 rounded-3 fw-medium d-flex align-items-center gap-2 text-dark">
+            <button onClick={() => navigate('/dashboard/checkin')} className="btn btn-white bg-white border px-3 py-2 rounded-3 fw-medium d-flex align-items-center gap-2 text-dark">
               <i className="bi bi-qr-code-scan" style={{ color: '#4F46E5' }}></i> Scan QR
             </button>
-            <button onClick={() => setActiveTab('analytics')} className="btn btn-white bg-white border px-3 py-2 rounded-3 fw-medium d-flex align-items-center gap-2 text-dark">
+            <button onClick={() => navigate('/dashboard/analytics')} className="btn btn-white bg-white border px-3 py-2 rounded-3 fw-medium d-flex align-items-center gap-2 text-dark">
               <i className="bi bi-file-earmark-bar-graph" style={{ color: '#4F46E5' }}></i> View Reports
             </button>
           </div>

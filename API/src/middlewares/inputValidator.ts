@@ -54,17 +54,6 @@ export const createEventSchema = Joi.object({
     start_date: Joi.date().min(Date.now()),
     end_date: Joi.date().min(Date.now()),
     category: Joi.string().valid(...Object.values(EventCategories)),
-
-    images: Joi.array().items(
-        Joi.object({
-            originalName: Joi.string(),
-            mimetype: Joi.string().valid(
-                "image/png", "image/jpeg", "image/jpg", "image/webp"
-            ),
-            size: Joi.number().max(5 * 1024 * 1024) // 5MB
-        })
-    ).min(1)
-
 })
 
 

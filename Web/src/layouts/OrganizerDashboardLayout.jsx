@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Sidebar from '../components/OrganizerSidebar';
+import { Outlet} from "react-router-dom";
 
 // Dashboard View Components Import Map Routing Layout Indexing List
 import OrganizerDashboard from '../pages/dashboard/OrganizerDashboard';
@@ -38,7 +39,7 @@ const OrganizerDashboardLayout = () => {
     return (
         <>
 
-        <Header />
+        <Header activeTab={activeTab} setIsMobileOpen={setIsMobileOpen} />
         
         <div className="container-fluid p-0 overflow-x-hidden min-vh-100 position-relative bg-light-subtle" style={{ backgroundColor: '#F9FAFB' }}>
 
@@ -66,7 +67,7 @@ const OrganizerDashboardLayout = () => {
                 style={{ paddingLeft: window.innerWidth >= 992 ? '260px' : '0', transition: 'padding 0.3s ease' }}
             >
                 <main className="flex-grow-1" style={{ position: 'relative' }}>
-                    {renderContent()}
+                    <Outlet />
                 </main>
             </div>
         </div>

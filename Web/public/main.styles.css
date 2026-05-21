@@ -825,3 +825,22 @@ a {
     }
 }
 
+/* ------------------------------------- */
+.btn-primary {
+    background-color: #D946EF!important;
+    border-color: #D946EF!important;
+}
+
+.card {
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Ensure the progress bar looks like the UI reference */
+.progress {
+    background-color: #f3e5f5;
+    border-radius: 10px;
+}

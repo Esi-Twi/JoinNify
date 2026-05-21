@@ -1,35 +1,53 @@
 import { useEffect, useState } from 'react'
 import { useAuthStore } from '../store/useAuthStore'
+import { useLocation } from 'react-router-dom'
 
-function Header() {
+function Header({activeTab, setIsMobileOpen}) {
   const { isLoggingOut, logout, authUser } = useAuthStore()
   const user = authUser?.user
+  const location = useLocation()
+  const [showDashboardMenu, setShowDashboardMenu] = useState(false)
   
   const logOut = () => {
     logout()
   }
 
-  console.log(user);
+  useEffect(() => {
+    if(location.pathname.startsWith('/dashboard')) {
+      setShowDashboardMenu(true)
+    }
+  }, [])
 
 
+  
 
   return (
     <nav className="sticky-top shadow-sm py-2" style={headerStyles.stickyHeader}>
       <div className="container-fluid px-lg-5">
         <div className="row align-items-center justify-content-between g-2">
 
+           
+
           {/* LEFT: Branding */}
-          <a href='/' className="text-decoration-none text-indigo col-auto d-flex align-items-center">
-            <div
+          <div className="text-decoration-none text-indigo col-auto d-flex align-items-center">
+            <a href='/'
               className="rounded-circle me-2 d-flex align-items-center justify-content-center"
               style={{ width: '40px', height: '40px', background: 'var(--join-gradient)' }}
             >
               <i className="bi bi-qr-code-scan text-white fs-5"></i>
-            </div>
-            <span className="h4 mb-0 fw-bold d-none d-sm-block text-join-primary">
+            </a>
+
+            {showDashboardMenu && <button
+              className="btn d-lg-none p-0 text-dark border-0"
+              onClick={() => setIsMobileOpen(true)}
+            >
+              <i className="bi bi-list fs-3"></i>
+            </button>}
+
+            <a href='/' className="h4 text-decoration-none mb-0 fw-bold d-none d-sm-block text-join-primary">
               JoinNify
-            </span>
-          </a>
+            </a>
+          </div>
 
           {/* CENTER: Quick Search (Hidden on Mobile, Visible on Tablet+) */}
           <div className="col d-none d-md-flex justify-content-center px-4">
@@ -86,7 +104,7 @@ function Header() {
                   </a>
                 </li>
                 {user?.role !== "Attendee" && <li>
-                  <a href='/org/dashboard' className="dropdown-item py-2 d-flex align-items-center gap-2" ><i className="bi bi-buildings">
+                  <a href='/dashboard/org' className="dropdown-item py-2 d-flex align-items-center gap-2" ><i className="bi bi-buildings">
                   </i> My Dashboard
                   </a>
                 </li>}

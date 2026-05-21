@@ -69,11 +69,12 @@ export const createEvent = async (id: number, data: CreateEventDTO) => {
         throw new AppError("User cannot be found", 401)
     }
 
-    // // Upload each image to Cloudinary
-    const uploadedImages = await Promise.all(data.images.map(async(img) => {
-        const uploadRes = await cloudinary.uploader.upload(img, {
-            folder: "events",
-        })
+    // Upload each image to Cloudinary
+    const uploadedImages = await Promise.all(
+        data.images.map(async(img) => {
+            const uploadRes = await cloudinary.uploader.upload(img.path, {
+                folder: "events",
+            })
 
         return uploadRes.secure_url
     }))

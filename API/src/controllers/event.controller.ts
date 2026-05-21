@@ -45,7 +45,8 @@ export const EventController = {
     async create(req: Request, res: Response, next: NextFunction) {
         try {
             const authenticatedUser = req.user
-            const { title, location, capacity, price, start_date, end_date, images, category, desc } = req.body
+            const { title, location, capacity, price, start_date, end_date, category, desc } = req.body
+            const images = req.files as Express.Multer.File[]
 
             if (!title || !location || !desc || !capacity || price < 0 || !start_date || !end_date || !category) {
                 throw new AppError("All Fields required", 401)
@@ -53,12 +54,12 @@ export const EventController = {
 
             //check if image is added
             if (!images) {
-                throw new AppError("At least one image is needed", 401)
+                throw new AppError("At least one image is needed", 401);
             }
 
             // //check images.length
             if (images.length > 9) {
-                throw new AppError("You can upload a minimun of 9 images", 401)
+                throw new AppError("You can upload a maximum of 9 images", 401)
             }
 
             //validate inputs
@@ -74,10 +75,13 @@ export const EventController = {
 
             const event = await createEvent(
                 Number(authenticatedUser!.id),
-                value
+                {
+                    ...value,
+                    images
+                }
             )
 
-            res.status(201).json({ success: true, msg: "Event created successfully!!!", event })
+            res.status(201).json({ success: true, msg: "Event created successfully!!!", value })
 
         } catch (error) {
             next(error)

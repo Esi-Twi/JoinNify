@@ -16,11 +16,11 @@ export default function dashboardRoutes() {
         <Route path='/dashboard'>
             <Route path='org' element={<OrganizerDashboard />} />
 
-            <Route path='my-events' element={<MyEvents />} />
+            <Route path='events' element={<MyEvents />} />
             <Route path='create-event' element={<CreateEvent />} />
             <Route path='ticket-sales' element={<TicketSalesPage />} />
             <Route path='attendees' element={<Attendees />} />
-            <Route path='qr-checkin' element={<QRCheckInPage />} />
+            <Route path='checkin' element={<QRCheckInPage />} />
             <Route path='analytics' element={<Analytics />} />
             <Route path='notifications' element={<Notifications />} />
             <Route path='settings' element={<Settings />} />

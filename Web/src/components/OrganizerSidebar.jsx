@@ -4,11 +4,11 @@ import { Link, NavLink } from "react-router-dom"
 const OrganizerSidebar = ({ activeTab, setActiveTab, isMobileOpen, setIsMobileOpen }) => {
     const menuItems = [
         { id: 'dashboard', path: '/dashboard/org', name: 'Dashboard', icon: 'bi-grid-1x2' },
-        { id: 'my-events', path: '/dashboard/my-events', name: 'My Events', icon: 'bi-calendar-event' },
+        { id: 'my-events', path: '/dashboard/events', name: 'My Events', icon: 'bi-calendar-event' },
         { id: 'create-event', path: '/dashboard/create-event', name: 'Create Event', icon: 'bi-plus-circle' },
         { id: 'ticket-sales', path: '/dashboard/ticket-sales', name: 'Ticket Sales', icon: 'bi-ticket-perforated' },
         { id: 'attendees', path: '/dashboard/attendees', name: 'Attendees', icon: 'bi-people' },
-        { id: 'qr-checkin', path: '/dashboard/qr-checkin', name: 'QR Check-In', icon: 'bi-qr-code-scan' },
+        { id: 'qr-checkin', path: '/dashboard/checkin', name: 'QR Check-In', icon: 'bi-qr-code-scan' },
         { id: 'analytics', path: '/dashboard/analytics', name: 'Analytics', icon: 'bi-graph-up-arrow' },
         { id: 'notifications', path: '/dashboard/notifications', name: 'Notifications', icon: 'bi-bell' },
         { id: 'settings', path: '/dashboard/settings', name: 'Settings', icon: 'bi-gear' },
@@ -29,7 +29,6 @@ const OrganizerSidebar = ({ activeTab, setActiveTab, isMobileOpen, setIsMobileOp
             <div className="flex-grow-1 overflow-y-auto p-3 mt-5">
                 <ul className="nav nav-pills flex-column gap-1 pt-2">
                     {menuItems.map((item) => {
-                        const isActive = activeTab === item.id;
                         return (
                             <li key={item.id} className="nav-item">
                                 <NavLink
